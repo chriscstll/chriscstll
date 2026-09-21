@@ -24,7 +24,7 @@ export const about = {
         'Christian Castillo is a frontend developer based in the Philippines, focused on building thoughtful web applications using React, Typescript and Tailwind CSS',
         "I'm open to opportunities where i can contribute to meaningful work to keep learning and developing my skills as a frontend developer",
     ],
-    image: '/profile.jpg',
+    image: '/profile-photo.png',
     resumeUrl: '/resume'
 };
 

@@ -64,7 +64,7 @@
 
 @layer utilities {
     .section-container {
-        @apply max-w-5xl mx-auto px-6 py-24 md:py-32;
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32;
     }
     .section-title {
         @apply text-3xl md:text-4xl font-bold mb-4 text-foreground;

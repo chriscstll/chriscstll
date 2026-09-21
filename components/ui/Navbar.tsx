@@ -38,7 +38,7 @@ export default function Navbar() {
                 WebkitBackdropFilter: isScrolled ? 'blur(12px)' : 'none',
             }}>
 
-                <nav className="max-w-5xl mx-auto px-6 h-14 md:h-16 flex items-center justify-between">
+                <nav className="max-w-6xl mx-auto px-8 lg:px-12 h-14 md:h-16 flex items-center justify-between">
                     <a href="#"
                         className="font-heading font-bold text-base md:text-lg tracking-tight text-foreground hover:text-accent transition-colors duration-200" onClick={closeMenu}>
                             {siteConfig.name}
