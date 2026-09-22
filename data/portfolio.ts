@@ -1,21 +1,19 @@
 import { title } from "process";
 
 export const siteConfig = {
-    name: 'Christian M, Castillo',
-    title: 'Christian M, Castillo — Frontend Developer',
+    name: 'Christian M. Castillo',
+    title: 'Christian M. Castillo',
     description: 'Christian Castillo is a frontend developer focused on creating scalable, intuitive and seamless digital experiences',
     url: 'https://stillindevelopment.com',
     ogImage: '/og-image.jpg'
 };
 
 export const hero = {
-    greeting: "Hi, I'm",
-    name: 'Christian M, Castillo',
+    name: 'Christian M. Castillo',
     title: 'Frontend Developer',
     tagline: 'Crafting ideas into reality',
     cta: {
-        primary: { label: 'View my Work', href: '#projects'},
-        secondary: { label: 'Contact Me', href: '#contact'},
+        contactbtn: { label: 'Contact Me', href: '#contact'},
     },
 };
 

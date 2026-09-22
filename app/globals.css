@@ -25,6 +25,8 @@
     * {
         border-color: var(--color-border);
         box-sizing: border-box;
+        scrollbar-width: none;        
+        -ms-overflow-style: none;
     }
     html {
         scroll-behavior: smooth;
@@ -47,18 +49,8 @@
         outline-offset: 4px;
         border-radius: 4px;
     }
-    ::-webkit-scrollbar {
-        width: 6px;
-    }
-     ::-webkit-scrollbar-track {
-    background: var(--color-background);
-    }
-    ::-webkit-scrollbar-thumb {
-        background: var(--color-border-hover);
-        border-radius: 999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: var(--color-foreground-subtle);
+    *::-webkit-scrollbar {
+        display: none;                
     }
 }
 

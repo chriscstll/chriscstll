@@ -39,7 +39,7 @@ export const metadata: Metadata = {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: `${siteConfig.name} — Frontend Developer`
+        alt: `${siteConfig.name} - Frontend Developer`
       },
     ],
   },
@@ -64,6 +64,12 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1
     },
+  },
+
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
 
  /*  Get this value from: search.google.com/search-console

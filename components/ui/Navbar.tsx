@@ -1,14 +1,15 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import { siteConfig } from "@/data/portfolio";
+import { Menu, X, Mail } from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import Image from 'next/image'
+import { contact } from "@/data/portfolio";
 
 const navLinks = [
     { label: 'About', href: '#about' },
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
-    { label: 'Contact', href: '#contact' },
 ];
 
 export default function Navbar() {
@@ -39,9 +40,10 @@ export default function Navbar() {
             }}>
 
                 <nav className="max-w-6xl mx-auto px-8 lg:px-12 h-14 md:h-16 flex items-center justify-between">
-                    <a href="#"
-                        className="font-heading font-bold text-base md:text-lg tracking-tight text-foreground hover:text-accent transition-colors duration-200" onClick={closeMenu}>
-                            {siteConfig.name}
+                    <a href="#" className="transition-opacity duration-200 hover:opacity-75"
+                        onClick={closeMenu}
+                        aria-label="Christian M. Castillo — Home">
+                        <Image src="/logo.png" alt="logo" width={50} height={60} style={{ width: 50, height: "auto" }} priority/>
                     </a>
 
                     <ul className="hidden md:flex items-center gap-8">
@@ -94,8 +96,38 @@ export default function Navbar() {
                                             &gt;
                                             </span>
                                         </span>
-                                    </a>
+                                    </a> 
                             ))}
+                            <div className="flex items-center gap-6 pt-2">
+      
+                                < a href={contact.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="GitHub profile"
+                                    className="text-foreground-subtle hover:text-foreground
+                                            transition-colors duration-200"
+                                >
+                                    <FaGithub size={20} />
+                                </a>
+                                
+                                < a href={contact.linkedin}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="LinkedIn profile"
+                                    className="text-foreground-subtle hover:text-foreground
+                                            transition-colors duration-200"
+                                >
+                                    <FaLinkedin size={20} />
+                                </a>
+                                
+                                <a href={`mailto:${contact.email}`}
+                                    aria-label="Send email"
+                                    className="text-foreground-subtle hover:text-foreground
+                                            transition-colors duration-200"
+                                >
+                                    <Mail size={20} />
+                                </a>
+                            </div>
                     </div>
                 )}
         </header>
