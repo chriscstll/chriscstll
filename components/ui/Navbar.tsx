@@ -42,8 +42,8 @@ export default function Navbar() {
                 <nav className="max-w-6xl mx-auto px-8 lg:px-12 h-14 md:h-16 flex items-center justify-between">
                     <a href="#" className="transition-opacity duration-200 hover:opacity-75"
                         onClick={closeMenu}
-                        aria-label="Christian M. Castillo — Home">
-                        <Image src="/logo.png" alt="logo" width={50} height={60} style={{ width: 50, height: "auto" }} priority/>
+                        aria-label="Christian M. Castillo">
+                        <Image src="/logo.png" alt="logo" width={55} height={60} style={{ width: 'auto', height: "auto" }} priority/>
                     </a>
 
                     <ul className="hidden md:flex items-center gap-8">

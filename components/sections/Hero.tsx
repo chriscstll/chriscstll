@@ -102,7 +102,7 @@ export default function Hero() {
                 <div className="relative flex items-center justify-center">
                     <div className="relative w-full h-112.5 sm:h-137.5 md:h-175">
                         <div className="relative w-full h-full overflow-hidden">
-                            <Image src="/profile-photo.png" alt="Your Full Name - Frontend Developer" fill className="object-contain object-center"
+                            <Image src="/profile-photo.png" alt="Christian M. Castillo" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain object-center"
                                 style={{
                                     filter: "grayscale(100%) contrast(1.1) brightness(0.85)",
                                 }}
@@ -117,12 +117,7 @@ export default function Hero() {
                             <motion.div
                                 key={icon.name}
                                 className={`absolute flex items-center justify-center w-10 h-10 z-10 
-                                    ${icon.position}`}
-                                style={{
-                                    backgroundColor: "rgba(15,15,15,0.75)",
-                                    backdropFilter: "blur(6px)",
-                                    WebkitBackdropFilter: "blur(6px)",
-                                }}
+                                ${icon.position}`}                               
                                 variants={floatVariant(i * 0.4)}
                                 animate="animate"
                                 title={icon.name}>
