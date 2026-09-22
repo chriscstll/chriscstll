@@ -18,11 +18,35 @@ export const hero = {
 };
 
 export const about = {
+    label: 'Introduction',
+    heading: "Hello!, I'm",
+    name: 'Christian Castillo',
+    subheading: 'A Frontend Developer based in the philippines',
     bio: [
         'Christian Castillo is a frontend developer based in the Philippines, focused on building thoughtful web applications using React, Typescript and Tailwind CSS',
         "I'm open to opportunities where i can contribute to meaningful work to keep learning and developing my skills as a frontend developer",
     ],
-    resumeUrl: '/resume'
+    resumeUrl: '/resume',
+    cards: [
+        {
+            id: "frontend",
+            label: "Frontend Developer",
+            description: "What I do and how I approach building for the web.",
+                content: {
+                    title: "Frontend Developer",
+                    body: "Placeholder — describe your frontend approach, what you enjoy building, and what kind of work you're looking for.",
+                },
+        },
+        {
+            id: "techstack",
+            label: "Tech Stack",
+            description: "The tools and technologies I work with.",
+                content: {
+                    title: "My Tech Stack",
+                    body: "Placeholder — describe your stack, how you use each technology, and what you're currently learning.",
+                },
+        },
+    ],
 };
 
 export type Project = {
