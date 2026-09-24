@@ -104,33 +104,83 @@ export default function Hero() {
         {/* HERO TAGLINE */}
         <div className="flex flex-col items-start">
           <div
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium tracking-wide mb-6 border"
+            className="inline-flex max-w-full items-center gap-1 rounded-full border px-1.5 py-0.5 text-[9px] font-medium tracking-wider sm:gap-1.5 sm:px-2 sm:py-1 sm:text-[10px] md:px-2.5 md:py-1 md:text-[11px] mb-3 sm:mb-4 md:mb-5"
             style={{
               backgroundColor: "var(--color-accent-subtle)",
               borderColor: "var(--color-accent)",
               color: "var(--color-accent)",
             }}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
-            {hero.title}
+            <span className="h-1 w-1 shrink-0 rounded-full bg-current animate-pulse sm:h-1.5 sm:w-1.5" />
+            <span className="truncate">{hero.title}</span>
           </div>
 
-          <h1 className="font-heading font-bold leading-tight text-4xl sm:text-5xl lg:text-6xl gradient-text mb-3">
+          <h1
+            className="font-heading font-bold leading-tight text-4xl sm:text-5xl lg:text-6xl gradient-text mb-3"
+            style={{ fontFamily: "'Caveat', cursive" }}
+          >
             {hero.tagline}
           </h1>
 
           <div className="flex flex-col items-start gap-3 mb-8">
             <a
               href={hero.cta.contactbtn.href}
-              className="inline-flex px-6 py-2 font-medium text-sm rounded-md text-foreground hover:text-accent backdrop-blur-lg bg-linear-to-tr from-transparent via-[rgba(121,121,121,0.16)] to-transparent shadow hover:shadow-accent transition-all duration-700"
+              className="group relative inline-flex items-center overflow-hidden rounded-full border border-border bg-background-card px-7 py-2.5 text-sm font-semibold text-foreground transition-all duration-300 hover:border-accent hover:text-accent"
             >
-              {hero.cta.contactbtn.label}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-40 transition-opacity duration-300 group-hover:opacity-100"
+                style={{
+                  background:
+                    "conic-gradient(from 0deg at 50% 50%, transparent 0deg, var(--color-accent-subtle) 40deg, transparent 80deg)",
+                  animation: "radar 3s linear infinite",
+                }}
+              />
+              <span className="relative z-10">{hero.cta.contactbtn.label}</span>
             </a>
           </div>
         </div>
         {/* HERO IMG */}
         <div className="relative flex items-center justify-center">
           <div className="relative w-full h-112.5 sm:h-137.5 md:h-175">
+            {/* === BLOB + SATELLITES LAYER === */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+              <svg viewBox="0 0 500 500" className="w-[85%] h-[85%] sm:w-[80%] sm:h-[80%]">
+                {/* Layer 1 — deepest, most offset */}
+                {/* Layer 1 — deepest, most offset */}
+                <path
+                  fill="var(--color-background-secondary)"
+                  fillOpacity="0.9"
+                  stroke="var(--color-border-hover)"
+                  strokeOpacity="0.35"
+                  strokeWidth="1"
+                  transform="translate(-22 -15) rotate(-8 250 250)"
+                  d="M400,130 C455,200 460,290 415,355 C370,420 285,465 195,450 C105,435 35,375 30,285 C25,195 70,115 145,65 C220,15 345,60 400,130 Z"
+                />
+
+                {/* Layer 2 — mid offset */}
+                <path
+                  fill="var(--color-background-card)"
+                  fillOpacity="0.95"
+                  stroke="var(--color-border-hover)"
+                  strokeOpacity="0.55"
+                  strokeWidth="1"
+                  transform="translate(10 10) rotate(5 250 250)"
+                  d="M400,130 C455,200 460,290 415,355 C370,420 285,465 195,450 C105,435 35,375 30,285 C25,195 70,115 145,65 C220,15 345,60 400,130 Z"
+                />
+
+                {/* Layer 3 — topmost, cutout */}
+                <path
+                  fill="var(--color-background)"
+                  stroke="var(--color-border)"
+                  strokeOpacity="0.6"
+                  strokeWidth="1"
+                  d="M400,130 C455,200 460,290 415,355 C370,420 285,465 195,450 C105,435 35,375 30,285 C25,195 70,115 145,65 C220,15 345,60 400,130 Z"
+                />
+              </svg>
+            </div>
+
+            {/* === IMAGE (unchanged) === */}
             <div className="relative w-full h-full overflow-hidden">
               <Image
                 src="/profile-photo.png"
@@ -152,11 +202,11 @@ export default function Hero() {
               />
             </div>
 
+            {/* === TECH ICONS (unchanged) === */}
             {techIcons.map((icon, i) => (
               <motion.div
                 key={icon.name}
-                className={`absolute flex items-center justify-center w-10 h-10 z-10 
-                                ${icon.position}`}
+                className={`absolute flex items-center justify-center w-10 h-10 z-10 ${icon.position}`}
                 variants={floatVariant(i * 0.4)}
                 animate="animate"
                 title={icon.name}

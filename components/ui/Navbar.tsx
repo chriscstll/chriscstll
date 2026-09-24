@@ -17,23 +17,19 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");
+  const [activeSection, setActiveSection] = useState<string | null>(null);
 
-  // Auto-hide navbar on scroll down, show on scroll up
+  // AUTO HIDE ON SCROLL DOWN, SHOW ON SCROLL UP
   useEffect(() => {
     let lastScrollY = window.scrollY;
 
     const onScroll = () => {
       const currentScrollY = window.scrollY;
-
-      // Always show navbar near the top of the page
       if (currentScrollY < 80) {
         setIsHidden(false);
       } else if (currentScrollY > lastScrollY) {
-        // Scrolling down — hide
         setIsHidden(true);
       } else {
-        // Scrolling up — show
         setIsHidden(false);
       }
 
@@ -44,7 +40,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Track which section is currently in view
+  // SECTION TRACKER
   useEffect(() => {
     const sections = navLinks.map((link) => link.href.replace("#", ""));
 
@@ -52,12 +48,12 @@ export default function Navbar() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            if (window.scrollY < 40) return;
             setActiveSection(entry.target.id);
           }
         });
       },
       {
-        // Triggers when section is roughly in the middle of the viewport
         rootMargin: "-40% 0px -40% 0px",
       },
     );
@@ -67,7 +63,19 @@ export default function Navbar() {
       if (el) observer.observe(el);
     });
 
-    return () => observer.disconnect();
+    const handleScroll = () => {
+      if (window.scrollY < 40) {
+        setActiveSection(null);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -83,7 +91,7 @@ export default function Navbar() {
     };
   }, [isMenuOpen]);
 
-  // ESC key closes menu
+  // ESC KEY
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsMenuOpen(false);
@@ -110,8 +118,6 @@ export default function Navbar() {
           className="max-w-6xl mx-auto px-8 lg:px-12 h-14 md:h-16
                         flex items-center justify-between"
         >
-          {/* Logo — always visible including when menu open */}
-
           <a
             href="#"
             className="transition-opacity duration-200 hover:opacity-75 relative z-50"
@@ -128,7 +134,6 @@ export default function Navbar() {
             />
           </a>
 
-          {/* Desktop links — your existing < > hover effect preserved */}
           <ul className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
               const sectionId = link.href.replace("#", "");
@@ -138,11 +143,8 @@ export default function Navbar() {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="group relative inline-flex items-center justify-center
-                     text-sm transition-colors duration-200"
-                    style={{
-                      color: isActive ? "var(--color-accent)" : "var(--color-foreground-muted)",
-                    }}
+                    className="group relative inline-flex items-center justify-center text-sm transition-colors duration-200"
+                    style={{ color: isActive ? "var(--color-accent)" : "var(--color-foreground-muted)" }}
                   >
                     <span className="relative">
                       <span
@@ -171,7 +173,7 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Hamburger — z-50 so it stays above the overlay */}
+          {/* HAMB MENU */}
           <button
             className="md:hidden p-2 -mr-2 rounded-lg relative z-50 text-foreground-muted hover:text-foreground transition-colors duration-200"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -183,16 +185,11 @@ export default function Navbar() {
         </nav>
       </header>
 
-      {/* Mobile overlay — slides from right to left */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="md:hidden fixed inset-0 z-40 flex flex-col
-                       items-center px-6 pt-24 pb-12 gap-6"
-            style={{
-              backgroundColor: "var(--color-background)",
-              willChange: "transform",
-            }}
+            className="md:hidden fixed inset-0 z-40 flex flex-col items-center px-6 pt-24 pb-12 gap-6"
+            style={{ backgroundColor: "var(--color-background)", willChange: "transform" }}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -201,43 +198,29 @@ export default function Navbar() {
               ease: [0.4, 0, 0.2, 1],
             }}
           >
-            {/* Nav links — your existing < > hover effect preserved */}
             {navLinks.map((link, i) => (
               <motion.a
                 key={link.href}
                 href={link.href}
-                className="group relative inline-flex items-center justify-center
-                           text-2xl font-heading font-bold py-2
-                           text-foreground-muted hover:text-foreground
-                           transition-colors duration-200"
+                className="group relative inline-flex items-center justify-center text-2xl font-heading font-bold py-2 text-foreground-muted hover:text-foreground transition-colors duration-200"
                 onClick={closeMenu}
                 initial={{ opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{
-                  delay: 0.15 + i * 0.07,
-                  duration: 0.3,
-                  ease: "easeOut",
-                }}
+                transition={{ delay: 0.15 + i * 0.07, duration: 0.3, ease: "easeOut" }}
               >
                 <span className="relative">
                   <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 text-lg font-normal transition-all duration-300 ease-out group-hover:left-0 group-hover:-translate-x-[calc(100%+0.5rem)] group-hover:opacity-100">
                     &lt;
                   </span>
                   <span>{link.label}</span>
-                  <span
-                    className="absolute left-1/2 top-1/2 -translate-x-1/2
-                                   -translate-y-1/2 opacity-0 text-lg font-normal
-                                   transition-all duration-300 ease-out
-                                   group-hover:left-full group-hover:translate-x-2
-                                   group-hover:opacity-100"
-                  >
+                  <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 text-lg font-normal transition-all duration-300 ease-out group-hover:left-full group-hover:translate-x-2 group-hover:opacity-100">
                     &gt;
                   </span>
                 </span>
               </motion.a>
             ))}
 
-            {/* Social links */}
+            {/* SOCIAL LINKS */}
             <motion.div
               className="flex items-center gap-6 pt-2"
               initial={{ opacity: 0 }}
@@ -249,8 +232,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub profile"
-                className="text-foreground-subtle hover:text-foreground
-                           transition-colors duration-200"
+                className="text-foreground-subtle hover:text-foreground transition-colors duration-200"
               >
                 <FaGithub size={20} />
               </a>
@@ -260,8 +242,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn profile"
-                className="text-foreground-subtle hover:text-foreground
-                           transition-colors duration-200"
+                className="text-foreground-subtle hover:text-foreground transition-colors duration-200"
               >
                 <FaLinkedin size={20} />
               </a>
@@ -269,8 +250,7 @@ export default function Navbar() {
               <a
                 href={`mailto:${contact.email}`}
                 aria-label="Send email"
-                className="text-foreground-subtle hover:text-foreground
-                           transition-colors duration-200"
+                className="text-foreground-subtle hover:text-foreground transition-colors duration-200"
               >
                 <Mail size={20} />
               </a>
