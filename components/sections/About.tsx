@@ -3,16 +3,13 @@
 import { useState } from "react";
 import { about } from "@/data/portfolio";
 import { motion } from "framer-motion";
-import { FaReact, FaGitAlt, FaHtml5, FaCss3Alt, FaJs } from "react-icons/fa";
-import { SiNextdotjs, SiTypescript, SiTailwindcss } from "react-icons/si";
-import { VscVscode } from "react-icons/vsc";
 
 export default function About() {
   const [activeCard, setActiveCard] = useState(0);
   return (
     <section id="about" className="section-container">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
-        //LEFT SIDE
+        {/* LEFT SIDE */}
         <div className="flex flex-col items-start">
           {about.cards.map((card, i) => (
             <div key={card.id} className="flex items-start gap-4">
@@ -73,7 +70,7 @@ export default function About() {
             </div>
           ))}
         </div>
-        //RIGHT SIDE
+        {/* RIGHT SIDE */}
         <div className="flex flex-col gap-6">
           <div>
             <h2 className="font-heading font-bold leading-tight text-3xl sm:text-4xl md:text-5xl mb-4">
@@ -91,55 +88,54 @@ export default function About() {
           </div>
         </div>
       </div>
-      //MARQUEE
-      <div className="mt-20 pt-8 overflow-hidden">
-        <p
-          className="text-xs font-medium tracking-widest uppercase mb-6 text-center"
-          style={{ color: "var(--color-foreground-subtle)" }}
-        >
-          Technologies I work with
-        </p>
-
-        <div className="relative flex overflow-hidden">
-          <div
-            className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
-            style={{
-              background: "linear-gradient(to right, var(--color-background), transparent)",
-            }}
-          />
-          <div
-            className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
-            style={{
-              background: "linear-gradient(to left, var(--color-background), transparent)",
-            }}
-          />
-
-          <div className="flex animate-marquee gap-20 items-center">
-            {[...marqueeItems, ...marqueeItems].map((item, i) => (
-              <span
-                key={i}
-                className="text-4xl shrink-0"
-                style={{ color: "var(--color-foreground-subtle)" }}
-                title={item.name}
-              >
-                {item.icon}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
     </section>
   );
 }
 
-const marqueeItems = [
-  { name: "VSCode", icon: <VscVscode /> },
-  { name: "HTML", icon: <FaHtml5 /> },
-  { name: "CSS", icon: <FaCss3Alt /> },
-  { name: "JavaScript", icon: <FaJs /> },
-  { name: "TypeScript", icon: <SiTypescript /> },
-  { name: "React", icon: <FaReact /> },
-  { name: "Next.js", icon: <SiNextdotjs /> },
-  { name: "Tailwind CSS", icon: <SiTailwindcss /> },
-  { name: "Git", icon: <FaGitAlt /> },
-];
+// const marqueeItems = [
+//   { name: "VSCode", icon: <VscVscode /> },
+//   { name: "HTML", icon: <FaHtml5 /> },
+//   { name: "CSS", icon: <FaCss3Alt /> },
+//   { name: "JavaScript", icon: <FaJs /> },
+//   { name: "TypeScript", icon: <SiTypescript /> },
+//   { name: "React", icon: <FaReact /> },
+//   { name: "Next.js", icon: <SiNextdotjs /> },
+//   { name: "Tailwind CSS", icon: <SiTailwindcss /> },
+//   { name: "Git", icon: <FaGitAlt /> },
+// ];
+//  <div className="mt-20 pt-8 overflow-hidden">
+//         <p
+//           className="text-xs font-medium tracking-widest uppercase mb-6 text-center"
+//           style={{ color: "var(--color-foreground-subtle)" }}
+//         >
+//           Technologies I work with
+//         </p>
+
+//         <div className="relative flex overflow-hidden">
+//           <div
+//             className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
+//             style={{
+//               background: "linear-gradient(to right, var(--color-background), transparent)",
+//             }}
+//           />
+//           <div
+//             className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
+//             style={{
+//               background: "linear-gradient(to left, var(--color-background), transparent)",
+//             }}
+//           />
+
+//           <div className="flex animate-marquee gap-20 items-center">
+//             {[...marqueeItems, ...marqueeItems].map((item, i) => (
+//               <span
+//                 key={i}
+//                 className="text-4xl shrink-0"
+//                 style={{ color: "var(--color-foreground-subtle)" }}
+//                 title={item.name}
+//               >
+//                 {item.icon}
+//               </span>
+//             ))}
+//           </div>
+//         </div>
+//       </div>

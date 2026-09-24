@@ -101,7 +101,7 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-svh flex items-center px-6 pt-14 md:pt-16">
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 items-center py-16 md:py-0">
-        //HERO TAGLINE
+        {/* HERO TAGLINE */}
         <div className="flex flex-col items-start">
           <div
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium tracking-wide mb-6 border"
@@ -128,7 +128,7 @@ export default function Hero() {
             </a>
           </div>
         </div>
-        //HERO IMG
+        {/* HERO IMG */}
         <div className="relative flex items-center justify-center">
           <div className="relative w-full h-112.5 sm:h-137.5 md:h-175">
             <div className="relative w-full h-full overflow-hidden">

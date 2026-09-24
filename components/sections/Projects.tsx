@@ -19,6 +19,13 @@ export default function Projects() {
 
   useEffect(() => {
     selectedProjectRef.current = selectedProject;
+    if (!selectedProject) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
   }, [selectedProject]);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -116,7 +123,7 @@ export default function Projects() {
         <h2 className="section-title">Projects</h2>
         <div className="section-title-underline" />
       </div>
-      //PROJ CARD
+      {/* PROJ CARD */}
       <div className="relative">
         <div
           className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
@@ -161,7 +168,7 @@ export default function Projects() {
           </div>
         </div>
       </div>
-      //MODAL
+      {/* MODAL */}
       <AnimatePresence>
         {selectedProject && (
           <>
@@ -171,9 +178,9 @@ export default function Projects() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setSelectedProject(null)}
+              onClick={closeModal}
             />
-            //MODAL PANEL
+            {/* MODAL PANEL */}
             <motion.div
               className="fixed z-50 overflow-y-auto"
               style={{
@@ -189,7 +196,7 @@ export default function Projects() {
               exit={{ opacity: 0, scale: 0.95, x: "-50%", y: "-50%" }}
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
             >
-              //MODAL IMG
+              {/* MODAL IMG */}
               <div
                 className="relative w-full h-55 md:h-70 overflow-hidden"
                 style={{ backgroundColor: "var(--color-background-secondary)" }}
@@ -197,20 +204,19 @@ export default function Projects() {
                 <img
                   src={selectedProject.image}
                   alt={selectedProject.title}
-                  className="w-full h-full object-cover object-top"
+                  sizes="(max-width: 768px) 100vw, 672px"
+                  className="object-contain object-center"
                 />
 
                 <button
                   onClick={closeModal}
-                  type="button"
-                  className="absolute top-3 right-3 z-10 p-2"
-                  style={{ backgroundColor: "rgba(15,15,15,0.8)", color: "var(--color-foreground)" }}
-                  aria-label="Close modal"
+                  aria-label="Close project"
+                  className="absolute top-3 right-3 z-10 p-2 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-125 active:scale-90"
                 >
-                  <X size={16} />
+                  <X size={20} />
                 </button>
               </div>
-              // MODAL CONTENT
+              {/* MODAL CONTENT */}
               <div className="p-6 flex flex-col gap-4">
                 <h3 className="font-heading font-bold text-xl" style={{ color: "var(--color-foreground)" }}>
                   {selectedProject.title}
@@ -218,7 +224,7 @@ export default function Projects() {
                 <p className="text-sm leading-relaxed" style={{ color: "var(--color-foreground-muted)" }}>
                   {selectedProject.description}
                 </p>
-                // TECH STACK
+                {/* TECH STACK */}
                 <div className="flex flex-wrap gap-2">
                   {selectedProject.tech.map((t) => (
                     <span
@@ -234,6 +240,7 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
+                {/* LINKS */}
                 <div className="flex gap-3 pt-2">
                   {selectedProject.liveUrl && (
                     <a

@@ -110,7 +110,9 @@ export const projects: Project[] = [
 
 export const skills = {
   language: ["JavaScript", "TypeScript", "HTML", "CSS"],
-  frameworks: ["Next.js", "Tailwind CSS"],
+  libraries: ["React", "Framer Motion"],
+  frameworks: ["Vue.js", "Next.js", "Tailwind CSS", "SCSS"],
+  tools: ["Git", "GitHub", "VS Code", "Vercel"],
 };
 
 export const contact = {
