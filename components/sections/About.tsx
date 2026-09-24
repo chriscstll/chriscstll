@@ -12,7 +12,7 @@ export default function About() {
   return (
     <section id="about" className="section-container">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
-        {/* ── ABOUT LEFT SIDE ── */}
+        //LEFT SIDE
         <div className="flex flex-col items-start">
           {about.cards.map((card, i) => (
             <div key={card.id} className="flex items-start gap-4">
@@ -30,10 +30,7 @@ export default function About() {
                 {i < about.cards.length - 1 && (
                   <div
                     className="relative w-px mt-1"
-                    style={{
-                      backgroundColor: "var(--color-border)",
-                      minHeight: "65px",
-                    }}
+                    style={{ backgroundColor: "var(--color-border)", minHeight: "65px" }}
                   >
                     <motion.div
                       className="absolute top-0 left-0 right-0"
@@ -60,9 +57,7 @@ export default function About() {
               >
                 <span
                   className="font-heading font-bold text-base md:text-lg transition-colors duration-300"
-                  style={{
-                    color: activeCard === i ? "var(--color-accent)" : "var(--color-foreground)",
-                  }}
+                  style={{ color: activeCard === i ? "var(--color-accent)" : "var(--color-foreground)" }}
                 >
                   {card.label}
                 </span>
@@ -78,14 +73,10 @@ export default function About() {
             </div>
           ))}
         </div>
-
-        {/* ABOUT RIGHT SIDE */}
+        //RIGHT SIDE
         <div className="flex flex-col gap-6">
           <div>
-            <h2
-              className="font-heading font-bold leading-tight
-                            text-3xl sm:text-4xl md:text-5xl mb-4"
-            >
+            <h2 className="font-heading font-bold leading-tight text-3xl sm:text-4xl md:text-5xl mb-4">
               {about.heading} <span className="gradient-text">{about.name}</span>
             </h2>
           </div>
@@ -100,7 +91,7 @@ export default function About() {
           </div>
         </div>
       </div>
-
+      //MARQUEE
       <div className="mt-20 pt-8 overflow-hidden">
         <p
           className="text-xs font-medium tracking-widest uppercase mb-6 text-center"

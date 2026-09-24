@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { hero, contact } from "@/data/portfolio";
+import { hero } from "@/data/portfolio";
 
 const techIcons = [
   {
@@ -12,8 +12,26 @@ const techIcons = [
       <svg viewBox="0 0 32 32" fill="none" className="w-full h-full">
         <circle cx="16" cy="16" r="3.2" fill="#61DAFB" />
         <ellipse cx="16" cy="16" rx="13" ry="5" stroke="#61DAFB" strokeWidth="1.5" fill="none" />
-        <ellipse cx="16" cy="16" rx="13" ry="5" stroke="#61DAFB" strokeWidth="1.5" fill="none" transform="rotate(60 16 16)" />
-        <ellipse cx="16" cy="16" rx="13" ry="5" stroke="#61DAFB" strokeWidth="1.5" fill="none" transform="rotate(120 16 16)" />
+        <ellipse
+          cx="16"
+          cy="16"
+          rx="13"
+          ry="5"
+          stroke="#61DAFB"
+          strokeWidth="1.5"
+          fill="none"
+          transform="rotate(60 16 16)"
+        />
+        <ellipse
+          cx="16"
+          cy="16"
+          rx="13"
+          ry="5"
+          stroke="#61DAFB"
+          strokeWidth="1.5"
+          fill="none"
+          transform="rotate(120 16 16)"
+        />
       </svg>
     ),
   },
@@ -81,8 +99,9 @@ const floatVariant = (delay: number) => ({
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative min-h-svh flex items-center px-6 pt-14 md:pt-16 overflow-hidden">
+    <section id="hero" className="relative min-h-svh flex items-center px-6 pt-14 md:pt-16">
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 items-center py-16 md:py-0">
+        //HERO TAGLINE
         <div className="flex flex-col items-start">
           <div
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium tracking-wide mb-6 border"
@@ -103,13 +122,13 @@ export default function Hero() {
           <div className="flex flex-col items-start gap-3 mb-8">
             <a
               href={hero.cta.contactbtn.href}
-              className="inline-flex px-6 py-2 font-medium text-sm rounded-md text-foreground hover:text-accent backdrop-blur-lg bg-gradient-to-tr from-transparent via-[rgba(121,121,121,0.16)] to-transparent shadow hover:shadow-accent transition-all duration-700"
+              className="inline-flex px-6 py-2 font-medium text-sm rounded-md text-foreground hover:text-accent backdrop-blur-lg bg-linear-to-tr from-transparent via-[rgba(121,121,121,0.16)] to-transparent shadow hover:shadow-accent transition-all duration-700"
             >
               {hero.cta.contactbtn.label}
             </a>
           </div>
         </div>
-
+        //HERO IMG
         <div className="relative flex items-center justify-center">
           <div className="relative w-full h-112.5 sm:h-137.5 md:h-175">
             <div className="relative w-full h-full overflow-hidden">
