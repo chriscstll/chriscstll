@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Lora } from "next/font/google";
 import "./globals.css";
 import { siteConfig, contact, structuredData } from "@/data/portfolio";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-bricolage",
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const lora = Lora({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-lora",
   display: "swap",
 });
 
@@ -74,7 +77,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${lora.variable} ${bricolage.variable}`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"

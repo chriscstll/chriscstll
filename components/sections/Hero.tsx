@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { hero } from "@/data/portfolio";
 
 const techIcons = [
   {
     name: "React",
-    position: "top-1/5 left-1/8 -translate-y-1/5 md:left-[15%] lg:left-1/8",
+    position: "top-1/5 left-1/8 md:left-[15%] lg:left-1/8",
     svg: (
       <svg viewBox="0 0 32 32" fill="none" className="w-full h-full">
         <circle cx="16" cy="16" r="3.2" fill="#61DAFB" />
@@ -48,7 +48,7 @@ const techIcons = [
   },
   {
     name: "TypeScript",
-    position: "top-1/3 right-[15%] -translate-y-1/3 md:right-[12%] lg:right-[15%]",
+    position: "top-1/3 right-[15%] md:right-[12%] lg:right-[15%]",
     svg: (
       <svg viewBox="0 0 32 32" fill="none" className="w-full h-full">
         <rect width="32" height="32" rx="4" fill="#3178C6" />
@@ -85,14 +85,25 @@ const techIcons = [
   },
 ];
 
-const floatVariant = (delay: number) => ({
+const iconVariant = (i: number): Variants => ({
+  initial: {
+    opacity: 0,
+    scale: 0.3,
+    x: (i % 2 === 0 ? 1 : -1) * (40 + i * 15), // fly in from alternating sides
+    y: i * 25 - 40,
+    rotate: (i % 2 === 0 ? 1 : -1) * 90,
+  },
   animate: {
-    y: [0, -10, 0],
+    opacity: 1,
+    scale: 1,
+    x: 0,
+    y: 0,
+    rotate: 0,
     transition: {
-      duration: 3,
-      repeat: Infinity,
-      ease: "easeInOut" as const,
-      delay,
+      delay: 0.5 + i * 0.1,
+      type: "spring",
+      stiffness: 120,
+      damping: 14,
     },
   },
 });
@@ -102,8 +113,12 @@ export default function Hero() {
     <section id="hero" className="relative min-h-svh flex items-center px-6 pt-14 md:pt-16">
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 items-center py-16 md:py-0">
         {/* HERO TAGLINE */}
-        <div className="flex flex-col items-start">
-          <div
+        <motion.div className="flex flex-col items-start" initial="initial" animate="animate">
+          {/* Badge — elastic slide-in */}
+          <motion.div
+            initial={{ opacity: 0, x: -40, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ type: "spring", stiffness: 300, damping: 12, delay: 0.1 }}
             className="inline-flex max-w-full items-center gap-1 rounded-full border px-1.5 py-0.5 text-[9px] font-medium tracking-wider sm:gap-1.5 sm:px-2 sm:py-1 sm:text-[10px] md:px-2.5 md:py-1 md:text-[11px] mb-3 sm:mb-4 md:mb-5"
             style={{
               backgroundColor: "var(--color-accent-subtle)",
@@ -113,20 +128,40 @@ export default function Hero() {
           >
             <span className="h-1 w-1 shrink-0 rounded-full bg-current animate-pulse sm:h-1.5 sm:w-1.5" />
             <span className="truncate">{hero.title}</span>
-          </div>
+          </motion.div>
 
-          <h1
-            className="font-heading font-bold leading-tight text-4xl sm:text-5xl lg:text-6xl gradient-text mb-3"
-            style={{ fontFamily: "'Caveat', cursive" }}
-          >
-            {hero.tagline}
+          {/* Tagline — masked word cascade */}
+          <h1 className="font-heading font-bold leading-tight text-4xl sm:text-5xl lg:text-6xl gradient-text mb-3">
+            {hero.tagline.split(" ").map((word, i) => (
+              <span key={i} className="inline-block overflow-hidden align-bottom">
+                <motion.span
+                  className="inline-block"
+                  initial={{ y: "110%", rotate: 6 }}
+                  animate={{ y: "0%", rotate: 0 }}
+                  transition={{
+                    delay: 0.3 + i * 0.08,
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 20,
+                  }}
+                >
+                  {word}
+                  {i < hero.tagline.split(" ").length - 1 ? "\u00A0" : ""}
+                </motion.span>
+              </span>
+            ))}
           </h1>
 
+          {/* CTA — radar + shine sweep */}
           <div className="flex flex-col items-start gap-3 mb-8">
-            <a
+            <motion.a
               href={hero.cta.contactbtn.href}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.4 }}
               className="group relative inline-flex items-center overflow-hidden rounded-full border border-border bg-background-card px-7 py-2.5 text-sm font-semibold text-foreground transition-all duration-300 hover:border-accent hover:text-accent"
             >
+              {/* Radar (existing) */}
               <span
                 aria-hidden
                 className="pointer-events-none absolute inset-0 opacity-40 transition-opacity duration-300 group-hover:opacity-100"
@@ -136,18 +171,20 @@ export default function Hero() {
                   animation: "radar 3s linear infinite",
                 }}
               />
+              {/* Shine sweep */}
+              <span
+                aria-hidden
+                className="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
+              />
               <span className="relative z-10">{hero.cta.contactbtn.label}</span>
-            </a>
+            </motion.a>
           </div>
-        </div>
+        </motion.div>
         {/* HERO IMG */}
         <div className="relative flex items-center justify-center">
           <div className="relative w-full h-112.5 sm:h-137.5 md:h-175">
-            {/* === BLOB + SATELLITES LAYER === */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
               <svg viewBox="0 0 500 500" className="w-[85%] h-[85%] sm:w-[80%] sm:h-[80%]">
-                {/* Layer 1 — deepest, most offset */}
-                {/* Layer 1 — deepest, most offset */}
                 <path
                   fill="var(--color-background-secondary)"
                   fillOpacity="0.9"
@@ -158,7 +195,6 @@ export default function Hero() {
                   d="M400,130 C455,200 460,290 415,355 C370,420 285,465 195,450 C105,435 35,375 30,285 C25,195 70,115 145,65 C220,15 345,60 400,130 Z"
                 />
 
-                {/* Layer 2 — mid offset */}
                 <path
                   fill="var(--color-background-card)"
                   fillOpacity="0.95"
@@ -169,7 +205,6 @@ export default function Hero() {
                   d="M400,130 C455,200 460,290 415,355 C370,420 285,465 195,450 C105,435 35,375 30,285 C25,195 70,115 145,65 C220,15 345,60 400,130 Z"
                 />
 
-                {/* Layer 3 — topmost, cutout */}
                 <path
                   fill="var(--color-background)"
                   stroke="var(--color-border)"
@@ -180,7 +215,6 @@ export default function Hero() {
               </svg>
             </div>
 
-            {/* === IMAGE (unchanged) === */}
             <div className="relative w-full h-full overflow-hidden">
               <Image
                 src="/profile-photo.png"
@@ -202,12 +236,12 @@ export default function Hero() {
               />
             </div>
 
-            {/* === TECH ICONS (unchanged) === */}
             {techIcons.map((icon, i) => (
               <motion.div
                 key={icon.name}
                 className={`absolute flex items-center justify-center w-10 h-10 z-10 ${icon.position}`}
-                variants={floatVariant(i * 0.4)}
+                variants={iconVariant(i)}
+                initial="initial"
                 animate="animate"
                 title={icon.name}
               >

@@ -16,8 +16,8 @@
   --color-border: #131514;
   --color-border-hover: #4a5044;
 
-  --font-sans: var(--font-geist-sans);
-  --font-heading: var(--font-geist-mono);
+  --font-sans: var(--font-lora);
+  --font-heading: var(--font-bricolage);
 }
 
 @layer base {
@@ -35,14 +35,17 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.7;
     overflow-x: hidden;
   }
   h1,
   h2,
   h3 {
     font-family: var(--font-heading);
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.02em;
+    line-height: 1.1;
     color: var(--color-foreground);
   }
   :focus-visible {
@@ -57,7 +60,7 @@
 
 @layer utilities {
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-28;
   }
   .section-title {
     @apply text-3xl md:text-4xl font-bold mb-4 text-foreground;

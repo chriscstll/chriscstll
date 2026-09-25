@@ -11,6 +11,7 @@ const navLinks = [
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -135,39 +136,58 @@ export default function Navbar() {
           </a>
 
           <ul className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => {
+            {navLinks.map((link, i) => {
               const sectionId = link.href.replace("#", "");
               const isActive = activeSection === sectionId;
 
               return (
-                <li key={link.href}>
-                  <a
+                <li key={link.href} className="py-1">
+                  <motion.a
                     href={link.href}
-                    className="group relative inline-flex items-center justify-center text-sm transition-colors duration-200"
-                    style={{ color: isActive ? "var(--color-accent)" : "var(--color-foreground-muted)" }}
+                    className="group relative inline-flex items-center justify-center whitespace-nowrap text-sm transition-colors duration-200"
+                    style={{
+                      color: isActive ? "var(--color-accent)" : "var(--color-foreground-muted)",
+                    }}
                   >
-                    <span className="relative">
-                      <span
-                        className={
-                          isActive
-                            ? "absolute left-0 top-1/2 -translate-x-[calc(100%+0.25rem)] -translate-y-1/2 text-xs font-normal opacity-100 transition-all duration-300 ease-out"
-                            : "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-normal opacity-0 transition-all duration-300 ease-out group-hover:left-0 group-hover:-translate-x-[calc(100%+0.25rem)] group-hover:opacity-100"
-                        }
-                      >
-                        &lt;
-                      </span>
-                      <span>{link.label}</span>
-                      <span
-                        className={
-                          isActive
-                            ? "absolute left-full top-1/2 translate-x-1 -translate-y-1/2 text-xs font-normal opacity-100 transition-all duration-300 ease-out"
-                            : "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-normal opacity-0 transition-all duration-300 ease-out group-hover:left-full group-hover:translate-x-1 group-hover:opacity-100"
-                        }
-                      >
-                        &gt;
-                      </span>
+                    {/* Left angle bracket — positioned relative to the <a>, not clipped */}
+                    <span
+                      className={
+                        isActive
+                          ? "absolute left-0 top-1/2 -translate-x-[calc(100%+0.25rem)] -translate-y-1/2 text-xs font-normal opacity-100 transition-all duration-300 ease-out"
+                          : "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-normal opacity-0 transition-all duration-300 ease-out group-hover:left-0 group-hover:-translate-x-[calc(100%+0.25rem)] group-hover:opacity-100"
+                      }
+                    >
+                      &lt;
                     </span>
-                  </a>
+
+                    {/* Label — clipped for entrance animation only */}
+                    <span className="relative inline-block overflow-hidden">
+                      <motion.span
+                        className="inline-block"
+                        initial={{ y: "110%" }}
+                        animate={{ y: "0%" }}
+                        transition={{
+                          delay: 0.8 + i * 0.07,
+                          type: "spring",
+                          stiffness: 220,
+                          damping: 22,
+                        }}
+                      >
+                        {link.label}
+                      </motion.span>
+                    </span>
+
+                    {/* Right angle bracket — positioned relative to the <a>, not clipped */}
+                    <span
+                      className={
+                        isActive
+                          ? "absolute left-full top-1/2 translate-x-1 -translate-y-1/2 text-xs font-normal opacity-100 transition-all duration-300 ease-out"
+                          : "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-normal opacity-0 transition-all duration-300 ease-out group-hover:left-full group-hover:translate-x-1 group-hover:opacity-100"
+                      }
+                    >
+                      &gt;
+                    </span>
+                  </motion.a>
                 </li>
               );
             })}

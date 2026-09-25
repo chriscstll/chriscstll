@@ -12,7 +12,7 @@ export const siteConfig = {
 export const hero = {
   name: "Christian M. Castillo",
   title: "Frontend Developer",
-  tagline: "Crafting ideas into reality",
+  tagline: "\u201CThe decisions nobody notices are the ones that matter most\u201D",
   cta: {
     contactbtn: { label: "Contact Me", href: "#contact" },
   },
