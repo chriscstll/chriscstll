@@ -47,6 +47,8 @@ export default function ProjectCard({ project, onClick, isDragging = false }: Pr
               src={project.image}
               alt={project.title}
               fill
+              loading="eager"
+              fetchPriority="high"
               sizes="320px"
               className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
             />

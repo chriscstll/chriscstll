@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CascadeText, BlurIn, StaggerList, StaggerItem } from "@/components/ui/motion-primitives";
 import { X, ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { projects, Project } from "@/data/portfolio";
@@ -113,17 +114,38 @@ export default function Projects() {
 
   return (
     <section id="projects" className="py-24 md:py-32">
+      {/* ===============================================
+        SECTION HEADER — cascade + blur
+    ================================================ */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <p
+        <CascadeText
+          as="p"
+          text="Work"
           className="text-xs font-medium tracking-widest uppercase mb-3"
-          style={{ color: "var(--color-foreground-muted)" }}
-        >
-          Work
-        </p>
-        <h2 className="section-title">Projects</h2>
-        <div className="section-title-underline" />
+          delay={0.1}
+          stagger={0.06}
+          blur={6}
+          y={-8}
+        />
+
+        <CascadeText
+          as="h2"
+          text="Projects"
+          className="section-title text-3xl sm:text-4xl md:text-5xl font-bold"
+          delay={0.25}
+          stagger={0.05}
+          blur={8}
+          y={-10}
+        />
+
+        <BlurIn delay={0.5} blur={8} y={6}>
+          <div className="section-title-underline" />
+        </BlurIn>
       </div>
-      {/* PROJ CARD */}
+
+      {/* ===============================================
+        PROJ CARDS — staggered blur-in
+    ================================================ */}
       <div className="relative">
         <div
           className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
@@ -154,21 +176,21 @@ export default function Projects() {
             overscrollBehaviorX: "contain",
           }}
         >
-          <div className="flex flex-nowrap gap-4 px-4 sm:px-6 lg:px-8" style={{ width: "max-content" }}>
-            {projects.map((project) => (
-              <div
-                key={project.title}
-                style={{
-                  scrollSnapAlign: "start",
-                }}
-              >
-                <ProjectCard project={project} isDragging={isDragging} onClick={() => handleProjectClick(project)} />
-              </div>
-            ))}
-          </div>
+          <StaggerList className="flex flex-nowrap gap-4 px-4 sm:px-6 lg:px-8" stagger={0.12} delay={0.3}>
+            <div style={{ width: "max-content" }} className="flex flex-nowrap gap-4">
+              {projects.map((project) => (
+                <StaggerItem key={project.title} style={{ scrollSnapAlign: "start" }}>
+                  <ProjectCard project={project} isDragging={isDragging} onClick={() => handleProjectClick(project)} />
+                </StaggerItem>
+              ))}
+            </div>
+          </StaggerList>
         </div>
       </div>
-      {/* MODAL */}
+
+      {/* ===============================================
+        MODAL — full content restored
+    ================================================ */}
       <AnimatePresence>
         {selectedProject && (
           <>
@@ -180,7 +202,6 @@ export default function Projects() {
               exit={{ opacity: 0 }}
               onClick={closeModal}
             />
-            {/* MODAL PANEL */}
             <motion.div
               className="fixed z-50 overflow-y-auto"
               style={{
@@ -199,7 +220,9 @@ export default function Projects() {
               {/* MODAL IMG */}
               <div
                 className="relative w-full h-55 md:h-70 overflow-hidden"
-                style={{ backgroundColor: "var(--color-background-secondary)" }}
+                style={{
+                  backgroundColor: "var(--color-background-secondary)",
+                }}
               >
                 <img
                   src={selectedProject.image}
@@ -216,6 +239,7 @@ export default function Projects() {
                   <X size={20} />
                 </button>
               </div>
+
               {/* MODAL CONTENT */}
               <div className="p-6 flex flex-col gap-4">
                 <h3 className="font-heading font-bold text-xl" style={{ color: "var(--color-foreground)" }}>
@@ -224,6 +248,7 @@ export default function Projects() {
                 <p className="text-sm leading-relaxed" style={{ color: "var(--color-foreground-muted)" }}>
                   {selectedProject.description}
                 </p>
+
                 {/* TECH STACK */}
                 <div className="flex flex-wrap gap-2">
                   {selectedProject.tech.map((t) => (
@@ -240,6 +265,7 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
+
                 {/* LINKS */}
                 <div className="flex gap-3 pt-2">
                   {selectedProject.liveUrl && (
@@ -256,13 +282,17 @@ export default function Projects() {
                       Live Site
                     </a>
                   )}
+
                   {selectedProject.githubUrl && (
                     <a
                       href={selectedProject.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium border transition-colors duration-200"
-                      style={{ color: "var(--color-foreground)", borderColor: "var(--color-border-hover)" }}
+                      style={{
+                        color: "var(--color-foreground)",
+                        borderColor: "var(--color-border-hover)",
+                      }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.borderColor = "var(--color-accent)";
                         e.currentTarget.style.color = "var(--color-accent)";

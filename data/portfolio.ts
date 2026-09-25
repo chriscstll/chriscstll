@@ -20,8 +20,8 @@ export const hero = {
 
 export const about = {
   label: "Introduction",
-  heading: "Hello!, I'm",
-  name: "Christian Castillo",
+  heading: "Hello!",
+  name: "I'm Christian Castillo",
   subheading: "A Frontend Developer based in the philippines",
   bio: [
     "Christian Castillo is a frontend developer based in the Philippines, focused on building thoughtful web applications using React, Typescript and Tailwind CSS",
