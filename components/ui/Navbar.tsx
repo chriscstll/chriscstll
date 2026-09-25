@@ -108,7 +108,11 @@ export default function Navbar() {
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          backgroundColor: isMenuOpen ? "var(--color-background)" : isScrolled ? "rgba(15,15,15,0.85)" : "transparent",
+          backgroundColor: isMenuOpen
+            ? "var(--color-background-secondary)"
+            : isScrolled
+              ? "rgba(15,15,15,0.85)"
+              : "transparent",
           borderBottom: isScrolled && !isMenuOpen ? "1px solid var(--color-border)" : "1px solid transparent",
           backdropFilter: !isMenuOpen && isScrolled ? "blur(12px)" : "none",
           WebkitBackdropFilter: !isMenuOpen && isScrolled ? "blur(12px)" : "none",
@@ -209,7 +213,7 @@ export default function Navbar() {
         {isMenuOpen && (
           <motion.div
             className="md:hidden fixed inset-0 z-40 flex flex-col items-center px-6 pt-24 pb-12 gap-6"
-            style={{ backgroundColor: "var(--color-background)", willChange: "transform" }}
+            style={{ backgroundColor: "var(--color-background-secondary)", willChange: "transform" }}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}

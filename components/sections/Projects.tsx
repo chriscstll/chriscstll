@@ -114,20 +114,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="py-24 md:py-32">
-      {/* ===============================================
-        SECTION HEADER — cascade + blur
-    ================================================ */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <CascadeText
-          as="p"
-          text="Work"
-          className="text-xs font-medium tracking-widest uppercase mb-3"
-          delay={0.1}
-          stagger={0.06}
-          blur={6}
-          y={-8}
-        />
-
         <CascadeText
           as="h2"
           text="Projects"
@@ -137,21 +124,12 @@ export default function Projects() {
           blur={8}
           y={-10}
         />
-
-        <BlurIn delay={0.5} blur={8} y={6}>
-          <div className="section-title-underline" />
-        </BlurIn>
       </div>
 
-      {/* ===============================================
-        PROJ CARDS — staggered blur-in
-    ================================================ */}
       <div className="relative">
         <div
           className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-          style={{
-            background: "linear-gradient(to left, var(--color-background), transparent)",
-          }}
+          style={{ background: "linear-gradient(to left, var(--color-background), transparent)" }}
         />
 
         <div
@@ -188,9 +166,7 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* ===============================================
-        MODAL — full content restored
-    ================================================ */}
+      {/* MODAL */}
       <AnimatePresence>
         {selectedProject && (
           <>

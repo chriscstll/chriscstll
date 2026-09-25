@@ -7,6 +7,7 @@ import { FaReact, FaGitAlt, FaHtml5, FaCss3Alt, FaJs, FaFigma, FaGithub } from "
 import { SiVuedotjs, SiNextdotjs, SiTypescript, SiTailwindcss, SiVercel, SiFramer, SiSass } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
 import { skills, projects } from "@/data/portfolio";
+import { CascadeText, BlurIn, StaggerList, StaggerItem } from "@/components/ui/motion-primitives";
 
 const iconMap: Record<string, React.ReactNode> = {
   HTML: <FaHtml5 />,
@@ -184,313 +185,330 @@ export default function Skills() {
 
   return (
     <section id="skills" className="section-container">
+      <div className="mb-12">
+        <CascadeText
+          as="h2"
+          text="Skills"
+          className="section-title text-3xl sm:text-4xl md:text-5xl font-bold"
+          delay={0.25}
+          stagger={0.05}
+          blur={8}
+          y={-10}
+        />
+      </div>
       <div className="w-full mb-12 sm:mb-16 flex justify-center">
         {!mounted ? (
           <div className="w-full h-110" />
         ) : isMobile ? (
           // GRID ON MOBILE
-          <div className="w-full space-y-4">
-            {(Object.keys(skills) as Array<keyof typeof skills>).map((group) => (
-              <div key={group} className="rounded-lg p-4">
-                <h3
-                  className="mb-3 text-[10px] font-semibold uppercase tracking-widest"
-                  style={{ color: "var(--color-foreground-subtle)" }}
-                >
-                  {groupLabels[group]}
-                </h3>
+          <BlurIn blur={8} y={12} className="w-full">
+            <StaggerList className="w-full space-y-4" stagger={0.12} delay={0.1}>
+              {(Object.keys(skills) as Array<keyof typeof skills>).map((group) => (
+                <StaggerItem key={group} className="rounded-lg p-4">
+                  <h3
+                    className="mb-3 text-[10px] font-semibold uppercase tracking-widest"
+                    style={{ color: "var(--color-foreground-subtle)" }}
+                  >
+                    {groupLabels[group]}
+                  </h3>
 
-                <div className="flex flex-wrap gap-2">
-                  {skills[group].map((skill) => {
-                    const hasProjects = projects.some((p) => p.status === "live" && p.tech.includes(skill));
-                    const isActive = activeSkill === skill;
-
-                    return (
-                      <button
-                        key={skill}
-                        type="button"
-                        onClick={() => handleSkillClick(skill)}
-                        disabled={!hasProjects}
-                        className="flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition-colors duration-200"
-                        style={{
-                          backgroundColor: isActive ? "var(--color-accent-subtle)" : "var(--color-background)",
-                          borderColor: isActive
-                            ? "var(--color-accent)"
-                            : hasProjects
-                              ? "var(--color-border-hover)"
-                              : "var(--color-border)",
-                          color: isActive
-                            ? "var(--color-accent)"
-                            : hasProjects
-                              ? "var(--color-foreground)"
-                              : "var(--color-foreground-subtle)",
-                          cursor: hasProjects ? "pointer" : "default",
-                        }}
-                      >
-                        <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center text-sm">
-                          {iconMap[skill]}
-                        </span>
-                        <span className="whitespace-nowrap">{skill}</span>
-                        {hasProjects && (
-                          <span
-                            className="ml-0.5 h-1 w-1 shrink-0 rounded-full"
-                            style={{
-                              backgroundColor: isActive ? "var(--color-accent)" : "var(--color-foreground-subtle)",
-                            }}
-                          />
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          // RADIAL ON DESKTOP
-          <div ref={setContainerEl} className="relative w-full max-w-275 h-110 sm:h-135 md:h-155 lg:h-170">
-            {size.w > 0 && size.h > 0 && (
-              <>
-                {/* RINGS WRAPPER */}
-                <motion.div
-                  className="absolute inset-0"
-                  initial={false}
-                  animate={{
-                    opacity: isExpanded ? 1 : 0,
-                    scale: isExpanded ? 1 : 0.2,
-                  }}
-                  transition={{
-                    duration: isExpanded ? 1.1 : 0.5,
-                    ease: isExpanded ? [0.16, 1, 0.3, 1] : "easeInOut",
-                  }}
-                  style={{
-                    transformOrigin: `${cx}px ${cy}px`,
-                    pointerEvents: isExpanded ? "auto" : "none",
-                  }}
-                >
-                  {/* ICONS CONNECTION */}
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                    {groupNodes.map(({ group, coords }) => (
-                      <motion.line
-                        key={`group-line-${group}`}
-                        x1={cx}
-                        y1={cy}
-                        x2={coords.x}
-                        y2={coords.y}
-                        stroke="var(--color-border)"
-                        strokeWidth={0.8}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.7 }}
-                        transition={{ duration: 0.4 }}
-                      />
-                    ))}
-
-                    {allSkillNodes.map(({ skill, group, coords }) => {
-                      const groupCoords = getCoords(cx, cy, skillBaseAngles[group], GROUP_RADIUS);
+                  <div className="flex flex-wrap gap-2">
+                    {skills[group].map((skill) => {
+                      const hasProjects = projects.some((p) => p.status === "live" && p.tech.includes(skill));
                       const isActive = activeSkill === skill;
-                      const dx = coords.x - groupCoords.x;
-                      const dy = coords.y - groupCoords.y;
-                      const distance = Math.hypot(dx, dy) || 1;
-                      const startX = groupCoords.x + (dx / distance) * ICON_RADIUS;
-                      const startY = groupCoords.y + (dy / distance) * ICON_RADIUS;
-                      const endX = coords.x - (dx / distance) * ICON_RADIUS;
-                      const endY = coords.y - (dy / distance) * ICON_RADIUS;
 
                       return (
-                        <motion.line
-                          key={`skill-line-${skill}`}
-                          x1={startX}
-                          y1={startY}
-                          x2={endX}
-                          y2={endY}
-                          stroke={isActive ? "var(--color-accent)" : "var(--color-border)"}
-                          strokeWidth={isActive ? 1.5 : 0.8}
-                          animate={{
-                            stroke: isActive ? "var(--color-accent)" : "var(--color-border)",
-                            strokeWidth: isActive ? 1.5 : 0.8,
-                          }}
-                          transition={{ duration: 0.3 }}
-                        />
-                      );
-                    })}
-                  </svg>
-
-                  {/* MIDDLE RING */}
-                  {groupNodes.map(({ group, coords }) => (
-                    <div
-                      key={group}
-                      className="absolute z-20"
-                      style={{
-                        left: coords.x,
-                        top: coords.y,
-                        transform: groupPillTransforms[group],
-                      }}
-                    >
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
-                      >
-                        <div
-                          className="px-2.5 py-1 sm:px-4 sm:py-2 border"
-                          style={{
-                            backgroundColor: "var(--color-background-card)",
-                            borderColor: "var(--color-border)",
-                          }}
-                        >
-                          <span
-                            className="text-[9px] sm:text-xs font-medium tracking-widest uppercase whitespace-nowrap"
-                            style={{ color: "var(--color-foreground-subtle)" }}
-                          >
-                            {groupLabels[group]}
-                          </span>
-                        </div>
-                      </motion.div>
-                    </div>
-                  ))}
-
-                  {/* OUTER RING */}
-                  {allSkillNodes.map(({ skill, coords }, idx) => {
-                    const isActive = activeSkill === skill;
-                    const hasProjects = projects.some((p) => p.status === "live" && p.tech.includes(skill));
-
-                    return (
-                      <motion.div
-                        key={skill}
-                        className="absolute z-20 -translate-x-1/2 -translate-y-1/2"
-                        style={{ left: coords.x, top: coords.y }}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                          duration: 0.4,
-                          delay: idx * 0.04,
-                          ease: "easeOut",
-                        }}
-                      >
                         <button
+                          key={skill}
+                          type="button"
                           onClick={() => handleSkillClick(skill)}
-                          className="relative"
+                          disabled={!hasProjects}
+                          className="flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition-colors duration-200"
                           style={{
-                            width: ICON_SIZE,
-                            height: ICON_SIZE,
+                            backgroundColor: isActive ? "var(--color-accent-subtle)" : "var(--color-background)",
+                            borderColor: isActive
+                              ? "var(--color-accent)"
+                              : hasProjects
+                                ? "var(--color-border-hover)"
+                                : "var(--color-border)",
+                            color: isActive
+                              ? "var(--color-accent)"
+                              : hasProjects
+                                ? "var(--color-foreground)"
+                                : "var(--color-foreground-subtle)",
                             cursor: hasProjects ? "pointer" : "default",
                           }}
-                          title={hasProjects ? `See projects using ${skill}` : skill}
                         >
-                          <motion.div
-                            className="w-full h-full rounded-full flex items-center justify-center border text-base sm:text-lg"
-                            style={{
-                              backgroundColor: isActive ? "var(--color-accent-subtle)" : "var(--color-background-card)",
-                              borderColor: isActive
-                                ? "var(--color-accent)"
-                                : hasProjects
-                                  ? "var(--color-border-hover)"
-                                  : "var(--color-border)",
-                              color: isActive
-                                ? "var(--color-accent)"
-                                : hasProjects
-                                  ? "var(--color-foreground)"
-                                  : "var(--color-foreground-subtle)",
-                            }}
-                            whileHover={
-                              hasProjects
-                                ? {
-                                    scale: 1.15,
-                                    borderColor: "var(--color-accent)",
-                                  }
-                                : { scale: 1.05 }
-                            }
-                            whileTap={{ scale: 0.92 }}
-                            animate={{
-                              boxShadow: isActive ? "0 0 16px var(--color-accent-subtle)" : "none",
-                            }}
-                          >
+                          <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center text-sm">
                             {iconMap[skill]}
-                          </motion.div>
-
-                          <span
-                            className="absolute left-1/2 top-full mt-1 -translate-x-1/2 text-center leading-tight text-[8px] sm:text-[9px] whitespace-nowrap"
-                            style={{
-                              color: isActive ? "var(--color-accent)" : "var(--color-foreground-subtle)",
-                            }}
-                          >
-                            {skill}
                           </span>
-
+                          <span className="whitespace-nowrap">{skill}</span>
                           {hasProjects && (
                             <span
-                              className="absolute left-1/2 top-full mt-4 -translate-x-1/2 w-1 h-1 rounded-full"
+                              className="ml-0.5 h-1 w-1 shrink-0 rounded-full"
                               style={{
                                 backgroundColor: isActive ? "var(--color-accent)" : "var(--color-foreground-subtle)",
                               }}
                             />
                           )}
                         </button>
-                      </motion.div>
-                    );
-                  })}
-                </motion.div>
-
-                {/* CENTER RING */}
-                <div className="absolute z-30 -translate-x-1/2 -translate-y-1/2" style={{ left: cx, top: cy }}>
-                  <div className="relative">
-                    {!isExpanded && (
-                      <motion.span
-                        key={`pulse-idle-${pulseKey}`}
-                        className="absolute inset-0 rounded-full pointer-events-none"
-                        style={{ border: "2px solid var(--color-accent)" }}
-                        initial={{ opacity: 0.75, scale: 1 }}
-                        animate={{ opacity: 0, scale: 2.4 }}
-                        transition={{
-                          duration: 1.8,
-                          repeat: Infinity,
-                          repeatDelay: 0.1,
-                          ease: "easeOut",
-                        }}
-                      />
-                    )}
-
-                    {isExpanded && (
-                      <motion.span
-                        key={`pulse-burst-${pulseKey}`}
-                        className="absolute inset-0 rounded-full pointer-events-none"
-                        style={{ border: "2px solid var(--color-accent)" }}
-                        initial={{ opacity: 0.8, scale: 1 }}
-                        animate={{ opacity: 0, scale: 3.2 }}
-                        transition={{
-                          duration: 1.1,
-                          ease: [0.16, 1, 0.3, 1],
-                        }}
-                      />
-                    )}
-
-                    <motion.button
-                      onClick={toggleExpanded}
-                      className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2"
-                      style={{
-                        backgroundColor: "var(--color-background-card)",
-                        borderColor: "var(--color-accent)",
-                        cursor: "pointer",
-                      }}
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.5, ease: "easeOut" }}
-                      whileHover={{ scale: 1.06 }}
-                      whileTap={{ scale: 0.94 }}
-                      aria-label={isExpanded ? "Hide skills" : "Show skills"}
-                      aria-expanded={isExpanded}
-                    >
-                      <span
-                        className="text-[9px] sm:text-[10px] font-bold font-heading tracking-widest"
-                        style={{ color: "var(--color-accent)" }}
-                      >
-                        SKILLS
-                      </span>
-                    </motion.button>
+                      );
+                    })}
                   </div>
-                </div>
-              </>
-            )}
-          </div>
+                </StaggerItem>
+              ))}
+            </StaggerList>
+          </BlurIn>
+        ) : (
+          // RADIAL ON DESKTOP
+          <BlurIn blur={10} y={16} className="w-full flex justify-center">
+            <div ref={setContainerEl} className="relative w-full max-w-275 h-110 sm:h-135 md:h-155 lg:h-170">
+              {size.w > 0 && size.h > 0 && (
+                <>
+                  {/* RINGS WRAPPER */}
+                  <motion.div
+                    className="absolute inset-0"
+                    initial={false}
+                    animate={{
+                      opacity: isExpanded ? 1 : 0,
+                      scale: isExpanded ? 1 : 0.2,
+                    }}
+                    transition={{
+                      duration: isExpanded ? 1.1 : 0.5,
+                      ease: isExpanded ? [0.16, 1, 0.3, 1] : "easeInOut",
+                    }}
+                    style={{
+                      transformOrigin: `${cx}px ${cy}px`,
+                      pointerEvents: isExpanded ? "auto" : "none",
+                    }}
+                  >
+                    {/* ICONS CONNECTION */}
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                      {groupNodes.map(({ group, coords }) => (
+                        <motion.line
+                          key={`group-line-${group}`}
+                          x1={cx}
+                          y1={cy}
+                          x2={coords.x}
+                          y2={coords.y}
+                          stroke="var(--color-border)"
+                          strokeWidth={0.8}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 0.7 }}
+                          transition={{ duration: 0.4 }}
+                        />
+                      ))}
+
+                      {allSkillNodes.map(({ skill, group, coords }) => {
+                        const groupCoords = getCoords(cx, cy, skillBaseAngles[group], GROUP_RADIUS);
+                        const isActive = activeSkill === skill;
+                        const dx = coords.x - groupCoords.x;
+                        const dy = coords.y - groupCoords.y;
+                        const distance = Math.hypot(dx, dy) || 1;
+                        const startX = groupCoords.x + (dx / distance) * ICON_RADIUS;
+                        const startY = groupCoords.y + (dy / distance) * ICON_RADIUS;
+                        const endX = coords.x - (dx / distance) * ICON_RADIUS;
+                        const endY = coords.y - (dy / distance) * ICON_RADIUS;
+
+                        return (
+                          <motion.line
+                            key={`skill-line-${skill}`}
+                            x1={startX}
+                            y1={startY}
+                            x2={endX}
+                            y2={endY}
+                            stroke={isActive ? "var(--color-accent)" : "var(--color-border)"}
+                            strokeWidth={isActive ? 1.5 : 0.8}
+                            animate={{
+                              stroke: isActive ? "var(--color-accent)" : "var(--color-border)",
+                              strokeWidth: isActive ? 1.5 : 0.8,
+                            }}
+                            transition={{ duration: 0.3 }}
+                          />
+                        );
+                      })}
+                    </svg>
+
+                    {/* MIDDLE RING */}
+                    {groupNodes.map(({ group, coords }) => (
+                      <div
+                        key={group}
+                        className="absolute z-20"
+                        style={{
+                          left: coords.x,
+                          top: coords.y,
+                          transform: groupPillTransforms[group],
+                        }}
+                      >
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.4, ease: "easeOut" }}
+                        >
+                          <div
+                            className="px-2.5 py-1 sm:px-4 sm:py-2 border"
+                            style={{
+                              backgroundColor: "var(--color-background-card)",
+                              borderColor: "var(--color-border)",
+                            }}
+                          >
+                            <span
+                              className="text-[9px] sm:text-xs font-medium tracking-widest uppercase whitespace-nowrap"
+                              style={{ color: "var(--color-foreground-subtle)" }}
+                            >
+                              {groupLabels[group]}
+                            </span>
+                          </div>
+                        </motion.div>
+                      </div>
+                    ))}
+
+                    {/* OUTER RING */}
+                    {allSkillNodes.map(({ skill, coords }, idx) => {
+                      const isActive = activeSkill === skill;
+                      const hasProjects = projects.some((p) => p.status === "live" && p.tech.includes(skill));
+
+                      return (
+                        <motion.div
+                          key={skill}
+                          className="absolute z-20 -translate-x-1/2 -translate-y-1/2"
+                          style={{ left: coords.x, top: coords.y }}
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{
+                            duration: 0.4,
+                            delay: idx * 0.04,
+                            ease: "easeOut",
+                          }}
+                        >
+                          <button
+                            onClick={() => handleSkillClick(skill)}
+                            className="relative"
+                            style={{
+                              width: ICON_SIZE,
+                              height: ICON_SIZE,
+                              cursor: hasProjects ? "pointer" : "default",
+                            }}
+                            title={hasProjects ? `See projects using ${skill}` : skill}
+                          >
+                            <motion.div
+                              className="w-full h-full rounded-full flex items-center justify-center border text-base sm:text-lg"
+                              style={{
+                                backgroundColor: isActive
+                                  ? "var(--color-accent-subtle)"
+                                  : "var(--color-background-card)",
+                                borderColor: isActive
+                                  ? "var(--color-accent)"
+                                  : hasProjects
+                                    ? "var(--color-border-hover)"
+                                    : "var(--color-border)",
+                                color: isActive
+                                  ? "var(--color-accent)"
+                                  : hasProjects
+                                    ? "var(--color-foreground)"
+                                    : "var(--color-foreground-subtle)",
+                              }}
+                              whileHover={
+                                hasProjects
+                                  ? {
+                                      scale: 1.15,
+                                      borderColor: "var(--color-accent)",
+                                    }
+                                  : { scale: 1.05 }
+                              }
+                              whileTap={{ scale: 0.92 }}
+                              animate={{
+                                boxShadow: isActive ? "0 0 16px var(--color-accent-subtle)" : "none",
+                              }}
+                            >
+                              {iconMap[skill]}
+                            </motion.div>
+
+                            <span
+                              className="absolute left-1/2 top-full mt-1 -translate-x-1/2 text-center leading-tight text-[8px] sm:text-[9px] whitespace-nowrap"
+                              style={{
+                                color: isActive ? "var(--color-accent)" : "var(--color-foreground-subtle)",
+                              }}
+                            >
+                              {skill}
+                            </span>
+
+                            {hasProjects && (
+                              <span
+                                className="absolute left-1/2 top-full mt-4 -translate-x-1/2 w-1 h-1 rounded-full"
+                                style={{
+                                  backgroundColor: isActive ? "var(--color-accent)" : "var(--color-foreground-subtle)",
+                                }}
+                              />
+                            )}
+                          </button>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+
+                  {/* CENTER RING */}
+                  <div className="absolute z-30 -translate-x-1/2 -translate-y-1/2" style={{ left: cx, top: cy }}>
+                    <div className="relative">
+                      {!isExpanded && (
+                        <motion.span
+                          key={`pulse-idle-${pulseKey}`}
+                          className="absolute inset-0 rounded-full pointer-events-none"
+                          style={{ border: "2px solid var(--color-accent)" }}
+                          initial={{ opacity: 0.75, scale: 1 }}
+                          animate={{ opacity: 0, scale: 2.4 }}
+                          transition={{
+                            duration: 1.8,
+                            repeat: Infinity,
+                            repeatDelay: 0.1,
+                            ease: "easeOut",
+                          }}
+                        />
+                      )}
+
+                      {isExpanded && (
+                        <motion.span
+                          key={`pulse-burst-${pulseKey}`}
+                          className="absolute inset-0 rounded-full pointer-events-none"
+                          style={{ border: "2px solid var(--color-accent)" }}
+                          initial={{ opacity: 0.8, scale: 1 }}
+                          animate={{ opacity: 0, scale: 3.2 }}
+                          transition={{
+                            duration: 1.1,
+                            ease: [0.16, 1, 0.3, 1],
+                          }}
+                        />
+                      )}
+
+                      <motion.button
+                        onClick={toggleExpanded}
+                        className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2"
+                        style={{
+                          backgroundColor: "var(--color-background-card)",
+                          borderColor: "var(--color-accent)",
+                          cursor: "pointer",
+                        }}
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        whileHover={{ scale: 1.06 }}
+                        whileTap={{ scale: 0.94 }}
+                        aria-label={isExpanded ? "Hide skills" : "Show skills"}
+                        aria-expanded={isExpanded}
+                      >
+                        <span
+                          className="text-[9px] sm:text-[10px] font-bold font-heading tracking-widest"
+                          style={{ color: "var(--color-accent)" }}
+                        >
+                          SKILLS
+                        </span>
+                      </motion.button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          </BlurIn>
         )}
       </div>
 
@@ -563,36 +581,41 @@ export default function Skills() {
 
       {/* MARQUEE */}
       <div className="pt-8 border-t overflow-hidden" style={{ borderColor: "var(--color-border)" }}>
-        <p
+        <CascadeText
+          as="p"
+          text="Technologies I work with"
           className="text-xs font-medium tracking-widest uppercase mb-6 text-center"
-          style={{ color: "var(--color-foreground-subtle)" }}
-        >
-          Technologies I work with
-        </p>
+          delay={0.1}
+          stagger={0.03}
+          blur={5}
+          y={-6}
+        />
 
-        <div className="relative flex overflow-hidden">
-          <div
-            className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to right, var(--color-background), transparent)" }}
-          />
-          <div
-            className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to left, var(--color-background), transparent)" }}
-          />
+        <BlurIn delay={0.4} blur={8} y={10}>
+          <div className="relative flex overflow-hidden">
+            <div
+              className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to right, var(--color-background), transparent)" }}
+            />
+            <div
+              className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 z-10 pointer-events-none"
+              style={{ background: "linear-gradient(to left, var(--color-background), transparent)" }}
+            />
 
-          <div className="flex animate-marquee gap-10 sm:gap-16 items-center">
-            {[...marqueeItems, ...marqueeItems].map((item, i) => (
-              <span
-                key={i}
-                className="text-2xl sm:text-3xl md:text-4xl shrink-0"
-                style={{ color: "var(--color-foreground-subtle)" }}
-                title={item.name}
-              >
-                {item.icon}
-              </span>
-            ))}
+            <div className="flex animate-marquee gap-10 sm:gap-16 items-center">
+              {[...marqueeItems, ...marqueeItems].map((item, i) => (
+                <span
+                  key={i}
+                  className="text-2xl sm:text-3xl md:text-4xl shrink-0"
+                  style={{ color: "var(--color-foreground-subtle)" }}
+                  title={item.name}
+                >
+                  {item.icon}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
+        </BlurIn>
       </div>
     </section>
   );

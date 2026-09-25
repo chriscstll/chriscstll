@@ -117,9 +117,39 @@ export const skills = {
 
 export const contact = {
   email: "castilloxtiann@gmail.com",
-  linkedin: "",
+  linkedin: "https://linkedin.com/in/placeholder",
   github: "https://github.com/chriscstll",
   formspreeEndpoint: "https://formspree.io/f/your-form-id",
+};
+
+export const footer = {
+  identity: {
+    name: "Christian M. Castillo",
+    role: "Frontend Developer",
+  },
+
+  nav: [
+    { label: "About", href: "#about" },
+    { label: "Projects", href: "#projects" },
+    { label: "Skills", href: "#skills" },
+    { label: "Contact", href: "#contact" },
+  ],
+
+  location: {
+    city: "Manila",
+    timeZone: "Asia/Manila",
+    locale: "en-PH",
+  },
+
+  startYear: 2026,
+  year: new Date().getFullYear(),
+  get copyright() {
+    return this.year === this.startYear
+      ? `© ${this.year} ${this.identity.name}`
+      : `© ${this.startYear}–${this.year} ${this.identity.name}`;
+  },
+
+  backToTop: { label: "Back to top", href: "#hero" },
 };
 
 export const structuredData = {
