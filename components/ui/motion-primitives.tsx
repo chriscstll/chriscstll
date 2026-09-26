@@ -213,17 +213,30 @@ export const staggerItem: Variants = {
 export function StaggerItem({
   children,
   className = "",
+  style,
+  ...rest
 }: {
   children: ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  [key: string]: unknown;
 }) {
   const reduce = useReducedMotion();
 
-  if (reduce) return <div className={className}>{children}</div>;
+  if (reduce)
+    return (
+      <div className={className} style={style} {...rest}>
+        {children}
+      </div>
+    );
 
   return (
-    <motion.div className={className} variants={staggerItem} style={{ willChange: "filter, transform, opacity" }}>
+    <motion.div
+      className={className}
+      style={{ willChange: "filter, transform, opacity", ...style }}
+      variants={staggerItem}
+      {...rest}
+    >
       {children}
     </motion.div>
   );

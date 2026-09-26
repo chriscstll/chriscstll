@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
@@ -216,7 +215,7 @@ export default function Projects() {
           style={{
             display: "flex",
             flexDirection: "row",
-            overflowX: "hidden",
+            overflowX: "scroll", // ← fixed from hidden
             overflowY: "hidden",
             paddingBottom: "1rem",
             scrollSnapType: "none",
@@ -229,58 +228,52 @@ export default function Projects() {
             overscrollBehaviorX: "contain",
           }}
         >
-          <div className="flex flex-nowrap gap-4 px-4 sm:px-6 lg:px-8" style={{ width: "max-content" }}>
-            <StaggerList
-              className="flex flex-nowrap gap-4 px-4 sm:px-6 lg:px-8"
-              style={{ width: "max-content" }}
-              delay={0.85}
-              stagger={0.08}
-            >
-              {projects.map((project) => (
-                <StaggerItem key={project.title}>
-                  <div data-project-card>
-                    <ProjectCard
-                      project={project}
-                      isDragging={isDragging}
-                      onClick={() => handleProjectClick(project)}
-                    />
-                  </div>
-                </StaggerItem>
-              ))}
-              <div aria-hidden="true" style={{ width: spacerWidth, flexShrink: 0 }} />
-            </StaggerList>
+          <StaggerList
+            className="flex flex-nowrap gap-4 px-4 sm:px-6 lg:px-8"
+            style={{ width: "max-content" }}
+            delay={0.85}
+            stagger={0.08}
+          >
+            {projects.map((project) => (
+              <StaggerItem key={project.title} data-project-card>
+                <ProjectCard project={project} isDragging={isDragging} onClick={() => handleProjectClick(project)} />
+              </StaggerItem>
+            ))}
+            <div aria-hidden="true" style={{ width: spacerWidth, flexShrink: 0 }} />
+          </StaggerList>
+        </div>
+      </div>
+
+      {/* DOTS */}
+      <BlurIn delay={1.2} blur={8} y={8} className="mt-6 flex items-center justify-center gap-4 px-4 sm:gap-6">
+        <div className="mt-6 flex items-center justify-center gap-4 px-4 sm:gap-6">
+          <div className="mt-6 flex items-center justify-center gap-1 px-4">
+            {projects.map((project, i) => {
+              const isActive = i === activeIndex;
+
+              return (
+                <button
+                  key={project.title}
+                  type="button"
+                  onClick={() => goTo(i)}
+                  aria-label={`Go to ${project.title}`}
+                  aria-current={isActive}
+                  className="flex h-8 items-center justify-center px-1"
+                >
+                  <span
+                    className="block rounded-full transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    style={{
+                      width: isActive ? "20px" : "6px",
+                      height: "6px",
+                      backgroundColor: isActive ? "var(--color-accent)" : "var(--color-border-hover)",
+                    }}
+                  />
+                </button>
+              );
+            })}
           </div>
         </div>
-      </div>
-
-      <div className="mt-6 flex items-center justify-center gap-4 px-4 sm:gap-6">
-        {/* DOTS */}
-        <div className="mt-6 flex items-center justify-center gap-1 px-4">
-          {projects.map((project, i) => {
-            const isActive = i === activeIndex;
-
-            return (
-              <button
-                key={project.title}
-                type="button"
-                onClick={() => goTo(i)}
-                aria-label={`Go to ${project.title}`}
-                aria-current={isActive}
-                className="flex h-8 items-center justify-center px-1"
-              >
-                <span
-                  className="block rounded-full transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                  style={{
-                    width: isActive ? "20px" : "6px",
-                    height: "6px",
-                    backgroundColor: isActive ? "var(--color-accent)" : "var(--color-border-hover)",
-                  }}
-                />
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      </BlurIn>
 
       {/* MODAL */}
       <AnimatePresence>
@@ -311,27 +304,20 @@ export default function Projects() {
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
             >
               <div
-                className="relative w-full h-[220px] md:h-[280px] overflow-hidden"
+                className="relative w-full h-55 md:h-70 overflow-hidden"
                 style={{ backgroundColor: "var(--color-background-secondary)" }}
               >
-                <Image
+                <img
                   src={selectedProject.image}
                   alt={selectedProject.title}
-                  fill
                   sizes="(max-width: 768px) 100vw, 672px"
                   className="object-contain object-center"
-                  priority
                 />
+
                 <button
                   onClick={closeModal}
                   aria-label="Close project"
-                  className="absolute top-3 right-3 z-10 p-2 transition-transform
-               duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
-               hover:scale-125 active:scale-90"
-                  style={{
-                    backgroundColor: "rgba(15,15,15,0.8)",
-                    color: "var(--color-foreground)",
-                  }}
+                  className="absolute top-3 right-3 z-10 p-2 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-125 active:scale-90"
                 >
                   <X size={20} />
                 </button>
