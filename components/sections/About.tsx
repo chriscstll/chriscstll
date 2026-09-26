@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { about } from "@/data/portfolio";
 import { motion } from "framer-motion";
+import { Fragment } from "react";
 import { CascadeText, BlurIn, StaggerList, StaggerItem } from "@/components/ui/motion-primitives";
 
 export default function About() {
@@ -70,6 +71,7 @@ export default function About() {
             </StaggerItem>
           ))}
         </StaggerList>
+
         {/* RIGHT SIDE */}
         <div className="flex flex-col gap-6">
           <h2>
@@ -94,7 +96,6 @@ export default function About() {
               y={-14}
             />
           </h2>
-
           <BlurIn delay={1.1} blur={12} y={16}>
             <h3 className="font-heading font-bold text-lg md:text-xl mb-3" style={{ color: "var(--color-foreground)" }}>
               {about.cards[activeCard].content.title}
@@ -104,6 +105,54 @@ export default function About() {
             </p>
           </BlurIn>
         </div>
+
+        {/* STATS ROW */}
+        <BlurIn delay={0.75} blur={8} y={12} className="mt-6 flex flex-col items-center text-center">
+          <div className="flex items-stretch justify-center gap-5 sm:gap-7">
+            {about.stats.map((stat, i) => (
+              <Fragment key={stat.label}>
+                {/* STATS DIVIDER*/}
+                {i > 0 && (
+                  <div
+                    className="w-px self-stretch"
+                    style={{ backgroundColor: "var(--color-background-secondary)" }}
+                    aria-hidden="true"
+                  />
+                )}
+
+                <div className="flex flex-col items-center">
+                  <CascadeText
+                    as="span"
+                    text={stat.value}
+                    className="font-heading text-2xl leading-none sm:text-3xl"
+                    delay={0.85 + i * 0.1}
+                    stagger={0.05}
+                    blur={6}
+                    y={-6}
+                  />
+                  <span
+                    className="mt-2 text-[9px] font-medium uppercase tracking-[0.25em]"
+                    style={{ color: "var(--color-foreground-muted)" }}
+                  >
+                    {stat.label}
+                  </span>
+                </div>
+              </Fragment>
+            ))}
+          </div>
+
+          {/* PRIVACY NOTE */}
+          {about.privacyNote && (
+            <BlurIn delay={1.15} blur={6} y={8}>
+              <p
+                className="mt-5 max-w-55 text-[11px] italic leading-relaxed"
+                style={{ color: "var(--color-foreground-subtle)" }}
+              >
+                {about.privacyNote}
+              </p>
+            </BlurIn>
+          )}
+        </BlurIn>
       </div>
     </section>
   );

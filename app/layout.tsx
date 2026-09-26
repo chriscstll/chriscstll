@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Lora } from "next/font/google";
 import "./globals.css";
-import { siteConfig, contact, structuredData } from "@/data/portfolio";
+import { siteConfig, structuredData } from "@/data/portfolio";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],

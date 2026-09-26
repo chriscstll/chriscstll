@@ -9,6 +9,13 @@ export const siteConfig = {
   ogImage: "/og-image.jpg",
 };
 
+export const navLinks = [
+  { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
+  { label: "Skills", href: "#skills" },
+  { label: "Contact", href: "#contact" },
+];
+
 export const hero = {
   name: "Christian M. Castillo",
   title: "Frontend Developer",
@@ -19,10 +26,13 @@ export const hero = {
 };
 
 export const about = {
-  label: "Introduction",
   heading: "Hello!",
   name: "I'm Christian Castillo",
-  subheading: "A Frontend Developer based in the philippines",
+  stats: [
+    { value: "2", label: "years" },
+    { value: "12", label: "projects" },
+  ],
+  privacyNote: "NDA'd client projects aren't listed.",
   bio: [
     "Christian Castillo is a frontend developer based in the Philippines, focused on building thoughtful web applications using React, Typescript and Tailwind CSS",
     "I'm open to opportunities where i can contribute to meaningful work to keep learning and developing my skills as a frontend developer",
@@ -61,6 +71,7 @@ export type Project = {
   status: "live" | "coming-soon" | "in-progress";
 };
 
+export const projectsTagline = "None of these changed anything. All of them changed me";
 export const projects: Project[] = [
   {
     title: "Your Real Project One",
@@ -108,6 +119,7 @@ export const projects: Project[] = [
   },
 ];
 
+export const skillsTagline = "The stack is visible. The judgment isn't.";
 export const skills = {
   language: ["JavaScript", "TypeScript", "HTML", "CSS"],
   libraries: ["React", "Framer Motion"],
@@ -116,6 +128,7 @@ export const skills = {
 };
 
 export const contact = {
+  tagline: "Everything begins with a message. Before the work, there's a word.",
   email: "castilloxtiann@gmail.com",
   linkedin: "https://linkedin.com/in/placeholder",
   github: "https://github.com/chriscstll",

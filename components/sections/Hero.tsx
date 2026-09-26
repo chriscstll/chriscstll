@@ -113,33 +113,9 @@ export default function Hero() {
   return (
     <section id="hero" className="relative min-h-svh flex items-center px-6 pt-14 md:pt-16">
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 items-center py-16 md:py-0">
-        {/* ===============================================
-            HERO TAGLINE
-        ================================================ */}
+        {/* HERO TAGLINE */}
         <div className="flex flex-col items-start">
-          {/* Badge — spring bounce, kept as-is */}
-          <motion.div
-            initial={{ opacity: 0, x: -40, scale: 0.8 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 12,
-              delay: 0.1,
-            }}
-            className="inline-flex max-w-full items-center gap-1 rounded-full border px-1.5 py-0.5 text-[9px] font-medium tracking-wider sm:gap-1.5 sm:px-2 sm:py-1 sm:text-[10px] md:px-2.5 md:py-1 md:text-[11px] mb-3 sm:mb-4 md:mb-5"
-            style={{
-              backgroundColor: "var(--color-accent-subtle)",
-              borderColor: "var(--color-accent)",
-              color: "var(--color-accent)",
-            }}
-          >
-            <span className="h-1 w-1 shrink-0 rounded-full bg-current animate-pulse sm:h-1.5 sm:w-1.5" />
-            <span className="truncate">{hero.title}</span>
-          </motion.div>
-
-          {/* Tagline — character cascade with blur (via primitive) */}
+          {/* Tagline */}
           <CascadeText
             as="h1"
             text={hero.tagline}
@@ -153,7 +129,7 @@ export default function Hero() {
             y={-16}
           />
 
-          {/* CTA — blur-in wrapper + existing radar/shine */}
+          {/* CTA  */}
           <BlurIn
             trigger="view"
             delay={1.1}
@@ -184,9 +160,7 @@ export default function Hero() {
           </BlurIn>
         </div>
 
-        {/* ===============================================
-            HERO IMG — blurred in, internals unchanged
-        ================================================ */}
+        {/* HERO IMG */}
         <BlurIn
           trigger="view"
           delay={0.2}
@@ -198,9 +172,7 @@ export default function Hero() {
           <div className="relative w-full h-112.5 sm:h-137.5 md:h-175">
             {/* SVG BLOB */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-              <svg viewBox="0 0 500 500" className="w-[85%] h-[85%] sm:w-[80%] sm:h-[80%]">
-                {/* ...all three path layers unchanged... */}
-              </svg>
+              <svg viewBox="0 0 500 500" className="w-[85%] h-[85%] sm:w-[80%] sm:h-[80%]"></svg>
             </div>
 
             {/* IMAGE */}
@@ -211,21 +183,17 @@ export default function Hero() {
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain object-center"
-                style={{
-                  filter: "grayscale(100%) contrast(1.1) brightness(0.85)",
-                }}
+                style={{ filter: "grayscale(100%) contrast(1.1) brightness(0.85)" }}
                 priority
               />
               <div
                 className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
                 aria-hidden="true"
-                style={{
-                  background: "linear-gradient(to top, var(--color-background), transparent)",
-                }}
+                style={{ background: "linear-gradient(to top, var(--color-background), transparent)" }}
               />
             </div>
 
-            {/* TECH ICONS — unchanged, own stagger */}
+            {/* TECH ICONS*/}
             {techIcons.map((icon, i) => (
               <motion.div
                 key={icon.name}

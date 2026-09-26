@@ -138,9 +138,12 @@ export default function Contact() {
           y={-14}
         />
 
-        <BlurIn delay={0.55} blur={8} y={12}>
-          <p className="mb-10 max-w-md text-sm leading-relaxed text-foreground-muted sm:text-base">
-            Have a project in mind, or just want to compare notes on CSS? Drop me a note — I usually reply within a day.
+        <BlurIn delay={0.7} blur={8} y={10} className="mb-10 max-w-xl">
+          <p
+            className="text-sm italic leading-relaxed sm:text-base"
+            style={{ color: "var(--color-foreground-subtle)" }}
+          >
+            {contact.tagline}
           </p>
         </BlurIn>
 
@@ -221,6 +224,7 @@ export default function Contact() {
                     touched={!!touched.name}
                     disabled={status === "submitting"}
                     maxLength={80}
+                    autoComplete="name"
                   />
                   <Field
                     name="email"
@@ -234,6 +238,7 @@ export default function Contact() {
                     touched={!!touched.email}
                     disabled={status === "submitting"}
                     maxLength={120}
+                    autoComplete="name"
                   />
                 </div>
 
@@ -251,6 +256,7 @@ export default function Contact() {
                   disabled={status === "submitting"}
                   rows={5}
                   maxLength={2000}
+                  autoComplete="name"
                 />
 
                 {/* SUBMIT + SERVER ERROR */}
@@ -344,6 +350,7 @@ type FieldProps = {
   disabled?: boolean;
   rows?: number;
   maxLength?: number;
+  autoComplete?: string;
 };
 
 function Field({
@@ -359,6 +366,7 @@ function Field({
   disabled,
   rows = 4,
   maxLength,
+  autoComplete,
 }: FieldProps) {
   const hasError = touched && !!error;
   const isValid = touched && !error && value.trim().length > 0;
@@ -405,6 +413,7 @@ function Field({
             onBlur={onBlur}
             disabled={disabled}
             maxLength={maxLength}
+            autoComplete={autoComplete}
             className={inputClasses}
             style={inputStyle}
             aria-invalid={hasError}
@@ -420,6 +429,7 @@ function Field({
             onBlur={onBlur}
             disabled={disabled}
             maxLength={maxLength}
+            autoComplete={autoComplete}
             className={inputClasses}
             style={inputStyle}
             aria-invalid={hasError}

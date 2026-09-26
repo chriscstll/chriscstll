@@ -6,7 +6,7 @@ import { ExternalLink } from "lucide-react";
 import { FaReact, FaGitAlt, FaHtml5, FaCss3Alt, FaJs, FaFigma, FaGithub } from "react-icons/fa";
 import { SiVuedotjs, SiNextdotjs, SiTypescript, SiTailwindcss, SiVercel, SiFramer, SiSass } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
-import { skills, projects } from "@/data/portfolio";
+import { skills, projects, skillsTagline } from "@/data/portfolio";
 import { CascadeText, BlurIn, StaggerList, StaggerItem } from "@/components/ui/motion-primitives";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -195,6 +195,14 @@ export default function Skills() {
           blur={8}
           y={-10}
         />
+        <BlurIn delay={0.65} blur={8} y={10} className="mt-6 max-w-xl">
+          <p
+            className="text-sm italic leading-relaxed sm:text-base"
+            style={{ color: "var(--color-foreground-subtle)" }}
+          >
+            {skillsTagline}
+          </p>
+        </BlurIn>
       </div>
       <div className="w-full mb-12 sm:mb-16 flex justify-center">
         {!mounted ? (

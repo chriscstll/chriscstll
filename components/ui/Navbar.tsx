@@ -5,14 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
-import { contact } from "@/data/portfolio";
-
-const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "#contact" },
-];
+import { contact, navLinks } from "@/data/portfolio";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
