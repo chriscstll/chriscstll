@@ -3,16 +3,14 @@
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
-/* =========================================================
-   EASING
-   ========================================================= */
+/* EASING */
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 
-/* =========================================================
+/* 
    CASCADE TEXT
    Splits text into characters (or words), each blurs in
    from below with a spring offset. Classic + blur combo.
-   ========================================================= */
+    */
 
 const motionTags = {
   span: motion.span,
@@ -30,7 +28,7 @@ type CascadeTextProps = {
   text: string;
   as?: MotionTag;
   className?: string;
-  /** Applied to each character span instead of the parent */
+
   charClassName?: string;
   delay?: number;
   stagger?: number;
@@ -115,10 +113,7 @@ export function CascadeText({
   );
 }
 
-/* =========================================================
-   BLUR IN
-   Wraps a whole block. Blurs + slides + fades in on scroll.
-   ========================================================= */
+/* BLUR IN | Wraps a whole block. Blurs + slides + fades in on scroll. */
 
 type BlurInProps = {
   children: ReactNode;
@@ -128,7 +123,7 @@ type BlurInProps = {
   y?: number;
   blur?: number;
   once?: boolean;
-  trigger?: "mount" | "view"; // ← add this
+  trigger?: "mount" | "view";
 };
 
 export function BlurIn({
@@ -139,7 +134,7 @@ export function BlurIn({
   y = 20,
   blur = 12,
   once = true,
-  trigger = "view", // ← add this (defaults to scroll-triggered)
+  trigger = "view",
 }: BlurInProps) {
   const reduce = useReducedMotion();
 
@@ -165,20 +160,19 @@ export function BlurIn({
   );
 }
 
-/* =========================================================
-   STAGGER LIST + ITEM
-   For lists (like your timeline). Parent staggers children
-   that are wrapped in <StaggerItem>.
-   ========================================================= */
+/* STAGGER LIST + ITEM
+   For lists. Parent staggers children
+   that are wrapped in <StaggerItem>. */
 
 type StaggerListProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
   stagger?: number;
+  style?: React.CSSProperties;
 };
 
-export function StaggerList({ children, className = "", delay = 0, stagger = 0.15 }: StaggerListProps) {
+export function StaggerList({ children, className = "", delay = 0, stagger = 0.15, style }: StaggerListProps) {
   const reduce = useReducedMotion();
 
   if (reduce) return <div className={className}>{children}</div>;
@@ -186,6 +180,7 @@ export function StaggerList({ children, className = "", delay = 0, stagger = 0.1
   return (
     <motion.div
       className={className}
+      style={style}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}

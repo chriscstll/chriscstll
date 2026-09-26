@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, ArrowLeft, ArrowRight } from "lucide-react";
+import { X, ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import ProjectCard from "@/components/ui/ProjectCard";
 import { CascadeText, BlurIn, StaggerList, StaggerItem } from "@/components/ui/motion-primitives";
@@ -19,29 +20,39 @@ export default function Projects() {
   const dragStartX = useRef(0);
   const dragStartScrollLeft = useRef(0);
   const hasDragged = useRef(false);
+  const pointerId = useRef<number | null>(null);
 
   const scrollRef = useRef<HTMLDivElement>(null);
+  const pendingIndexRef = useRef<number | null>(null);
 
-  /* =========================================================
-     SCROLL — active index detection
-     ========================================================= */
+  /* SCROLL - DETECT ACTIVE INDEX */
   const handleScroll = () => {
+    if (pendingIndexRef.current !== null) return;
+
     const el = scrollRef.current;
     if (!el) return;
 
     const cards = el.querySelectorAll<HTMLElement>("[data-project-card]");
-    if (cards.length < 2) return;
+    if (cards.length === 0) return;
 
-    const step = cards[1].offsetLeft - cards[0].offsetLeft;
-    if (step <= 0) return;
+    const startOffset = cards[0].offsetLeft;
+    const scrollLeft = el.scrollLeft;
 
-    const index = Math.round(el.scrollLeft / step);
-    setActiveIndex(Math.max(0, Math.min(index, projects.length - 1)));
+    let closest = 0;
+    let minDiff = Infinity;
+
+    cards.forEach((card, i) => {
+      const diff = Math.abs(card.offsetLeft - startOffset - scrollLeft);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closest = i;
+      }
+    });
+
+    setActiveIndex(closest);
   };
 
-  /* =========================================================
-     ARROWS — scroll to specific index
-     ========================================================= */
+  /* ARROWS */
   const goTo = (index: number) => {
     const el = scrollRef.current;
     if (!el) return;
@@ -49,36 +60,39 @@ export default function Projects() {
     const cards = el.querySelectorAll<HTMLElement>("[data-project-card]");
     if (!cards[index]) return;
 
-    const target = cards[index].offsetLeft - cards[0].offsetLeft;
+    setActiveIndex(index);
+    pendingIndexRef.current = index;
+
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    const startOffset = cards[0].offsetLeft;
+    const target = Math.min(cards[index].offsetLeft - startOffset, maxScroll);
+
     el.scrollTo({ left: target, behavior: "smooth" });
+
+    window.setTimeout(() => {
+      pendingIndexRef.current = null;
+    }, 600);
   };
-
-  const prev = () => goTo(activeIndex - 1);
-  const next = () => goTo(activeIndex + 1);
-
-  const atStart = activeIndex === 0;
-  const atEnd = activeIndex === projects.length - 1;
-
-  /* =========================================================
-     KEYBOARD — left/right arrows while section is in view
-     ========================================================= */
+  /* KEYBOARD */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      // Skip if user is typing in a form field
       const target = e.target as HTMLElement;
       if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) {
         return;
       }
-      // Skip if modal is open
+      if (e.key === "Escape" && selectedProject) {
+        closeModal();
+        return;
+      }
       if (selectedProject) return;
 
       if (e.key === "ArrowLeft") {
         e.preventDefault();
-        prev();
+        goTo(Math.max(0, activeIndex - 1));
       }
       if (e.key === "ArrowRight") {
         e.preventDefault();
-        next();
+        goTo(Math.min(projects.length - 1, activeIndex + 1));
       }
     };
 
@@ -86,43 +100,74 @@ export default function Projects() {
     return () => window.removeEventListener("keydown", onKey);
   }, [activeIndex, selectedProject]);
 
-  /* =========================================================
-     DRAG — pointer handlers (existing behavior, preserved)
-     ========================================================= */
+  // DEADSPACE AT THE END OF CARDS
+  const [spacerWidth, setSpacerWidth] = useState(0);
+
+  useEffect(() => {
+    const measure = () => {
+      const el = scrollRef.current;
+      if (!el) return;
+      const cards = el.querySelectorAll<HTMLElement>("[data-project-card]");
+      if (cards.length === 0) return;
+      const cardWidth = cards[0].offsetWidth;
+      setSpacerWidth(Math.max(0, el.clientWidth - cardWidth));
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [projects.length]);
+
+  /* DRAG */
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     const el = scrollRef.current;
     if (!el) return;
-    setIsDragging(true);
-    hasDragged.current = false;
+
     dragStartX.current = e.clientX;
     dragStartScrollLeft.current = el.scrollLeft;
-    el.setPointerCapture(e.pointerId);
+    hasDragged.current = false;
+    pointerId.current = e.pointerId;
+
+    setIsDragging(false);
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
     const el = scrollRef.current;
     if (!el) return;
-    const delta = e.clientX - dragStartX.current;
-    if (Math.abs(delta) > 4) hasDragged.current = true;
-    el.scrollLeft = dragStartScrollLeft.current - delta;
-  };
+    if (pointerId.current !== e.pointerId) return;
 
-  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-    setIsDragging(false);
-    const el = scrollRef.current;
-    if (el) {
+    const delta = e.clientX - dragStartX.current;
+
+    // Only start dragging after 4px of movement
+    if (!hasDragged.current && Math.abs(delta) > 4) {
+      hasDragged.current = true;
+      setIsDragging(true);
       try {
-        el.releasePointerCapture(e.pointerId);
-      } catch {
-        // ignore
-      }
+        el.setPointerCapture(e.pointerId);
+      } catch {}
+    }
+
+    if (hasDragged.current) {
+      el.scrollLeft = dragStartScrollLeft.current - delta;
     }
   };
 
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = scrollRef.current;
+    if (el && pointerId.current === e.pointerId) {
+      try {
+        el.releasePointerCapture(e.pointerId);
+      } catch {}
+    }
+    pointerId.current = null;
+    setIsDragging(false);
+  };
+
+  const handlePointerCancel = (e: React.PointerEvent<HTMLDivElement>) => {
+    handlePointerUp(e);
+  };
+
   const handleProjectClick = (project: Project) => {
-    // If the user just dragged, don't trigger the click
     if (hasDragged.current) return;
     setSelectedProject(project);
   };
@@ -131,20 +176,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="py-24 md:py-32">
-      {/* ===============================================
-          SECTION HEADER
-      ================================================ */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <CascadeText
-          as="p"
-          text="Work"
-          className="text-xs font-medium tracking-widest uppercase mb-3"
-          delay={0.1}
-          stagger={0.06}
-          blur={6}
-          y={-8}
-        />
-
         <CascadeText
           as="h2"
           text="Projects"
@@ -154,10 +186,6 @@ export default function Projects() {
           blur={8}
           y={-10}
         />
-
-        <BlurIn delay={0.5} blur={8} y={6}>
-          <div className="section-title-underline" />
-        </BlurIn>
 
         <BlurIn delay={0.65} blur={8} y={10} className="mt-6 max-w-xl">
           <p
@@ -169,11 +197,8 @@ export default function Projects() {
         </BlurIn>
       </div>
 
-      {/* ===============================================
-          HORIZONTAL SCROLL
-      ================================================ */}
+      {/* HORIZONTAL SCROLL */}
       <div className="relative">
-        {/* Right fade */}
         <div
           className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
           style={{
@@ -205,36 +230,32 @@ export default function Projects() {
           }}
         >
           <div className="flex flex-nowrap gap-4 px-4 sm:px-6 lg:px-8" style={{ width: "max-content" }}>
-            {projects.map((project) => (
-              <div key={project.title} data-project-card>
-                <ProjectCard project={project} isDragging={isDragging} onClick={() => handleProjectClick(project)} />
-              </div>
-            ))}
+            <StaggerList
+              className="flex flex-nowrap gap-4 px-4 sm:px-6 lg:px-8"
+              style={{ width: "max-content" }}
+              delay={0.85}
+              stagger={0.08}
+            >
+              {projects.map((project) => (
+                <StaggerItem key={project.title}>
+                  <div data-project-card>
+                    <ProjectCard
+                      project={project}
+                      isDragging={isDragging}
+                      onClick={() => handleProjectClick(project)}
+                    />
+                  </div>
+                </StaggerItem>
+              ))}
+              <div aria-hidden="true" style={{ width: spacerWidth, flexShrink: 0 }} />
+            </StaggerList>
           </div>
         </div>
       </div>
 
-      {/* ===============================================
-          NAV — arrows + dots
-      ================================================ */}
       <div className="mt-6 flex items-center justify-center gap-4 px-4 sm:gap-6">
-        {/* LEFT ARROW — hidden on mobile */}
-        <button
-          type="button"
-          onClick={prev}
-          disabled={atStart}
-          aria-label="Previous project"
-          className="hidden items-center justify-center rounded-full border p-2 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed sm:flex"
-          style={{
-            borderColor: atStart ? "var(--color-border)" : "var(--color-border-hover)",
-            color: atStart ? "var(--color-foreground-subtle)" : "var(--color-foreground)",
-          }}
-        >
-          <ArrowLeft size={16} />
-        </button>
-
         {/* DOTS */}
-        <div className="flex items-center gap-1">
+        <div className="mt-6 flex items-center justify-center gap-1 px-4">
           {projects.map((project, i) => {
             const isActive = i === activeIndex;
 
@@ -245,9 +266,8 @@ export default function Projects() {
                 onClick={() => goTo(i)}
                 aria-label={`Go to ${project.title}`}
                 aria-current={isActive}
-                className="group relative flex h-8 items-center justify-center px-1"
+                className="flex h-8 items-center justify-center px-1"
               >
-                {/* Pill / dot */}
                 <span
                   className="block rounded-full transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
                   style={{
@@ -256,42 +276,13 @@ export default function Projects() {
                     backgroundColor: isActive ? "var(--color-accent)" : "var(--color-border-hover)",
                   }}
                 />
-
-                {/* Tooltip */}
-                <span
-                  className="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 whitespace-nowrap rounded-md border px-2 py-1 text-[10px] font-medium opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                  style={{
-                    backgroundColor: "var(--color-background-card)",
-                    borderColor: "var(--color-border)",
-                    color: "var(--color-foreground)",
-                  }}
-                >
-                  {project.title}
-                </span>
               </button>
             );
           })}
         </div>
-
-        {/* RIGHT ARROW — hidden on mobile */}
-        <button
-          type="button"
-          onClick={next}
-          disabled={atEnd}
-          aria-label="Next project"
-          className="hidden items-center justify-center rounded-full border p-2 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed sm:flex"
-          style={{
-            borderColor: atEnd ? "var(--color-border)" : "var(--color-border-hover)",
-            color: atEnd ? "var(--color-foreground-subtle)" : "var(--color-foreground)",
-          }}
-        >
-          <ArrowRight size={16} />
-        </button>
       </div>
 
-      {/* ===============================================
-          MODAL — unchanged
-      ================================================ */}
+      {/* MODAL */}
       <AnimatePresence>
         {selectedProject && (
           <>
@@ -320,20 +311,27 @@ export default function Projects() {
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
             >
               <div
-                className="relative w-full h-55 md:h-70 overflow-hidden"
+                className="relative w-full h-[220px] md:h-[280px] overflow-hidden"
                 style={{ backgroundColor: "var(--color-background-secondary)" }}
               >
-                <img
+                <Image
                   src={selectedProject.image}
                   alt={selectedProject.title}
+                  fill
                   sizes="(max-width: 768px) 100vw, 672px"
                   className="object-contain object-center"
+                  priority
                 />
-
                 <button
                   onClick={closeModal}
                   aria-label="Close project"
-                  className="absolute top-3 right-3 z-10 p-2 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-125 active:scale-90"
+                  className="absolute top-3 right-3 z-10 p-2 transition-transform
+               duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
+               hover:scale-125 active:scale-90"
+                  style={{
+                    backgroundColor: "rgba(15,15,15,0.8)",
+                    color: "var(--color-foreground)",
+                  }}
                 >
                   <X size={20} />
                 </button>
