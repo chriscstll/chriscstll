@@ -6,6 +6,7 @@ import { Menu, X, Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
 import { contact, navLinks } from "@/data/portfolio";
+import { BlurIn } from "@/components/ui/motion-primitives";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -116,21 +117,23 @@ export default function Navbar() {
           className="max-w-6xl mx-auto px-8 lg:px-12 h-14 md:h-16
                         flex items-center justify-between"
         >
-          <a
-            href="#"
-            className="transition-opacity duration-200 hover:opacity-75 relative z-50"
-            onClick={closeMenu}
-            aria-label="Christian M. Castillo"
-          >
-            <Image
-              src="/logo.png"
-              alt="logo"
-              width={55}
-              height={60}
-              style={{ width: "auto", height: "auto" }}
-              priority
-            />
-          </a>
+          <BlurIn trigger="mount" delay={0.1} blur={8} y={-6} duration={0.5} className="relative z-50">
+            <a
+              href="/"
+              className="transition-opacity duration-200 hover:opacity-75 relative z-50"
+              onClick={closeMenu}
+              aria-label="Christian M. Castillo"
+            >
+              <Image
+                src="/logo.png"
+                alt="logo"
+                width={55}
+                height={60}
+                style={{ width: "auto", height: "auto" }}
+                priority
+              />
+            </a>
+          </BlurIn>
 
           <ul className="hidden md:flex items-center gap-8">
             {navLinks.map((link, i) => {
@@ -191,14 +194,16 @@ export default function Navbar() {
           </ul>
 
           {/* HAMB MENU */}
-          <button
-            className="md:hidden p-2 -mr-2 rounded-lg relative z-50 text-foreground-muted hover:text-foreground transition-colors duration-200"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isMenuOpen}
-          >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          <BlurIn trigger="mount" delay={0.2} blur={8} y={-6} duration={0.5} className="md:hidden relative z-50">
+            <button
+              className="p-2 -mr-2 rounded-lg text-foreground-muted hover:text-foreground transition-colors duration-200"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+            >
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </BlurIn>
         </nav>
       </header>
 

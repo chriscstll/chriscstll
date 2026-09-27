@@ -30,7 +30,7 @@ export const about = {
   name: "I'm Christian Castillo",
   stats: [
     { value: "2", label: "years" },
-    { value: "12", label: "projects" },
+    { value: "8", label: "projects" },
   ],
   privacyNote: "NDA'd client projects aren't listed.",
   bio: [
@@ -49,12 +49,12 @@ export const about = {
       },
     },
     {
-      id: "techstack",
-      label: "Tech Stack",
-      description: "The tools and technologies I work with.",
+      id: "the-unlogged-hours",
+      label: "The unlogged hours",
+      description: "Some hours are spent. Some are invested. They look identical.",
       content: {
-        title: "My Tech Stack",
-        body: "Placeholder — describe your stack, how you use each technology, and what you're currently learning.",
+        title: "Unlogged hours",
+        body: "Reading, mostly — sci-fi, essays, anything that isn't a screen. Long walks with no destination. Slow coffee before the day starts. Rebuilding my setup every few months for no clear reason. Cooking the same five dishes well. None of it looks productive. All of it is. The ideas that end up in the work almost never arrive while I'm working — they arrive on a walk, in the shower, mid-conversation about something else entirely. The best hours don't show up in any log.",
       },
     },
   ],
