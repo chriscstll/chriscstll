@@ -29,7 +29,7 @@ export const about = {
   heading: "Hello!",
   name: "I'm Christian Castillo",
   stats: [
-    { value: "2", label: "years" },
+    { value: "2+", label: "years" },
     { value: "8", label: "projects" },
   ],
   privacyNote: "NDA'd client projects aren't listed.",
@@ -37,7 +37,6 @@ export const about = {
     "Christian Castillo is a frontend developer based in the Philippines, focused on building thoughtful web applications using React, Typescript and Tailwind CSS",
     "I'm open to opportunities where i can contribute to meaningful work to keep learning and developing my skills as a frontend developer",
   ],
-  resumeUrl: "/resume",
   cards: [
     {
       id: "frontend",
@@ -45,7 +44,7 @@ export const about = {
       description: "What I do and how I approach building for the web.",
       content: {
         title: "Frontend Developer",
-        body: "Placeholder — describe your frontend approach, what you enjoy building, and what kind of work you're looking for.",
+        body: "",
       },
     },
     {
@@ -54,7 +53,7 @@ export const about = {
       description: "Some hours are spent. Some are invested. They look identical.",
       content: {
         title: "Unlogged hours",
-        body: "Reading, mostly — sci-fi, essays, anything that isn't a screen. Long walks with no destination. Slow coffee before the day starts. Rebuilding my setup every few months for no clear reason. Cooking the same five dishes well. None of it looks productive. All of it is. The ideas that end up in the work almost never arrive while I'm working — they arrive on a walk, in the shower, mid-conversation about something else entirely. The best hours don't show up in any log.",
+        body: "",
       },
     },
   ],
@@ -74,20 +73,20 @@ export type Project = {
 export const projectsTagline = "None of these changed anything. All of them changed me";
 export const projects: Project[] = [
   {
-    title: "Your Real Project One",
-    shortDescription: "One line — what it does.",
+    title: "J4G Autoworks",
+    shortDescription: "",
     description: "Two sentences — what it does and what problem it solves.",
-    tech: ["HTML", "CSS", "JavaScript"],
+    tech: ["VS Code", "GitHub", "Git", "HTML", "CSS", "JavaScript"],
     liveUrl: "https://chriscstll.github.io/j4g_Autoworks/",
     githubUrl: "https://github.com/chriscstll/j4g_Autoworks",
     image: "/projects/project-one.png",
     status: "live",
   },
   {
-    title: "Your Real Project Two",
-    shortDescription: "One line — what it does.",
+    title: "King Panda Defense",
+    shortDescription: "",
     description: "Two sentences — what it does and what problem it solves.",
-    tech: ["HTML", "SCSS", "JavaScript"],
+    tech: ["VS Code", "GitHub", "Git", "HTML", "SCSS", "JavaScript"],
     liveUrl: "https://chriscstll.github.io/KingPandaDefense/",
     githubUrl: "https://github.com/chriscstll/KingPandaDefense",
     image: "/projects/project-two.png",

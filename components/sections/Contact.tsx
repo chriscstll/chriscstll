@@ -247,7 +247,7 @@ export default function Contact() {
                   name="message"
                   label="Message"
                   type="textarea"
-                  placeholder="Tell me what you're working on…"
+                  placeholder="Tell me what we're working on…"
                   value={values.message}
                   onChange={(v) => handleChange("message", v)}
                   onBlur={() => handleBlur("message")}
