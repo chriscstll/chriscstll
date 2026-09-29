@@ -120,7 +120,7 @@ export default function Hero() {
             as="h1"
             text={hero.tagline}
             trigger="view"
-            className="font-heading font-bold leading-tight text-4xl sm:text-5xl lg:text-6xl mb-3"
+            className="font-heading font-bold leading-tight text-[clamp(2.25rem,5vw,4rem)] mb-3"
             charClassName="gradient-text"
             delay={0.25}
             stagger={0.02}

@@ -41,19 +41,19 @@ export const about = {
     {
       id: "frontend",
       label: "Frontend Developer",
-      description: "What I do and how I approach building for the web.",
+      description: "Less than it looks. More than it shows.",
       content: {
         title: "Frontend Developer",
-        body: "",
+        body: "I've been building frontends for two years.|In that time I've worked with clients, built for businesses and consumers, and shipped personal projects on the side.|Every one of them taught me something different. Some taught me how to work with a team, others taught me how to work alone. Client work taught me how to listen. Personal work taught me how to build things nobody asked for.",
       },
     },
     {
       id: "the-unlogged-hours",
-      label: "The unlogged hours",
+      label: "Unlogged hours",
       description: "Some hours are spent. Some are invested. They look identical.",
       content: {
         title: "Unlogged hours",
-        body: "",
+        body: " for businesses and consumers, and shipped personal projects on the side.|Every one of them taught me something different. Some taught me how to work with a team, others taught me how to work alone. Client work taught me how to listen. Personal work taught me how to build things nobody asked for.",
       },
     },
   ],

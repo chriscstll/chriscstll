@@ -105,9 +105,10 @@ export default function Navbar() {
           backgroundColor: isMenuOpen
             ? "var(--color-background-secondary)"
             : isScrolled
-              ? "rgba(15,15,15,0.85)"
+              ? "rgba(30, 32, 30, 0.85)"
               : "transparent",
-          borderBottom: isScrolled && !isMenuOpen ? "1px solid var(--color-border)" : "1px solid transparent",
+          borderBottom:
+            isScrolled && !isMenuOpen ? "1px solid var(--color-background-secondary)" : "1px solid transparent",
           backdropFilter: !isMenuOpen && isScrolled ? "blur(12px)" : "none",
           WebkitBackdropFilter: !isMenuOpen && isScrolled ? "blur(12px)" : "none",
           transform: isHidden && !isMenuOpen ? "translateY(-100%)" : "translateY(0)",
@@ -129,7 +130,7 @@ export default function Navbar() {
                 alt="logo"
                 width={55}
                 height={60}
-                style={{ width: "auto", height: "auto" }}
+                className="h-10 w-auto sm:h-11 md:h-12"
                 priority
               />
             </a>
@@ -196,7 +197,7 @@ export default function Navbar() {
           {/* HAMB MENU */}
           <BlurIn trigger="mount" delay={0.2} blur={8} y={-6} duration={0.5} className="md:hidden relative z-50">
             <button
-              className="p-2 -mr-2 rounded-lg text-foreground-muted hover:text-foreground transition-colors duration-200"
+              className="p-2 -mr-2 rounded-lg cursor-pointer text-foreground-muted hover:text-foreground transition-colors duration-200"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMenuOpen}
