@@ -18,10 +18,10 @@ export const navLinks = [
 
 export const hero = {
   name: "Christian M. Castillo",
-  title: "Frontend Developer",
   tagline: "\u201CThe decisions nobody notices are the ones that matter most\u201D",
+  subtitle: "I build UI that disappears into the experience.",
   cta: {
-    contactbtn: { label: "Contact Me", href: "#contact" },
+    contactbtn: { label: "Say something", href: "#contact" },
   },
 };
 
@@ -33,10 +33,6 @@ export const about = {
     { value: "8", label: "projects" },
   ],
   privacyNote: "NDA'd client projects aren't listed.",
-  bio: [
-    "Christian Castillo is a frontend developer based in the Philippines, focused on building thoughtful web applications using React, Typescript and Tailwind CSS",
-    "I'm open to opportunities where i can contribute to meaningful work to keep learning and developing my skills as a frontend developer",
-  ],
   cards: [
     {
       id: "frontend",
@@ -44,7 +40,7 @@ export const about = {
       description: "Less than it looks. More than it shows.",
       content: {
         title: "Frontend Developer",
-        body: "I've been building frontends for two years.|In that time I've worked with clients, built for businesses and consumers, and shipped personal projects on the side.|Every one of them taught me something different. Some taught me how to work with a team, others taught me how to work alone. Client work taught me how to listen. Personal work taught me how to build things nobody asked for.",
+        body: "I've been building frontends for two years.In that time I've worked with clients, built for businesses and consumers, and shipped personal projects on the side.Every one of them taught me something different. Some taught me how to work with a team, others taught me how to work alone. Client work taught me how to listen. Personal work taught me how to build things nobody asked for.",
       },
     },
     {
@@ -53,7 +49,7 @@ export const about = {
       description: "Some hours are spent. Some are invested. They look identical.",
       content: {
         title: "Unlogged hours",
-        body: " for businesses and consumers, and shipped personal projects on the side.|Every one of them taught me something different. Some taught me how to work with a team, others taught me how to work alone. Client work taught me how to listen. Personal work taught me how to build things nobody asked for.",
+        body: "",
       },
     },
   ],

@@ -111,7 +111,7 @@ const iconVariant = (i: number): Variants => ({
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative min-h-svh flex items-center px-6 pt-14 md:pt-16">
+    <section id="hero" className="relative min-h-svh flex items-center px-6 pt-10 md:pt-12">
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 items-center py-16 md:py-0">
         {/* HERO TAGLINE */}
         <div className="flex flex-col items-start">
@@ -128,6 +128,9 @@ export default function Hero() {
             blur={12}
             y={-16}
           />
+          <BlurIn delay={0.9} blur={6} y={8}>
+            <p className="text-sm sm:text-base max-w-md text-foreground-muted">{hero.subtitle}</p>
+          </BlurIn>
 
           {/* CTA  */}
           <BlurIn
@@ -136,26 +139,14 @@ export default function Hero() {
             duration={0.6}
             blur={12}
             y={12}
-            className="flex flex-col items-start gap-3 mb-8"
+            className="flex flex-col items-start gap-3 mt-[clamp(2.5rem,6vw,5rem)]"
           >
             <a
-              href={hero.cta.contactbtn.href}
-              className="group relative inline-flex items-center overflow-hidden rounded-full border border-border bg-background-card px-7 py-2.5 text-sm font-semibold text-foreground transition-all duration-300 hover:border-accent hover:text-accent"
+              href="#contact"
+              className="group relative inline-flex items-center pb-1 text-lg font-semibold text-foreground transition-colors duration-300 hover:text-accent sm:text-xl md:text-2xl"
             >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-40 transition-opacity duration-300 group-hover:opacity-100"
-                style={{
-                  background:
-                    "conic-gradient(from 0deg at 50% 50%, transparent 0deg, var(--color-accent-subtle) 40deg, transparent 80deg)",
-                  animation: "radar 3s linear infinite",
-                }}
-              />
-              <span
-                aria-hidden
-                className="absolute inset-0 z-0 -translate-x-full bg-linear-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
-              />
-              <span className="relative z-10">{hero.cta.contactbtn.label}</span>
+              {hero.cta.contactbtn.label}
+              <span className="absolute bottom-0 left-0 h-px w-full origin-right scale-x-0 bg-accent transition-transform duration-500 ease-out group-hover:origin-left group-hover:scale-x-100" />
             </a>
           </BlurIn>
         </div>

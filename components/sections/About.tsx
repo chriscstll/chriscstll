@@ -102,8 +102,11 @@ export default function About() {
             </h3>
 
             <p
-              className="text-sm leading-[1.65] tracking-wide min-h-35 md:min-h-45 md:max-w-90 lg:max-w-md"
-              style={{ color: "var(--color-foreground-muted)" }}
+              className="text-sm leading-[1.65] tracking-wide min-h-45 md:min-h-55 md:max-w-90 lg:max-w-md rounded-md px-4 py-3"
+              style={{
+                color: "var(--color-foreground-muted)",
+                backgroundColor: "var(--color-background-card)",
+              }}
             >
               {about.cards[activeCard].content.body}
             </p>
