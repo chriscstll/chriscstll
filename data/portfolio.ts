@@ -19,7 +19,7 @@ export const navLinks = [
 export const hero = {
   name: "Christian M. Castillo",
   tagline: "\u201CThe decisions nobody notices are the ones that matter most\u201D",
-  subtitle: "I build UI that disappears into the experience.",
+  subtitle: "I craft seamless web applications through thoughtful engineering.",
   cta: {
     contactbtn: { label: "Say something", href: "#contact" },
   },
@@ -49,7 +49,7 @@ export const about = {
       description: "Some hours are spent. Some are invested. They look identical.",
       content: {
         title: "Unlogged hours",
-        body: "",
+        body: "When I’m not coding, I’m usually looking for somewhere to go or something to do outside. I enjoy cars, going on long drives by myself, doing off-road trails, camping, and overlanding. I also spend a fair amount of time in the kitchen. Sometimes I’m trying out a new recipe, sometimes I’m just cooking whatever I feel like. These are the things that help me slow down, clear my head, and enjoy some time away from the screen.",
       },
     },
   ],
@@ -71,7 +71,8 @@ export const projects: Project[] = [
   {
     title: "J4G Autoworks",
     shortDescription: "",
-    description: "Two sentences — what it does and what problem it solves.",
+    description:
+      "I built a web-based booking system for J4G Autoworks to simplify how customers schedule automotive services. The application uses Google Apps Script for booking management and automated email notifications, reducing the need for manual appointment handling.",
     tech: ["VS Code", "GitHub", "Git", "HTML", "CSS", "JavaScript"],
     liveUrl: "https://chriscstll.github.io/j4g_Autoworks/",
     githubUrl: "https://github.com/chriscstll/j4g_Autoworks",
@@ -81,7 +82,8 @@ export const projects: Project[] = [
   {
     title: "King Panda Defense",
     shortDescription: "",
-    description: "Two sentences — what it does and what problem it solves.",
+    description:
+      "A responsive frontend experience developed for King Panda Defense to establish a professional digital presence and improve how customers discover and engage with its services. The architecture is structured to accommodate additional functionality, including an online booking workflow in future releases.",
     tech: ["VS Code", "GitHub", "Git", "HTML", "SCSS", "JavaScript"],
     liveUrl: "https://chriscstll.github.io/KingPandaDefense/",
     githubUrl: "https://github.com/chriscstll/KingPandaDefense",
