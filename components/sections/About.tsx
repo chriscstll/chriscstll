@@ -12,7 +12,7 @@ export default function About() {
     <section id="about" className="section-container">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
         {/* LEFT SIDE */}
-        <StaggerList className="flex flex-col items-start" stagger={0.18} delay={0.1}>
+        <StaggerList className="flex flex-col items-start" stagger={0.25} delay={0.25}>
           {about.cards.map((card, i) => (
             <StaggerItem key={card.id} className="flex items-start gap-4">
               <div className="flex flex-col items-center">
@@ -79,7 +79,7 @@ export default function About() {
               as="span"
               text={about.heading}
               className="block text-xs tracking-widest text-foreground-subtle mb-2"
-              delay={0.3}
+              delay={0.35}
               stagger={0.05}
               splitBy="char"
               blur={6}
@@ -89,14 +89,14 @@ export default function About() {
               text={about.name}
               className="block font-bold leading-tight text-[clamp(1.75rem,4.5vw,3.5rem)]"
               charClassName="gradient-text"
-              delay={0.55}
+              delay={0.6}
               stagger={0.04}
               splitBy="char"
               blur={10}
               y={-14}
             />
           </h2>
-          <BlurIn delay={1.1} blur={12} y={16}>
+          <BlurIn delay={1.2} blur={12} y={16}>
             <h3 className="font-heading font-bold text-lg md:text-xl mb-3" style={{ color: "var(--color-foreground)" }}>
               {about.cards[activeCard].content.title}
             </h3>

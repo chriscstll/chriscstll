@@ -51,7 +51,7 @@ export default function Footer() {
 
   return (
     <footer className="" style={{ backgroundColor: "var(--color-background-secondary)" }}>
-      <BlurIn blur={6} y={12} className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+      <BlurIn delay={0.5} blur={6} y={12} className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
         {/* ===============================================
             LAYOUT — everything stacked, all centered
         ================================================ */}

@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AlertCircle, Check, Loader2, Send } from "lucide-react";
+import { AlertCircle, Check, Loader2 } from "lucide-react";
 import { CascadeText, BlurIn } from "@/components/ui/motion-primitives";
 import { contact } from "@/data/portfolio";
 
@@ -138,7 +138,7 @@ export default function Contact() {
           y={-14}
         />
 
-        <BlurIn delay={0.7} blur={8} y={10} className="mb-10 max-w-xl">
+        <BlurIn delay={0.75} blur={8} y={10} className="mb-10 max-w-xl">
           <p
             className="text-sm italic leading-relaxed sm:text-base"
             style={{ color: "var(--color-foreground-subtle)" }}
@@ -148,7 +148,7 @@ export default function Contact() {
         </BlurIn>
 
         {/* FORM */}
-        <BlurIn delay={0.75} blur={10} y={14} className="w-full">
+        <BlurIn delay={1.1} blur={10} y={14} className="w-full">
           <AnimatePresence mode="wait">
             {status === "success" ? (
               <motion.div
@@ -156,7 +156,7 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 12, filter: "blur(8px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="flex flex-col items-start gap-4 rounded-lg border p-6"
                 style={{
                   borderColor: "var(--color-accent)",
@@ -264,29 +264,16 @@ export default function Contact() {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border px-6 py-2.5 text-sm font-semibold transition-all duration-300 disabled:opacity-60"
-                    style={{
-                      borderColor: "var(--color-accent)",
-                      color: "var(--color-accent)",
-                    }}
+                    className="inline-flex items-center justify-center gap-2 text-m font-semibold tracking-normal cursor-pointer transition-all duration-500 ease-out hover:tracking-[0.15em] disabled:opacity-60 text-accent"
                   >
-                    <span
-                      aria-hidden
-                      className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
-                    />
-                    <span className="relative z-10 inline-flex items-center gap-2">
-                      {status === "submitting" ? (
-                        <>
-                          <Loader2 size={14} className="animate-spin" />
-                          Sending…
-                        </>
-                      ) : (
-                        <>
-                          <Send size={14} />
-                          Send message
-                        </>
-                      )}
-                    </span>
+                    {status === "submitting" ? (
+                      <>
+                        <Loader2 size={14} className="animate-spin" />
+                        Sending…
+                      </>
+                    ) : (
+                      <>Send message</>
+                    )}
                   </button>
 
                   <AnimatePresence>
@@ -311,7 +298,7 @@ export default function Contact() {
         </BlurIn>
 
         {/* EMAIL FALLBACK */}
-        <BlurIn delay={0.95} blur={6} y={10}>
+        <BlurIn delay={1.35} blur={6} y={10}>
           <div
             className="mt-8 pt-6 text-sm"
             style={{

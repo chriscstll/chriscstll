@@ -65,19 +65,22 @@ export function CascadeText({
   }
 
   const words = text.split(" ");
-  let charIndex = 0;
 
   return (
     <Tag
       className={className}
       aria-label={text}
+      initial="hidden"
       {...(trigger === "mount"
-        ? { initial: "hidden", animate: "visible" }
+        ? { animate: "visible" }
         : {
-            initial: "hidden",
             whileInView: "visible",
             viewport: { once: true, amount: 0.3 },
           })}
+      transition={{
+        staggerChildren: stagger,
+        delayChildren: delay,
+      }}
     >
       {words.map((word, wi) => (
         <span
@@ -88,25 +91,24 @@ export function CascadeText({
             marginRight: wi < words.length - 1 ? "0.25em" : undefined,
           }}
         >
-          {Array.from(word).map((char) => {
-            const i = charIndex++;
-            return (
-              <motion.span
-                key={i}
-                className={charClassName}
-                style={{ willChange: "filter, transform, opacity" }}
-                initial={{ opacity: 0, filter: `blur(${blur}px)`, y }}
-                animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                transition={{
-                  duration,
-                  delay: delay + i * stagger,
-                  ease: EASE_OUT_EXPO,
-                }}
-              >
-                {char}
-              </motion.span>
-            );
-          })}
+          {Array.from(word).map((char, ci) => (
+            <motion.span
+              key={ci}
+              className={charClassName}
+              style={{ willChange: "filter, transform, opacity" }}
+              variants={{
+                hidden: { opacity: 0, filter: `blur(${blur}px)`, y },
+                visible: {
+                  opacity: 1,
+                  filter: "blur(0px)",
+                  y: 0,
+                  transition: { duration, ease: EASE_OUT_EXPO },
+                },
+              }}
+            >
+              {char}
+            </motion.span>
+          ))}
         </span>
       ))}
     </Tag>

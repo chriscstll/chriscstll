@@ -90,7 +90,7 @@ const iconVariant = (i: number): Variants => ({
   initial: {
     opacity: 0,
     scale: 0.3,
-    x: (i % 2 === 0 ? 1 : -1) * (40 + i * 15), // fly in from alternating sides
+    x: (i % 2 === 0 ? 1 : -1) * (40 + i * 15),
     y: i * 25 - 40,
     rotate: (i % 2 === 0 ? 1 : -1) * 90,
   },
@@ -101,7 +101,7 @@ const iconVariant = (i: number): Variants => ({
     y: 0,
     rotate: 0,
     transition: {
-      delay: 0.5 + i * 0.1,
+      delay: 1.9 + i * 0.1,
       type: "spring",
       stiffness: 120,
       damping: 14,
@@ -152,29 +152,47 @@ export default function Hero() {
         </div>
 
         {/* HERO IMG */}
-        <BlurIn
-          trigger="view"
-          delay={0.2}
-          duration={0.9}
-          blur={16}
-          y={24}
-          className="relative flex items-center justify-center"
-        >
+        <div className="relative flex items-center justify-center">
           <div className="relative w-full h-112.5 sm:h-137.5 md:h-175">
-            {/* SVG BLOB */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-              <svg viewBox="0 0 500 500" className="w-[85%] h-[85%] sm:w-[80%] sm:h-[80%]"></svg>
-            </div>
+            {/* BLOB */}
+            <BlurIn
+              trigger="view"
+              delay={0.4}
+              duration={0.9}
+              blur={14}
+              y={20}
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            >
+              <svg viewBox="0 0 500 500" className="w-[90%] h-[90%]" aria-hidden="true">
+                <path
+                  fill="var(--color-background-secondary)"
+                  fillOpacity="0.8"
+                  d="M220,80 C260,60 310,70 350,100 C390,130 420,180 420,230 C420,280 400,320 380,350 C360,380 330,420 280,440 C230,460 170,450 120,420 C70,390 40,340 50,290 C60,240 90,200 130,170 C170,140 190,100 220,80 Z"
+                />
+                <circle cx="80" cy="120" r="4" fill="var(--color-background-secondary)" fillOpacity="0.4" />
+                <circle cx="440" cy="380" r="3" fill="var(--color-background-secondary)" fillOpacity="0.4" />
+                <circle cx="60" cy="400" r="5" fill="var(--color-background-secondary)" fillOpacity="0.3" />
+                <circle cx="430" cy="130" r="4" fill="var(--color-background-secondary)" fillOpacity="0.3" />
+              </svg>
+            </BlurIn>
 
-            {/* IMAGE */}
-            <div className="relative w-full h-full overflow-hidden">
+            {/* IMG*/}
+            <BlurIn
+              trigger="view"
+              delay={1.2}
+              duration={1.0}
+              blur={16}
+              y={12}
+              className="absolute inset-0 overflow-hidden"
+            >
               <Image
                 src="/profile-photo.png"
                 alt="Christian M. Castillo"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain object-center"
+                className="object-contain object-center select-none pointer-events-none"
                 style={{ filter: "grayscale(100%) contrast(1.1) brightness(0.85)" }}
+                draggable={false}
                 priority
               />
               <div
@@ -182,13 +200,13 @@ export default function Hero() {
                 aria-hidden="true"
                 style={{ background: "linear-gradient(to top, var(--color-background), transparent)" }}
               />
-            </div>
+            </BlurIn>
 
-            {/* TECH ICONS*/}
+            {/* TECH ICONS */}
             {techIcons.map((icon, i) => (
               <motion.div
                 key={icon.name}
-                className={`absolute flex items-center justify-center w-10 h-10 z-10 ${icon.position}`}
+                className={`absolute flex items-center justify-center w-10 h-10 z-20 ${icon.position}`}
                 variants={iconVariant(i)}
                 initial="initial"
                 whileInView="animate"
@@ -199,7 +217,7 @@ export default function Hero() {
               </motion.div>
             ))}
           </div>
-        </BlurIn>
+        </div>
       </div>
     </section>
   );

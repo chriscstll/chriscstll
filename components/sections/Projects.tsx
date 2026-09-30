@@ -186,7 +186,7 @@ export default function Projects() {
           y={-10}
         />
 
-        <BlurIn delay={0.65} blur={8} y={10} className="mt-6 max-w-xl">
+        <BlurIn delay={0.75} blur={8} y={10} className="mt-6 max-w-xl">
           <p
             className="text-sm italic leading-relaxed sm:text-base"
             style={{ color: "var(--color-foreground-subtle)" }}
@@ -215,7 +215,7 @@ export default function Projects() {
           style={{
             display: "flex",
             flexDirection: "row",
-            overflowX: "scroll", // ← fixed from hidden
+            overflowX: "scroll",
             overflowY: "hidden",
             paddingBottom: "1rem",
             scrollSnapType: "none",
@@ -231,8 +231,8 @@ export default function Projects() {
           <StaggerList
             className="flex flex-nowrap gap-4 px-4 sm:px-6 lg:px-8"
             style={{ width: "max-content" }}
-            delay={0.85}
-            stagger={0.08}
+            stagger={0.12}
+            delay={1.0}
           >
             {projects.map((project) => (
               <StaggerItem key={project.title} data-project-card>
@@ -245,34 +245,35 @@ export default function Projects() {
       </div>
 
       {/* DOTS */}
-      <BlurIn delay={1.2} blur={8} y={8} className="mt-6 flex items-center justify-center gap-4 px-4 sm:gap-6">
-        <div className="mt-6 flex items-center justify-center gap-4 px-4 sm:gap-6">
-          <div className="mt-6 flex items-center justify-center gap-1 px-4">
-            {projects.map((project, i) => {
-              const isActive = i === activeIndex;
+      <BlurIn
+        delay={1.6}
+        blur={8}
+        y={8}
+        className="mt-6 flex items-center justify-center gap-0.5 px-4 sm:gap-1 md:gap-1.5"
+      >
+        {projects.map((project, i) => {
+          const isActive = i === activeIndex;
 
-              return (
-                <button
-                  key={project.title}
-                  type="button"
-                  onClick={() => goTo(i)}
-                  aria-label={`Go to ${project.title}`}
-                  aria-current={isActive}
-                  className="flex h-8 items-center justify-center px-1"
-                >
-                  <span
-                    className="block rounded-full transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                    style={{
-                      width: isActive ? "20px" : "6px",
-                      height: "6px",
-                      backgroundColor: isActive ? "var(--color-accent)" : "var(--color-border-hover)",
-                    }}
-                  />
-                </button>
-              );
-            })}
-          </div>
-        </div>
+          return (
+            <button
+              key={project.title}
+              type="button"
+              onClick={() => goTo(i)}
+              aria-label={`Go to ${project.title}`}
+              aria-current={isActive}
+              className="flex h-8 items-center justify-center px-0.5 sm:px-1"
+            >
+              <span
+                className="block rounded-full transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                style={{
+                  width: isActive ? "20px" : "6px",
+                  height: "6px",
+                  backgroundColor: isActive ? "var(--color-accent)" : "var(--color-border-hover)",
+                }}
+              />
+            </button>
+          );
+        })}
       </BlurIn>
 
       {/* MODAL */}

@@ -48,6 +48,10 @@
     line-height: 1.1;
     color: var(--color-foreground);
   }
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 4px;
