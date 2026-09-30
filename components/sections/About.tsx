@@ -12,7 +12,7 @@ export default function About() {
     <section id="about" className="section-container">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
         {/* LEFT SIDE */}
-        <StaggerList className="flex flex-col items-start" stagger={0.25} delay={0.25}>
+        <StaggerList className="order-2 md:order-1 flex flex-col items-start" stagger={0.25} delay={1.1}>
           {about.cards.map((card, i) => (
             <StaggerItem key={card.id} className="flex items-start gap-4">
               <div className="flex flex-col items-center">
@@ -73,7 +73,7 @@ export default function About() {
         </StaggerList>
 
         {/* RIGHT SIDE */}
-        <div className="flex flex-col gap-6">
+        <div className="order-1 md:order-2 flex flex-col gap-6">
           <h2>
             <CascadeText
               as="span"
@@ -114,7 +114,7 @@ export default function About() {
         </div>
       </div>
       {/* STATS ROW */}
-      <BlurIn delay={0.75} blur={8} y={12} className="mt-6 flex flex-col items-start text-left pl-[10%] lg:pl-67">
+      <BlurIn delay={1.6} blur={8} y={12} className="mt-6 flex flex-col items-start text-left pl-[10%] lg:pl-67">
         <div className="flex items-stretch gap-5 sm:gap-7">
           {about.stats.map((stat, i) => (
             <Fragment key={stat.label}>

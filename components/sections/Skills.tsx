@@ -269,7 +269,7 @@ export default function Skills() {
           </BlurIn>
         ) : (
           // RADIAL ON DESKTOP
-          <BlurIn delay={1.1} blur={10} y={16} className="w-full flex justify-center">
+          <BlurIn delay={1.2} blur={10} y={16} className="w-full flex justify-center">
             <div ref={setContainerEl} className="relative w-full max-w-275 h-110 sm:h-135 md:h-155 lg:h-170">
               {size.w > 0 && size.h > 0 && (
                 <>

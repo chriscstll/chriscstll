@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Mail } from "lucide-react";
+import { AlignRight, SquareX, Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
 import { contact, navLinks } from "@/data/portfolio";
@@ -75,6 +75,8 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 10);
+    onScroll();
+
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -145,23 +147,23 @@ export default function Navbar() {
                 <li key={link.href} className="py-1">
                   <motion.a
                     href={link.href}
-                    className="group relative inline-flex items-center justify-center whitespace-nowrap text-sm transition-colors duration-200"
+                    className="group relative inline-flex items-center justify-center whitespace-nowrap text-sm transition-colors duration-300 ease-out"
                     style={{
                       color: isActive ? "var(--color-accent)" : "var(--color-foreground-muted)",
                     }}
                   >
-                    {/* Left angle bracket — positioned relative to the <a>, not clipped */}
+                    {/* LEFT BRACKET */}
                     <span
                       className={
                         isActive
-                          ? "absolute left-0 top-1/2 -translate-x-[calc(100%+0.25rem)] -translate-y-1/2 text-xs font-normal opacity-100 transition-all duration-300 ease-out"
+                          ? "absolute left-0 top-1/2 -translate-x-[calc(100%+0.25rem)] -translate-y-1/2 text-xs font-normal opacity-100 transition-all duration-300 ease-out delay-150"
                           : "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-normal opacity-0 transition-all duration-300 ease-out group-hover:left-0 group-hover:-translate-x-[calc(100%+0.25rem)] group-hover:opacity-100"
                       }
                     >
                       &lt;
                     </span>
 
-                    {/* Label — clipped for entrance animation only */}
+                    {/* Label */}
                     <span className="relative inline-block overflow-hidden">
                       <motion.span
                         className="inline-block"
@@ -178,11 +180,11 @@ export default function Navbar() {
                       </motion.span>
                     </span>
 
-                    {/* Right angle bracket — positioned relative to the <a>, not clipped */}
+                    {/* RIGHT BRACKET */}
                     <span
                       className={
                         isActive
-                          ? "absolute left-full top-1/2 translate-x-1 -translate-y-1/2 text-xs font-normal opacity-100 transition-all duration-300 ease-out"
+                          ? "absolute left-full top-1/2 translate-x-1 -translate-y-1/2 text-xs font-normal opacity-100 transition-all duration-300 ease-out delay-150"
                           : "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-normal opacity-0 transition-all duration-300 ease-out group-hover:left-full group-hover:translate-x-1 group-hover:opacity-100"
                       }
                     >
@@ -202,7 +204,7 @@ export default function Navbar() {
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMenuOpen}
             >
-              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {isMenuOpen ? <SquareX size={25} /> : <AlignRight size={25} />}
             </button>
           </BlurIn>
         </nav>
@@ -217,7 +219,7 @@ export default function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{
-              duration: 0.4,
+              duration: 0.5,
               ease: [0.4, 0, 0.2, 1],
             }}
           >
@@ -229,7 +231,7 @@ export default function Navbar() {
                 onClick={closeMenu}
                 initial={{ opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.15 + i * 0.07, duration: 0.3, ease: "easeOut" }}
+                transition={{ delay: 0.25 + i * 0.15, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
                 <span className="relative">
                   <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 text-lg font-normal transition-all duration-300 ease-out group-hover:left-0 group-hover:-translate-x-[calc(100%+0.5rem)] group-hover:opacity-100">
@@ -248,7 +250,7 @@ export default function Navbar() {
               className="flex items-center gap-6 pt-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.45, duration: 0.3 }}
+              transition={{ delay: 1.0, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
               <a
                 href={contact.github}
