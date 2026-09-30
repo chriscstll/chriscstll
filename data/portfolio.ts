@@ -29,8 +29,8 @@ export const about = {
   heading: "Hello!",
   name: "I'm Christian Castillo",
   stats: [
-    { value: "2+", label: "years" },
-    { value: "8", label: "projects" },
+    { value: "1+", label: "years" },
+    { value: "6", label: "projects" },
   ],
   privacyNote: "NDA'd client projects aren't listed.",
   cards: [
