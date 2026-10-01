@@ -93,6 +93,9 @@ export default function Skills() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerEl, setContainerEl] = useState<HTMLDivElement | null>(null);
 
+  const [flowTarget, setFlowTarget] = useState<{ group: string; skill: string } | null>(null);
+  const [flowKey, setFlowKey] = useState(0);
+
   useEffect(() => {
     if (!containerEl || isMobile) return;
 
@@ -155,14 +158,29 @@ export default function Skills() {
   const handleSkillClick = (skill: string) => {
     const hasProjects = projects.some((p) => p.status === "live" && p.tech.includes(skill));
     if (!hasProjects) return;
-    setActiveSkill((prev) => (prev === skill ? null : skill));
+
+    const next = activeSkill === skill ? null : skill;
+    setActiveSkill(next);
+
+    if (next) {
+      const group = (Object.keys(skills) as Array<keyof typeof skills>).find((g) => skills[g].includes(skill));
+      if (group) {
+        setFlowTarget({ group, skill });
+        setFlowKey((k) => k + 1);
+      }
+    } else {
+      setFlowTarget(null); // ← clears when deselecting
+    }
   };
 
   const toggleExpanded = () => {
     const next = !isExpanded;
     setIsExpanded(next);
     setPulseKey((k) => k + 1);
-    if (!next) setActiveSkill(null);
+    if (!next) {
+      setActiveSkill(null);
+      setFlowTarget(null);
+    }
   };
 
   const groupNodes = (Object.keys(skills) as Array<keyof typeof skills>).map((group) => ({
@@ -307,34 +325,66 @@ export default function Skills() {
                         />
                       ))}
 
-                      {allSkillNodes.map(({ skill, group, coords }) => {
-                        const groupCoords = getCoords(cx, cy, skillBaseAngles[group], GROUP_RADIUS);
-                        const isActive = activeSkill === skill;
-                        const dx = coords.x - groupCoords.x;
-                        const dy = coords.y - groupCoords.y;
-                        const distance = Math.hypot(dx, dy) || 1;
-                        const startX = groupCoords.x + (dx / distance) * ICON_RADIUS;
-                        const startY = groupCoords.y + (dy / distance) * ICON_RADIUS;
-                        const endX = coords.x - (dx / distance) * ICON_RADIUS;
-                        const endY = coords.y - (dy / distance) * ICON_RADIUS;
+                      {flowTarget &&
+                        (() => {
+                          const groupNode = groupNodes.find((n) => n.group === flowTarget.group);
+                          const skillNode = allSkillNodes.find((n) => n.skill === flowTarget.skill);
+                          if (!groupNode || !skillNode) return null;
 
-                        return (
-                          <motion.line
-                            key={`skill-line-${skill}`}
-                            x1={startX}
-                            y1={startY}
-                            x2={endX}
-                            y2={endY}
-                            stroke={isActive ? "var(--color-accent)" : "var(--color-border)"}
-                            strokeWidth={isActive ? 1.5 : 0.8}
-                            animate={{
-                              stroke: isActive ? "var(--color-accent)" : "var(--color-border)",
-                              strokeWidth: isActive ? 1.5 : 0.8,
-                            }}
-                            transition={{ duration: 0.3 }}
-                          />
-                        );
-                      })}
+                          const dx = skillNode.coords.x - groupNode.coords.x;
+                          const dy = skillNode.coords.y - groupNode.coords.y;
+                          const distance = Math.hypot(dx, dy) || 1;
+                          const startX = groupNode.coords.x + (dx / distance) * ICON_RADIUS;
+                          const startY = groupNode.coords.y + (dy / distance) * ICON_RADIUS;
+                          const endX = skillNode.coords.x - (dx / distance) * ICON_RADIUS;
+                          const endY = skillNode.coords.y - (dy / distance) * ICON_RADIUS;
+
+                          return (
+                            <>
+                              {/* Center → Group */}
+                              <motion.line
+                                key={`flow-center-${flowKey}`}
+                                x1={cx}
+                                y1={cy}
+                                x2={groupNode.coords.x}
+                                y2={groupNode.coords.y}
+                                stroke="var(--color-accent)"
+                                strokeWidth={1.5}
+                                strokeLinecap="round"
+                                initial={{ pathLength: 0, opacity: 0 }}
+                                animate={{ pathLength: 1, opacity: 1 }}
+                                transition={{
+                                  pathLength: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
+                                  opacity: { duration: 0.1 },
+                                }}
+                                style={{ filter: "drop-shadow(0 0 4px var(--color-accent))" }}
+                              />
+
+                              {/* Group → Skill */}
+                              <motion.line
+                                key={`flow-skill-${flowKey}`}
+                                x1={startX}
+                                y1={startY}
+                                x2={endX}
+                                y2={endY}
+                                stroke="var(--color-accent)"
+                                strokeWidth={1.5}
+                                strokeLinecap="round"
+                                initial={{ pathLength: 0, opacity: 0 }}
+                                animate={{ pathLength: 1, opacity: 1 }}
+                                transition={{
+                                  pathLength: {
+                                    duration: 0.35,
+                                    delay: 0.35,
+                                    ease: [0.16, 1, 0.3, 1],
+                                  },
+                                  opacity: { duration: 0.1, delay: 0.35 },
+                                }}
+                                style={{ filter: "drop-shadow(0 0 4px var(--color-accent))" }}
+                              />
+                            </>
+                          );
+                        })()}
                     </svg>
 
                     {/* MIDDLE RING */}
@@ -464,7 +514,7 @@ export default function Skills() {
                           className="absolute inset-0 rounded-full pointer-events-none"
                           style={{ border: "2px solid var(--color-accent)" }}
                           initial={{ opacity: 0.75, scale: 1 }}
-                          animate={{ opacity: 0, scale: 2.4 }}
+                          animate={{ opacity: 0, scale: 1.6 }}
                           transition={{
                             duration: 1.8,
                             repeat: Infinity,
@@ -480,7 +530,7 @@ export default function Skills() {
                           className="absolute inset-0 rounded-full pointer-events-none"
                           style={{ border: "2px solid var(--color-accent)" }}
                           initial={{ opacity: 0.8, scale: 1 }}
-                          animate={{ opacity: 0, scale: 3.2 }}
+                          animate={{ opacity: 0, scale: 2.2 }}
                           transition={{
                             duration: 1.1,
                             ease: [0.16, 1, 0.3, 1],
@@ -490,7 +540,7 @@ export default function Skills() {
 
                       <motion.button
                         onClick={toggleExpanded}
-                        className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2"
+                        className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full flex items-center justify-center border-2"
                         style={{
                           backgroundColor: "var(--color-background-card)",
                           borderColor: "var(--color-accent)",
@@ -505,7 +555,7 @@ export default function Skills() {
                         aria-expanded={isExpanded}
                       >
                         <span
-                          className="text-[9px] sm:text-[10px] font-bold font-heading tracking-widest"
+                          className="text-sm sm:text-base font-bold font-heading tracking-widest"
                           style={{ color: "var(--color-accent)" }}
                         >
                           SKILLS

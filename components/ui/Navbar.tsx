@@ -149,7 +149,7 @@ export default function Navbar() {
                     href={link.href}
                     className="group relative inline-flex items-center justify-center whitespace-nowrap text-sm transition-colors duration-300 ease-out"
                     style={{
-                      color: isActive ? "var(--color-accent)" : "var(--color-foreground-muted)",
+                      color: isActive ? "var(--color-accent-hover)" : "var(--color-foreground-muted)",
                     }}
                   >
                     {/* LEFT BRACKET */}

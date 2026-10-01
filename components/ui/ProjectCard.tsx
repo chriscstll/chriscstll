@@ -14,7 +14,7 @@ export default function ProjectCard({ project, onClick, isDragging = false }: Pr
 
   return (
     <div
-      className="shrink-0 w-90 flex flex-col border transition-all duration-300 group"
+      className="shrink-0 w-90 flex flex-col rounded-lg overflow-hidden border transition-all duration-300 group "
       style={{ borderColor: "var(--color-border)" }}
     >
       {/* Image — only this area is clickable */}
@@ -59,7 +59,7 @@ export default function ProjectCard({ project, onClick, isDragging = false }: Pr
               style={{ backgroundColor: "rgba(15,15,15,0.7)" }}
             >
               <span
-                className="text-xs font-medium tracking-widest uppercase px-4 py-2 border"
+                className="text-xs font-medium tracking-widest uppercase px-4 py-2 border rounded-md overflow-hidden"
                 style={{ color: "var(--color-foreground)", borderColor: "var(--color-foreground)" }}
               >
                 View Project
@@ -86,7 +86,7 @@ export default function ProjectCard({ project, onClick, isDragging = false }: Pr
           {project.tech.slice(0, 3).map((t) => (
             <span
               key={t}
-              className="text-xs px-2 py-0.5"
+              className="text-xs px-2 py-0.5 border rounded-md overflow-hidden"
               style={{ color: "var(--color-foreground-subtle)", backgroundColor: "var(--color-background-secondary)" }}
             >
               {t}

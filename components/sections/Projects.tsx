@@ -72,6 +72,19 @@ export default function Projects() {
       pendingIndexRef.current = null;
     }, 600);
   };
+
+  // SCROLL LOCK WHEN MODAL IS OPEN
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedProject]);
+
   /* KEYBOARD */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -290,7 +303,7 @@ export default function Projects() {
             />
 
             <motion.div
-              className="fixed z-50 overflow-y-auto"
+              className="fixed z-50 overflow-hidden rounded-lg"
               style={{
                 backgroundColor: "var(--color-background-card)",
                 top: "50%",
@@ -318,7 +331,10 @@ export default function Projects() {
                 <button
                   onClick={closeModal}
                   aria-label="Close project"
-                  className="absolute top-3 right-3 z-10 p-2 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-125 active:scale-90"
+                  className="absolute top-3 right-3 z-10 p-2 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-125 active:scale-90"
+                  style={{ color: "var(--color-accent-hover)" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-accent-hover)")}
                 >
                   <X size={20} />
                 </button>
@@ -336,11 +352,10 @@ export default function Projects() {
                   {selectedProject.tech.map((t) => (
                     <span
                       key={t}
-                      className="text-xs px-3 py-1 border"
+                      className="inline-flex items-center rounded-sm px-3 py-1.5 text-xs"
                       style={{
                         color: "var(--color-foreground-muted)",
-                        borderColor: "var(--color-border)",
-                        backgroundColor: "var(--color-background-secondary)",
+                        boxShadow: "inset 0 1px 0 var(--color-border-hover), inset 0 -1px 0 var(--color-border-hover)",
                       }}
                     >
                       {t}
@@ -354,10 +369,8 @@ export default function Projects() {
                       href={selectedProject.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium transition-colors duration-200 text-white"
-                      style={{ backgroundColor: "var(--color-accent)" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--color-accent-hover)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--color-accent)")}
+                      className="group inline-flex items-center gap-2 rounded-md border border-transparent px-4 py-2 text-sm font-medium transition-all duration-300 hover:border-accent"
+                      style={{ color: "var(--color-accent-text)" }}
                     >
                       <ExternalLink size={14} />
                       Live Site
@@ -369,19 +382,8 @@ export default function Projects() {
                       href={selectedProject.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium border transition-colors duration-200"
-                      style={{
-                        color: "var(--color-foreground)",
-                        borderColor: "var(--color-border-hover)",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = "var(--color-accent)";
-                        e.currentTarget.style.color = "var(--color-accent)";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = "var(--color-border-hover)";
-                        e.currentTarget.style.color = "var(--color-foreground)";
-                      }}
+                      className="group inline-flex items-center gap-2 rounded-md border border-transparent px-4 py-2 text-sm font-medium transition-all duration-300 hover:border-accent"
+                      style={{ color: "var(--color-accent-text)" }}
                     >
                       <FaGithub size={14} />
                       GitHub

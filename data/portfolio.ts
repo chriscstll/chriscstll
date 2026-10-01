@@ -83,7 +83,7 @@ export const projects: Project[] = [
     title: "King Panda Defense",
     shortDescription: "",
     description:
-      "A responsive frontend experience developed for King Panda Defense to establish a professional digital presence and improve how customers discover and engage with its services. The architecture is structured to accommodate additional functionality, including an online booking workflow in future releases.",
+      "A responsive frontend experience developed for King Panda Defense to establish a professional digital presence and improve how customers discover and engage with its services.",
     tech: ["VS Code", "GitHub", "Git", "HTML", "SCSS", "JavaScript"],
     liveUrl: "https://chriscstll.github.io/KingPandaDefense/",
     githubUrl: "https://github.com/chriscstll/KingPandaDefense",
