@@ -6,6 +6,8 @@ A quite personal portfolio.
 
 The site exists to answer one question: _is this person careful with the work?_
 
+## The through-line
+
 Every section says the same thing from a different angle:
 
 | Section  | Line                                                                 | Idea                |
@@ -16,4 +18,4 @@ Every section says the same thing from a different angle:
 | About    | _Some hours are spent. Some are invested. They look identical._      | Invisible time      |
 | Contact  | _Everything begins with a message. Before the work, there's a word._ | Invisible origin    |
 
-Read top-to-bottom, the site argues that **the thing you can't see is the thing that matters.**
+One argument emerges: **the thing you can't see is the thing that matters.**
