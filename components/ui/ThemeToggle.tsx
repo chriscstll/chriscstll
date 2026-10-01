@@ -8,7 +8,6 @@ export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Read the current theme from the DOM (set by inline script or default)
     const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
     setTheme(current);
     setMounted(true);
@@ -27,7 +26,6 @@ export default function ThemeToggle() {
     localStorage.setItem("theme", next);
   };
 
-  // Placeholder during SSR to avoid layout shift
   if (!mounted) {
     return <div className="h-5 w-5" aria-hidden="true" />;
   }

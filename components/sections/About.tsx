@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { about } from "@/data/portfolio";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Fragment } from "react";
 import { CascadeText, BlurIn, StaggerList, StaggerItem } from "@/components/ui/motion-primitives";
 
@@ -96,20 +96,39 @@ export default function About() {
               y={-14}
             />
           </h2>
-          <BlurIn delay={1.2} blur={12} y={16}>
-            <h3 className="font-heading font-bold text-lg md:text-xl mb-3" style={{ color: "var(--color-foreground)" }}>
-              {about.cards[activeCard].content.title}
-            </h3>
+          <BlurIn delay={1.1} blur={12} y={16}>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div key={activeCard}>
+                <motion.h3
+                  initial={{ opacity: 0, y: -8, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -6, filter: "blur(4px)" }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="font-heading font-bold text-lg md:text-xl mb-3"
+                  style={{ color: "var(--color-foreground)" }}
+                >
+                  {about.cards[activeCard].content.title}
+                </motion.h3>
 
-            <p
-              className="text-sm leading-[1.65] tracking-wide min-h-45 md:min-h-55 md:max-w-90 lg:max-w-md rounded-md px-4 py-3"
-              style={{
-                color: "var(--color-foreground-muted)",
-                backgroundColor: "var(--color-background-card)",
-              }}
-            >
-              {about.cards[activeCard].content.body}
-            </p>
+                <motion.p
+                  initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.1,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="text-sm leading-[1.65] tracking-wide min-h-70 md:min-h-85 md:max-w-90 lg:max-w-md rounded-md px-4 py-3"
+                  style={{
+                    color: "var(--color-foreground-muted)",
+                    backgroundColor: "var(--color-background-card)",
+                  }}
+                >
+                  {about.cards[activeCard].content.body}
+                </motion.p>
+              </motion.div>
+            </AnimatePresence>
           </BlurIn>
         </div>
       </div>

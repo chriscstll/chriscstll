@@ -5,10 +5,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { BlurIn } from "@/components/ui/motion-primitives";
 import { contact, footer } from "@/data/portfolio";
 
-/* =========================================================
-   SOCIALS — built from `contact`, empty URLs are dropped
-   ========================================================= */
-
+/* SOCIALS — built from `contact`, empty URLs are dropped */
 const socials = [
   contact.github && {
     label: "GitHub",
@@ -25,10 +22,6 @@ const socials = [
   href: string;
   icon: React.ReactNode;
 }>;
-
-/* =========================================================
-   COMPONENT
-   ========================================================= */
 
 export default function Footer() {
   const [time, setTime] = useState("");
@@ -52,9 +45,6 @@ export default function Footer() {
   return (
     <footer className="" style={{ backgroundColor: "var(--color-background-secondary)" }}>
       <BlurIn delay={0.5} blur={6} y={12} className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
-        {/* ===============================================
-            LAYOUT — everything stacked, all centered
-        ================================================ */}
         <div className="flex flex-col items-center text-center">
           {/* IDENTITY + SOCIALS */}
           <p className="font-heading text-base font-bold" style={{ color: "var(--color-foreground)" }}>
@@ -83,7 +73,7 @@ export default function Footer() {
             </ul>
           )}
 
-          {/* META — below identity + socials, centered */}
+          {/* META */}
           <div className="mt-8 flex flex-col gap-1.5 text-xs">
             <p style={{ color: "var(--color-foreground-muted)" }}>
               {footer.location.city}

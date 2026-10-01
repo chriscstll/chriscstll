@@ -59,10 +59,9 @@ export default function ProjectCard({ project, onClick, isDragging = false }: Pr
               style={{ backgroundColor: "rgba(0,0,0,0.55)" }}
             >
               <span
-                className="rounded-md px-3 py-1.5 text-xs font-medium uppercase tracking-widest"
+                className="border rounded-md px-3 py-1.5 text-xs font-medium uppercase tracking-widest"
                 style={{
-                  backgroundColor: "color-mix(in srgb, var(--color-accent) 60%, black)",
-                  color: "var(--color-background)",
+                  color: "rgba(241, 234, 218, 1)",
                 }}
               >
                 View Project

@@ -39,11 +39,6 @@ type CascadeTextProps = {
   trigger?: "mount" | "view";
 };
 
-const unitVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-};
-
 export function CascadeText({
   text,
   as = "span",
@@ -70,6 +65,16 @@ export function CascadeText({
     <Tag
       className={className}
       aria-label={text}
+      // Parent variants — controls stagger timing for children
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: stagger,
+            delayChildren: delay,
+          },
+        },
+      }}
       initial="hidden"
       {...(trigger === "mount"
         ? { animate: "visible" }
@@ -77,10 +82,6 @@ export function CascadeText({
             whileInView: "visible",
             viewport: { once: true, amount: 0.3 },
           })}
-      transition={{
-        staggerChildren: stagger,
-        delayChildren: delay,
-      }}
     >
       {words.map((word, wi) => (
         <span
@@ -91,15 +92,22 @@ export function CascadeText({
             marginRight: wi < words.length - 1 ? "0.25em" : undefined,
           }}
         >
-          {Array.from(word).map((char, i) => (
+          {Array.from(word).map((char, ci) => (
             <motion.span
-              key={i}
+              key={ci}
+              className={charClassName}
               style={{ willChange: "filter, transform, opacity" }}
-              initial={{ opacity: 0, filter: `blur(${blur}px)`, y }}
-              animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-              transition={{ duration, delay: delay + i * stagger, ease: EASE_OUT_EXPO }}
+              variants={{
+                hidden: { opacity: 0, filter: `blur(${blur}px)`, y },
+                visible: {
+                  opacity: 1,
+                  filter: "blur(0px)",
+                  y: 0,
+                  transition: { duration, ease: EASE_OUT_EXPO },
+                },
+              }}
             >
-              <span className={charClassName}>{char}</span>
+              {char}
             </motion.span>
           ))}
         </span>
@@ -178,7 +186,7 @@ export function StaggerList({ children, className = "", delay = 0, stagger = 0.1
       style={style}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.05 }}
       variants={{
         hidden: {},
         visible: {

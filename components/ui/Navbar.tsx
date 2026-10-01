@@ -98,6 +98,14 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768) setIsMenuOpen(false);
+    };
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
@@ -147,23 +155,23 @@ export default function Navbar() {
                 <li key={link.href} className="py-1">
                   <motion.a
                     href={link.href}
-                    className="group relative inline-flex items-center justify-center whitespace-nowrap text-sm transition-colors duration-300 ease-out"
+                    className="group relative inline-flex items-center justify-center whitespace-nowrap px-1.5 text-sm transition-colors duration-300 ease-out"
                     style={{
-                      color: isActive ? "var(--color-accent-hover)" : "var(--color-foreground-muted)",
+                      color: isActive ? "var(--color-accent-text)" : "var(--color-foreground-muted)",
                     }}
                   >
-                    {/* LEFT BRACKET */}
+                    {/* LEFT BRAKCET */}
                     <span
-                      className={
+                      className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-xs font-normal transition-all duration-300 ease-out ${
                         isActive
-                          ? "absolute left-0 top-1/2 -translate-x-[calc(100%+0.25rem)] -translate-y-1/2 text-xs font-normal opacity-100 transition-all duration-300 ease-out delay-150"
-                          : "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-normal opacity-0 transition-all duration-300 ease-out group-hover:left-0 group-hover:-translate-x-[calc(100%+0.25rem)] group-hover:opacity-100"
-                      }
+                          ? "left-0 -translate-x-[calc(100%-0.05rem)]"
+                          : "left-1/2 -translate-x-1/2 opacity-0 group-hover:left-0 group-hover:-translate-x-full group-hover:opacity-100"
+                      }`}
                     >
                       &lt;
                     </span>
 
-                    {/* Label */}
+                    {/* LABEL */}
                     <span className="relative inline-block overflow-hidden">
                       <motion.span
                         className="inline-block"
@@ -180,13 +188,13 @@ export default function Navbar() {
                       </motion.span>
                     </span>
 
-                    {/* RIGHT BRACKET */}
+                    {/* RIGHT BRAKCET */}
                     <span
-                      className={
+                      className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-xs font-normal transition-all duration-300 ease-out ${
                         isActive
-                          ? "absolute left-full top-1/2 translate-x-1 -translate-y-1/2 text-xs font-normal opacity-100 transition-all duration-300 ease-out delay-150"
-                          : "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-normal opacity-0 transition-all duration-300 ease-out group-hover:left-full group-hover:translate-x-1 group-hover:opacity-100"
-                      }
+                          ? "left-full translate-x-[0.05rem]"
+                          : "left-1/2 -translate-x-1/2 opacity-0 group-hover:left-full group-hover:translate-x-0 group-hover:opacity-100"
+                      }`}
                     >
                       &gt;
                     </span>

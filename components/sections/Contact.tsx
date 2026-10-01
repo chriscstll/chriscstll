@@ -42,7 +42,7 @@ function validateField(name: FieldName, value: string): string | null {
     case "message":
       if (!trimmed) return "Please write a message.";
       if (trimmed.length < 10) return "Message should be at least 10 characters.";
-      if (trimmed.length > 2000) return "Message is too long (2000 characters max).";
+      if (trimmed.length > 1000) return "Message is too long (1000 characters max).";
       return null;
   }
 }
@@ -116,7 +116,7 @@ export default function Contact() {
         setTouched({});
       } else {
         setStatus("error");
-        setServerError("We couldn't send your message right now. Please try again, or email me directly.");
+        setServerError("We couldn't send your message right now. Please try again later, or email me directly.");
       }
     } catch {
       setStatus("error");
@@ -255,7 +255,7 @@ export default function Contact() {
                   touched={!!touched.message}
                   disabled={status === "submitting"}
                   rows={5}
-                  maxLength={2000}
+                  maxLength={1000}
                   autoComplete="name"
                 />
 
@@ -264,7 +264,8 @@ export default function Contact() {
                   <button
                     type="submit"
                     disabled={status === "submitting"}
-                    className="inline-flex items-center justify-center gap-2 text-m font-semibold tracking-normal cursor-pointer transition-all duration-500 ease-out hover:tracking-[0.15em] disabled:opacity-60 text-accent"
+                    className="inline-flex self-start items-center justify-center gap-2 rounded-md border px-2.5 py-1 text-m font-semibold tracking-normal cursor-pointer transition-all duration-500 ease-out hover:tracking-[0.15em] disabled:opacity-60 text-accent"
+                    style={{ borderColor: "var(--color-accent-text)" }}
                   >
                     {status === "submitting" ? (
                       <>
