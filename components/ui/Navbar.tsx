@@ -7,6 +7,7 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
 import { contact, navLinks } from "@/data/portfolio";
 import { BlurIn } from "@/components/ui/motion-primitives";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -107,12 +108,11 @@ export default function Navbar() {
           backgroundColor: isMenuOpen
             ? "var(--color-background-secondary)"
             : isScrolled
-              ? "rgba(30, 32, 30, 0.85)"
+              ? "var(--navbar-tint)"
               : "transparent",
-          borderBottom:
-            isScrolled && !isMenuOpen ? "1px solid var(--color-background-secondary)" : "1px solid transparent",
-          backdropFilter: !isMenuOpen && isScrolled ? "blur(12px)" : "none",
-          WebkitBackdropFilter: !isMenuOpen && isScrolled ? "blur(12px)" : "none",
+          borderBottom: isScrolled && !isMenuOpen ? "1px solid var(--color-border)" : "1px solid transparent",
+          backdropFilter: !isMenuOpen && isScrolled ? "blur(20px)" : "none",
+          WebkitBackdropFilter: !isMenuOpen && isScrolled ? "blur(20px)" : "none",
           transform: isHidden && !isMenuOpen ? "translateY(-100%)" : "translateY(0)",
         }}
       >
@@ -197,16 +197,19 @@ export default function Navbar() {
           </ul>
 
           {/* HAMB MENU */}
-          <BlurIn trigger="mount" delay={0.2} blur={8} y={-6} duration={0.5} className="md:hidden relative z-50">
-            <button
-              className="p-2 -mr-2 rounded-lg cursor-pointer text-foreground-muted hover:text-foreground transition-colors duration-200"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isMenuOpen}
-            >
-              {isMenuOpen ? <SquareX size={25} /> : <AlignRight size={25} />}
-            </button>
-          </BlurIn>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <BlurIn trigger="mount" delay={0.2} blur={8} y={-6} duration={0.5} className="md:hidden relative z-50">
+              <button
+                className="p-2 -mr-2 rounded-lg cursor-pointer text-foreground-muted hover:text-foreground transition-colors duration-200"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isMenuOpen}
+              >
+                {isMenuOpen ? <SquareX size={25} /> : <AlignRight size={25} />}
+              </button>
+            </BlurIn>
+          </div>
         </nav>
       </header>
 

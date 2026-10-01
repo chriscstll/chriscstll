@@ -227,7 +227,7 @@ export default function Skills() {
           <div className="w-full h-110" />
         ) : isMobile ? (
           // GRID ON MOBILE
-          <BlurIn blur={8} y={12} className="w-full">
+          <BlurIn delay={1.2} blur={8} y={12} className="w-full">
             <StaggerList className="w-full space-y-4" stagger={0.12} delay={0.1}>
               {(Object.keys(skills) as Array<keyof typeof skills>).map((group) => (
                 <StaggerItem key={group} className="rounded-lg p-4">

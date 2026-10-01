@@ -91,22 +91,15 @@ export function CascadeText({
             marginRight: wi < words.length - 1 ? "0.25em" : undefined,
           }}
         >
-          {Array.from(word).map((char, ci) => (
+          {Array.from(word).map((char, i) => (
             <motion.span
-              key={ci}
-              className={charClassName}
+              key={i}
               style={{ willChange: "filter, transform, opacity" }}
-              variants={{
-                hidden: { opacity: 0, filter: `blur(${blur}px)`, y },
-                visible: {
-                  opacity: 1,
-                  filter: "blur(0px)",
-                  y: 0,
-                  transition: { duration, ease: EASE_OUT_EXPO },
-                },
-              }}
+              initial={{ opacity: 0, filter: `blur(${blur}px)`, y }}
+              animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+              transition={{ duration, delay: delay + i * stagger, ease: EASE_OUT_EXPO }}
             >
-              {char}
+              <span className={charClassName}>{char}</span>
             </motion.span>
           ))}
         </span>

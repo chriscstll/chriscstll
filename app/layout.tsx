@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Lora } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import { siteConfig, structuredData } from "@/data/portfolio";
 
 const bricolage = Bricolage_Grotesque({
@@ -79,14 +80,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${lora.variable} ${bricolage.variable}`} suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
+            __html: `
+              (function () {
+                try {
+                  var stored = localStorage.getItem("theme");
+                  if (stored === "dark") {
+                    document.documentElement.setAttribute("data-theme", "dark");
+                  }
+                } catch (e) {}
+              })();
+            `,
           }}
         />
       </head>
-      <body className="bg-background text-foreground font-sans antialiased overflow-x-hidden">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

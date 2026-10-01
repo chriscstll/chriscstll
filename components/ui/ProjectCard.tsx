@@ -55,12 +55,15 @@ export default function ProjectCard({ project, onClick, isDragging = false }: Pr
 
             {/* Hover overlay */}
             <div
-              className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              style={{ backgroundColor: "rgba(15,15,15,0.7)" }}
+              className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{ backgroundColor: "rgba(0,0,0,0.55)" }}
             >
               <span
-                className="text-xs font-medium tracking-widest uppercase px-4 py-2 border rounded-md overflow-hidden"
-                style={{ color: "var(--color-foreground)", borderColor: "var(--color-foreground)" }}
+                className="rounded-md px-3 py-1.5 text-xs font-medium uppercase tracking-widest"
+                style={{
+                  backgroundColor: "color-mix(in srgb, var(--color-accent) 60%, black)",
+                  color: "var(--color-background)",
+                }}
               >
                 View Project
               </span>

@@ -128,11 +128,12 @@ export default function Hero() {
             blur={12}
             y={-16}
           />
+
           <BlurIn delay={0.9} blur={6} y={8}>
             <p className="text-sm sm:text-base max-w-md text-foreground-muted">{hero.subtitle}</p>
           </BlurIn>
 
-          {/* CTA  */}
+          {/* CTA */}
           <BlurIn
             trigger="view"
             delay={1.1}
@@ -143,10 +144,13 @@ export default function Hero() {
           >
             <a
               href="#contact"
-              className="group relative inline-flex items-center pb-1 text-lg font-semibold text-foreground transition-colors duration-300 hover:text-accent sm:text-xl md:text-2xl"
+              className="group relative inline-flex items-center pb-1 text-lg font-semibold text-foreground transition-colors duration-300 hover:text-accent-hover sm:text-xl md:text-2xl"
             >
               {hero.cta.contactbtn.label}
-              <span className="absolute bottom-0 left-0 h-px w-full origin-right scale-x-0 bg-accent transition-transform duration-500 ease-out group-hover:origin-left group-hover:scale-x-100" />
+              <span
+                className="absolute bottom-0 left-0 h-px w-full origin-right scale-x-0 transition-transform duration-500 ease-out group-hover:origin-left group-hover:scale-x-100"
+                style={{ backgroundColor: "var(--color-accent-hover)" }}
+              />
             </a>
           </BlurIn>
         </div>
@@ -191,14 +195,16 @@ export default function Hero() {
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain object-center select-none pointer-events-none"
-                style={{ filter: "grayscale(100%) contrast(1.1) brightness(0.85)" }}
+                style={{ filter: "grayscale(80%) contrast(1.1) brightness(0.85)" }}
                 draggable={false}
                 priority
               />
               <div
-                className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
+                className="absolute bottom-0 left-0 right-0 h-8 sm:h-12 md:h-16 lg:h-20 pointer-events-none"
                 aria-hidden="true"
-                style={{ background: "linear-gradient(to top, var(--color-background), transparent)" }}
+                style={{
+                  background: `linear-gradient(to top, color-mix(in srgb, var(--color-background) 80%, transparent) 0%, transparent 100%)`,
+                }}
               />
             </BlurIn>
 

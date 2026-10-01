@@ -87,7 +87,7 @@ export default function About() {
             <CascadeText
               as="span"
               text={about.name}
-              className="block font-bold leading-tight text-[clamp(1.75rem,4.5vw,3.5rem)]"
+              className="block font-bold leading-tight text-[clamp(2.25rem,4.5vw,3.5rem)]"
               charClassName="gradient-text"
               delay={0.6}
               stagger={0.04}
