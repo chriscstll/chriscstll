@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { useEffect, useState, useRef } from "react";
-import { createPortal } from "react-dom";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Moon, Sun } from "lucide-react";
+import { useEffect, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { Moon, Sun } from 'lucide-react';
 
-type Theme = "light" | "dark";
+type Theme = 'light' | 'dark';
 
 const THEME_COLORS: Record<Theme, { bg: string; accent: string }> = {
-  light: { bg: "#f1eada", accent: "#3d5c59" },
-  dark: { bg: "#25272c", accent: "#6ec9c0" },
+  light: { bg: '#f1eada', accent: '#3d5c59' },
+  dark: { bg: '#25272c', accent: '#6ec9c0' },
 };
 
 const COMPLETE_AT = 880;
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>('light');
   const [mounted, setMounted] = useState(false);
   const [transition, setTransition] = useState<{
     to: Theme;
@@ -27,35 +27,35 @@ export default function ThemeToggle() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     setTheme(current);
     setMounted(true);
   }, []);
 
   const applyTheme = (next: Theme) => {
     const root = document.documentElement;
-    root.classList.add("theme-switching");
+    root.classList.add('theme-switching');
 
-    if (next === "dark") {
-      root.setAttribute("data-theme", "dark");
+    if (next === 'dark') {
+      root.setAttribute('data-theme', 'dark');
     } else {
-      root.removeAttribute("data-theme");
+      root.removeAttribute('data-theme');
     }
 
     void root.offsetHeight;
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        root.classList.remove("theme-switching");
+        root.classList.remove('theme-switching');
       });
     });
 
-    localStorage.setItem("theme", next);
+    localStorage.setItem('theme', next);
     setTheme(next);
   };
 
   const toggle = () => {
-    const next: Theme = theme === "dark" ? "light" : "dark";
+    const next: Theme = theme === 'dark' ? 'light' : 'dark';
     if (reduce) {
       applyTheme(next);
       return;
@@ -81,7 +81,13 @@ export default function ThemeToggle() {
     return () => clearTimeout(timer);
   }, [transition]);
 
-  if (!mounted) return <div className="h-5 w-5" aria-hidden="true" />;
+  if (!mounted)
+    return (
+      <div
+        className="h-5 w-5"
+        aria-hidden="true"
+      />
+    );
 
   const colors = transition ? THEME_COLORS[transition.to] : THEME_COLORS[theme];
 
@@ -92,19 +98,18 @@ export default function ThemeToggle() {
         type="button"
         onClick={toggle}
         disabled={!!transition}
-        aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+        aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
         className="relative flex h-5 w-5 items-center justify-center transition-colors duration-200 disabled:opacity-60"
-        style={{ color: "var(--color-foreground-muted)" }}
-        onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-accent-text)")}
-        onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-foreground-muted)")}
-      >
+        style={{ color: 'var(--color-foreground-muted)' }}
+        onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent-text)')}
+        onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-foreground-muted)')}>
         <Sun
           size={16}
           strokeWidth={1.75}
           className="absolute transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{
-            transform: theme === "dark" ? "rotate(90deg) scale(0.5)" : "rotate(0deg) scale(1)",
-            opacity: theme === "dark" ? 0 : 1,
+            transform: theme === 'dark' ? 'rotate(90deg) scale(0.5)' : 'rotate(0deg) scale(1)',
+            opacity: theme === 'dark' ? 0 : 1,
           }}
         />
         <Moon
@@ -112,14 +117,22 @@ export default function ThemeToggle() {
           strokeWidth={1.75}
           className="absolute transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{
-            transform: theme === "dark" ? "rotate(0deg) scale(1)" : "rotate(-90deg) scale(0.5)",
-            opacity: theme === "dark" ? 1 : 0,
+            transform: theme === 'dark' ? 'rotate(0deg) scale(1)' : 'rotate(-90deg) scale(0.5)',
+            opacity: theme === 'dark' ? 1 : 0,
           }}
         />
       </button>
 
       {createPortal(
-        <>{transition && <PixelateOverlay key={transition.id} color={colors.bg} origin={transition.origin} />}</>,
+        <>
+          {transition && (
+            <PixelateOverlay
+              key={transition.id}
+              color={colors.bg}
+              origin={transition.origin}
+            />
+          )}
+        </>,
         document.body,
       )}
     </>
@@ -127,7 +140,7 @@ export default function ThemeToggle() {
 }
 
 function PixelateOverlay({ color, origin }: { color: string; origin: { x: number; y: number } }) {
-  const isSmall = typeof window !== "undefined" && window.innerWidth < 768;
+  const isSmall = typeof window !== 'undefined' && window.innerWidth < 768;
 
   const COLS = isSmall ? 30 : 45;
   const ROWS = isSmall ? 18 : 24;
@@ -158,7 +171,10 @@ function PixelateOverlay({ color, origin }: { color: string; origin: { x: number
 
   return (
     <div className="pointer-events-none fixed inset-0 z-9999 overflow-hidden">
-      <motion.svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
+      <motion.svg
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        className="absolute inset-0 w-full h-full">
         {cells.map((cell, i) => (
           <rect
             key={i}

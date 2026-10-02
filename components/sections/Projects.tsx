@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink } from "lucide-react";
-import { FaGithub } from "react-icons/fa";
-import ProjectCard from "@/components/ui/ProjectCard";
-import { CascadeText, BlurIn, StaggerList, StaggerItem } from "@/components/ui/motion-primitives";
-import { projects, projectsTagline } from "@/data/portfolio";
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, ExternalLink } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
+import ProjectCard from '@/components/ui/ProjectCard';
+import { CascadeText, BlurIn, StaggerList, StaggerItem } from '@/components/ui/motion-primitives';
+import { projects, projectsTagline } from '@/data/portfolio';
 
 type Project = (typeof projects)[number];
 
@@ -31,7 +31,7 @@ export default function Projects() {
     const el = scrollRef.current;
     if (!el) return;
 
-    const cards = el.querySelectorAll<HTMLElement>("[data-project-card]");
+    const cards = el.querySelectorAll<HTMLElement>('[data-project-card]');
     if (cards.length === 0) return;
 
     const startOffset = cards[0].offsetLeft;
@@ -56,7 +56,7 @@ export default function Projects() {
     const el = scrollRef.current;
     if (!el) return;
 
-    const cards = el.querySelectorAll<HTMLElement>("[data-project-card]");
+    const cards = el.querySelectorAll<HTMLElement>('[data-project-card]');
     if (!cards[index]) return;
 
     setActiveIndex(index);
@@ -66,7 +66,7 @@ export default function Projects() {
     const startOffset = cards[0].offsetLeft;
     const target = Math.min(cards[index].offsetLeft - startOffset, maxScroll);
 
-    el.scrollTo({ left: target, behavior: "smooth" });
+    el.scrollTo({ left: target, behavior: 'smooth' });
 
     window.setTimeout(() => {
       pendingIndexRef.current = null;
@@ -76,12 +76,12 @@ export default function Projects() {
   // SCROLL LOCK WHEN MODAL IS OPEN
   useEffect(() => {
     if (selectedProject) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     }
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     };
   }, [selectedProject]);
 
@@ -89,27 +89,27 @@ export default function Projects() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
-      if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) {
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
         return;
       }
-      if (e.key === "Escape" && selectedProject) {
+      if (e.key === 'Escape' && selectedProject) {
         closeModal();
         return;
       }
       if (selectedProject) return;
 
-      if (e.key === "ArrowLeft") {
+      if (e.key === 'ArrowLeft') {
         e.preventDefault();
         goTo(Math.max(0, activeIndex - 1));
       }
-      if (e.key === "ArrowRight") {
+      if (e.key === 'ArrowRight') {
         e.preventDefault();
         goTo(Math.min(projects.length - 1, activeIndex + 1));
       }
     };
 
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, [activeIndex, selectedProject]);
 
   // DEADSPACE AT THE END OF CARDS
@@ -119,15 +119,15 @@ export default function Projects() {
     const measure = () => {
       const el = scrollRef.current;
       if (!el) return;
-      const cards = el.querySelectorAll<HTMLElement>("[data-project-card]");
+      const cards = el.querySelectorAll<HTMLElement>('[data-project-card]');
       if (cards.length === 0) return;
       const cardWidth = cards[0].offsetWidth;
       setSpacerWidth(Math.max(0, el.clientWidth - cardWidth));
     };
 
     measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
   }, [projects.length]);
 
   /* DRAG */
@@ -185,7 +185,9 @@ export default function Projects() {
   const closeModal = () => setSelectedProject(null);
 
   return (
-    <section id="projects" className="py-24 md:py-32">
+    <section
+      id="projects"
+      className="py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <CascadeText
           as="h2"
@@ -197,11 +199,14 @@ export default function Projects() {
           y={-10}
         />
 
-        <BlurIn delay={0.75} blur={8} y={10} className="mt-6 max-w-xl">
+        <BlurIn
+          delay={0.75}
+          blur={8}
+          y={10}
+          className="mt-6 max-w-xl">
           <p
             className="text-sm italic leading-relaxed sm:text-base"
-            style={{ color: "var(--color-foreground-subtle)" }}
-          >
+            style={{ color: 'var(--color-foreground-subtle)' }}>
             {projectsTagline}
           </p>
         </BlurIn>
@@ -219,33 +224,40 @@ export default function Projects() {
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
           style={{
-            display: "flex",
-            flexDirection: "row",
-            overflowX: "scroll",
-            overflowY: "hidden",
-            paddingBottom: "1rem",
-            scrollSnapType: "none",
-            WebkitOverflowScrolling: "touch",
-            msOverflowStyle: "none",
-            scrollbarWidth: "none",
-            cursor: isDragging ? "grabbing" : "grab",
-            userSelect: "none",
-            touchAction: "pan-y",
-            overscrollBehaviorX: "contain",
-          }}
-        >
+            display: 'flex',
+            flexDirection: 'row',
+            overflowX: 'scroll',
+            overflowY: 'hidden',
+            paddingBottom: '1rem',
+            scrollSnapType: 'none',
+            WebkitOverflowScrolling: 'touch',
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none',
+            cursor: isDragging ? 'grabbing' : 'grab',
+            userSelect: 'none',
+            touchAction: 'pan-y',
+            overscrollBehaviorX: 'contain',
+          }}>
           <StaggerList
             className="flex flex-nowrap gap-4 px-4 sm:px-6 lg:px-8"
-            style={{ width: "max-content" }}
+            style={{ width: 'max-content' }}
             stagger={0.12}
-            delay={1.0}
-          >
+            delay={1.0}>
             {projects.map((project) => (
-              <StaggerItem key={project.title} data-project-card>
-                <ProjectCard project={project} isDragging={isDragging} onClick={() => handleProjectClick(project)} />
+              <StaggerItem
+                key={project.title}
+                data-project-card>
+                <ProjectCard
+                  project={project}
+                  isDragging={isDragging}
+                  onClick={() => handleProjectClick(project)}
+                />
               </StaggerItem>
             ))}
-            <div aria-hidden="true" style={{ width: spacerWidth, flexShrink: 0 }} />
+            <div
+              aria-hidden="true"
+              style={{ width: spacerWidth, flexShrink: 0 }}
+            />
           </StaggerList>
         </div>
       </div>
@@ -255,8 +267,7 @@ export default function Projects() {
         delay={1.6}
         blur={8}
         y={8}
-        className="mt-6 flex items-center justify-center gap-0.5 px-4 sm:gap-1 md:gap-1.5"
-      >
+        className="mt-6 flex items-center justify-center gap-0.5 px-4 sm:gap-1 md:gap-1.5">
         {projects.map((project, i) => {
           const isActive = i === activeIndex;
 
@@ -267,14 +278,13 @@ export default function Projects() {
               onClick={() => goTo(i)}
               aria-label={`Go to ${project.title}`}
               aria-current={isActive}
-              className="flex h-8 items-center justify-center px-0.5 sm:px-1"
-            >
+              className="flex h-8 items-center justify-center px-0.5 sm:px-1">
               <span
                 className="block rounded-full transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
                 style={{
-                  width: isActive ? "20px" : "6px",
-                  height: "6px",
-                  backgroundColor: isActive ? "var(--color-accent)" : "var(--color-border-hover)",
+                  width: isActive ? '20px' : '6px',
+                  height: '6px',
+                  backgroundColor: isActive ? 'var(--color-accent)' : 'var(--color-border-hover)',
                 }}
               />
             </button>
@@ -288,7 +298,7 @@ export default function Projects() {
           <>
             <motion.div
               className="fixed inset-0 z-50"
-              style={{ backgroundColor: "rgba(0,0,0,0.8)" }}
+              style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -298,22 +308,20 @@ export default function Projects() {
             <motion.div
               className="fixed z-50 overflow-hidden rounded-lg"
               style={{
-                backgroundColor: "var(--color-background-card)",
-                top: "50%",
-                left: "50%",
-                width: "calc(100% - 2rem)",
-                maxWidth: "672px",
-                maxHeight: "90vh",
+                backgroundColor: 'var(--color-background-card)',
+                top: '50%',
+                left: '50%',
+                width: 'calc(100% - 2rem)',
+                maxWidth: '672px',
+                maxHeight: '90vh',
               }}
-              initial={{ opacity: 0, scale: 0.95, x: "-50%", y: "-50%" }}
-              animate={{ opacity: 1, scale: 1, x: "-50%", y: "-50%" }}
-              exit={{ opacity: 0, scale: 0.95, x: "-50%", y: "-50%" }}
-              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-            >
+              initial={{ opacity: 0, scale: 0.95, x: '-50%', y: '-50%' }}
+              animate={{ opacity: 1, scale: 1, x: '-50%', y: '-50%' }}
+              exit={{ opacity: 0, scale: 0.95, x: '-50%', y: '-50%' }}
+              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}>
               <div
                 className="relative w-full h-55 md:h-70 overflow-hidden"
-                style={{ backgroundColor: "var(--color-background-secondary)" }}
-              >
+                style={{ backgroundColor: 'var(--color-background-secondary)' }}>
                 <img
                   src={selectedProject.image}
                   alt={selectedProject.title}
@@ -325,19 +333,22 @@ export default function Projects() {
                   onClick={closeModal}
                   aria-label="Close project"
                   className="absolute top-3 right-3 z-10 p-2 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-125 active:scale-90"
-                  style={{ color: "rgba(241, 234, 218, 1)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(251, 249, 245, 1)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(241, 234, 218, 1)")}
-                >
+                  style={{ color: 'rgba(241, 234, 218, 1)' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'rgba(251, 249, 245, 1)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(241, 234, 218, 1)')}>
                   <X size={20} />
                 </button>
               </div>
 
               <div className="p-6 flex flex-col gap-4">
-                <h3 className="font-heading font-bold text-xl" style={{ color: "var(--color-foreground)" }}>
+                <h3
+                  className="font-heading font-bold text-xl"
+                  style={{ color: 'var(--color-foreground)' }}>
                   {selectedProject.title}
                 </h3>
-                <p className="text-sm leading-relaxed" style={{ color: "var(--color-foreground-muted)" }}>
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: 'var(--color-foreground-muted)' }}>
                   {selectedProject.description}
                 </p>
 
@@ -347,10 +358,9 @@ export default function Projects() {
                       key={t}
                       className="inline-flex items-center rounded-md px-3 py-1.5 text-xs"
                       style={{
-                        color: "var(--color-foreground-muted)",
-                        backgroundColor: "var(--color-background-secondary)",
-                      }}
-                    >
+                        color: 'var(--color-foreground-muted)',
+                        backgroundColor: 'var(--color-background-secondary)',
+                      }}>
                       {t}
                     </span>
                   ))}
@@ -363,8 +373,7 @@ export default function Projects() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group inline-flex items-center gap-1 rounded-md border px-2.5 py-1 text-base font-medium "
-                      style={{ color: "var(--color-accent-text)" }}
-                    >
+                      style={{ color: 'var(--color-accent-text)' }}>
                       <ExternalLink size={14} />
                       Live Site
                     </a>
@@ -376,8 +385,7 @@ export default function Projects() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group inline-flex items-center gap-1 rounded-md border px-2.5 py-1 text-base font-medium"
-                      style={{ color: "var(--color-accent-text)" }}
-                    >
+                      style={{ color: 'var(--color-accent-text)' }}>
                       <FaGithub size={14} />
                       GitHub
                     </a>

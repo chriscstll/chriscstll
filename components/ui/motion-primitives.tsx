@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
+import { motion, useReducedMotion, type Variants } from 'framer-motion';
+import type { ReactNode } from 'react';
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 
@@ -26,22 +26,22 @@ type CascadeTextProps = {
   delay?: number;
   stagger?: number;
   duration?: number;
-  splitBy?: "char" | "word";
+  splitBy?: 'char' | 'word';
   blur?: number;
   y?: number;
-  trigger?: "mount" | "view";
+  trigger?: 'mount' | 'view';
 };
 
 export function CascadeText({
   text,
-  as = "span",
-  className = "",
-  charClassName = "",
+  as = 'span',
+  className = '',
+  charClassName = '',
   delay = 0,
   stagger = 0.03,
   duration = 0.55,
-  splitBy = "char",
-  trigger = "view",
+  splitBy = 'char',
+  trigger = 'view',
   blur = 8,
   y = -10,
 }: CascadeTextProps) {
@@ -52,7 +52,7 @@ export function CascadeText({
     return <Tag className={className}>{text}</Tag>;
   }
 
-  const words = text.split(" ");
+  const words = text.split(' ');
 
   return (
     <Tag
@@ -68,37 +68,34 @@ export function CascadeText({
         },
       }}
       initial="hidden"
-      {...(trigger === "mount"
-        ? { animate: "visible" }
+      {...(trigger === 'mount'
+        ? { animate: 'visible' }
         : {
-            whileInView: "visible",
+            whileInView: 'visible',
             viewport: { once: true, amount: 0.3 },
-          })}
-    >
+          })}>
       {words.map((word, wi) => (
         <span
           key={wi}
           className="inline-flex"
           aria-hidden="true"
           style={{
-            marginRight: wi < words.length - 1 ? "0.25em" : undefined,
-          }}
-        >
+            marginRight: wi < words.length - 1 ? '0.25em' : undefined,
+          }}>
           {Array.from(word).map((char, ci) => (
             <motion.span
               key={ci}
               className={charClassName}
-              style={{ willChange: "filter, transform, opacity" }}
+              style={{ willChange: 'filter, transform, opacity' }}
               variants={{
                 hidden: { opacity: 0, filter: `blur(${blur}px)`, y },
                 visible: {
                   opacity: 1,
-                  filter: "blur(0px)",
+                  filter: 'blur(0px)',
                   y: 0,
                   transition: { duration, ease: EASE_OUT_EXPO },
                 },
-              }}
-            >
+              }}>
               {char}
             </motion.span>
           ))}
@@ -116,38 +113,37 @@ type BlurInProps = {
   y?: number;
   blur?: number;
   once?: boolean;
-  trigger?: "mount" | "view";
+  trigger?: 'mount' | 'view';
 };
 
 export function BlurIn({
   children,
-  className = "",
+  className = '',
   delay = 0,
   duration = 0.7,
   y = 20,
   blur = 12,
   once = true,
-  trigger = "view",
+  trigger = 'view',
 }: BlurInProps) {
   const reduce = useReducedMotion();
 
   if (reduce) return <div className={className}>{children}</div>;
 
-  const target = { opacity: 1, y: 0, filter: "blur(0px)" };
+  const target = { opacity: 1, y: 0, filter: 'blur(0px)' };
 
   return (
     <motion.div
       className={className}
       initial={{ opacity: 0, y, filter: `blur(${blur}px)` }}
-      {...(trigger === "mount"
+      {...(trigger === 'mount'
         ? { animate: target }
         : {
             whileInView: target,
             viewport: { once, amount: 0.3 },
           })}
       transition={{ duration, delay, ease: EASE_OUT_EXPO }}
-      style={{ willChange: "filter, transform, opacity" }}
-    >
+      style={{ willChange: 'filter, transform, opacity' }}>
       {children}
     </motion.div>
   );
@@ -161,7 +157,7 @@ type StaggerListProps = {
   style?: React.CSSProperties;
 };
 
-export function StaggerList({ children, className = "", delay = 0, stagger = 0.15, style }: StaggerListProps) {
+export function StaggerList({ children, className = '', delay = 0, stagger = 0.15, style }: StaggerListProps) {
   const reduce = useReducedMotion();
 
   if (reduce) return <div className={className}>{children}</div>;
@@ -178,8 +174,7 @@ export function StaggerList({ children, className = "", delay = 0, stagger = 0.1
         visible: {
           transition: { staggerChildren: stagger, delayChildren: delay },
         },
-      }}
-    >
+      }}>
       {children}
     </motion.div>
   );
@@ -189,19 +184,19 @@ export const staggerItem: Variants = {
   hidden: {
     opacity: 0,
     y: 20,
-    filter: "blur(10px)",
+    filter: 'blur(10px)',
   },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
+    filter: 'blur(0px)',
     transition: { duration: 0.7, ease: EASE_OUT_EXPO },
   },
 };
 
 export function StaggerItem({
   children,
-  className = "",
+  className = '',
   style,
   ...rest
 }: {
@@ -214,7 +209,10 @@ export function StaggerItem({
 
   if (reduce)
     return (
-      <div className={className} style={style} {...rest}>
+      <div
+        className={className}
+        style={style}
+        {...rest}>
         {children}
       </div>
     );
@@ -222,10 +220,9 @@ export function StaggerItem({
   return (
     <motion.div
       className={className}
-      style={{ willChange: "filter, transform, opacity", ...style }}
+      style={{ willChange: 'filter, transform, opacity', ...style }}
       variants={staggerItem}
-      {...rest}
-    >
+      {...rest}>
       {children}
     </motion.div>
   );

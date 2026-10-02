@@ -1,22 +1,23 @@
-import type { Metadata } from "next";
-import { Bricolage_Grotesque, Lora } from "next/font/google";
-import "./globals.css";
-import Script from "next/script";
-import { siteConfig, structuredData } from "@/data/portfolio";
+import type { Metadata } from 'next';
+import { Bricolage_Grotesque, Lora } from 'next/font/google';
+import './globals.css';
+import SmoothScroll from '@/components/SmoothScroll';
+import Script from 'next/script';
+import { siteConfig, structuredData } from '@/data/portfolio';
 
 const bricolage = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-bricolage",
-  display: "swap",
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-bricolage',
+  display: 'swap',
 });
 
 const lora = Lora({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-lora",
-  display: "swap",
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-lora',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -28,12 +29,12 @@ export const metadata: Metadata = {
 
   metadataBase: new URL(siteConfig.url),
   alternates: {
-    canonical: "/",
+    canonical: '/',
   },
 
   openGraph: {
-    type: "website",
-    locale: "en_US",
+    type: 'website',
+    locale: 'en_US',
     url: siteConfig.url,
     title: siteConfig.title,
     description: siteConfig.description,
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
 
-  keywords: [siteConfig.name, "Frontend Developer", "TypeScript", "React Developer", "Tailwind CSS"],
+  keywords: [siteConfig.name, 'Frontend Developer', 'TypeScript', 'React Developer', 'Tailwind CSS'],
 
   robots: {
     index: true,
@@ -59,15 +60,15 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
 
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
   },
 
   /*  Get this value from: search.google.com/search-console
@@ -78,9 +79,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${lora.variable} ${bricolage.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${lora.variable} ${bricolage.variable}`}
+      suppressHydrationWarning>
       <head>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
 
         <Script
           id="theme-init"
@@ -99,7 +106,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <SmoothScroll />
+        {children}
+      </body>
     </html>
   );
 }

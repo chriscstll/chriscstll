@@ -1,18 +1,34 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { motion, type Variants } from "framer-motion";
-import { CascadeText, BlurIn } from "@/components/ui/motion-primitives";
-import { hero } from "@/data/portfolio";
+import Image from 'next/image';
+import { motion, type Variants } from 'framer-motion';
+import { CascadeText, BlurIn } from '@/components/ui/motion-primitives';
+import { hero } from '@/data/portfolio';
 
 const techIcons = [
   {
-    name: "React",
-    position: "top-1/5 left-1/8 md:left-[15%] lg:left-1/8",
+    name: 'React',
+    position: 'top-1/5 left-1/8 md:left-[15%] lg:left-1/8',
     svg: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-full h-full">
-        <circle cx="16" cy="16" r="3.2" fill="#61DAFB" />
-        <ellipse cx="16" cy="16" rx="13" ry="5" stroke="#61DAFB" strokeWidth="1.5" fill="none" />
+      <svg
+        viewBox="0 0 32 32"
+        fill="none"
+        className="w-full h-full">
+        <circle
+          cx="16"
+          cy="16"
+          r="3.2"
+          fill="#61DAFB"
+        />
+        <ellipse
+          cx="16"
+          cy="16"
+          rx="13"
+          ry="5"
+          stroke="#61DAFB"
+          strokeWidth="1.5"
+          fill="none"
+        />
         <ellipse
           cx="16"
           cy="16"
@@ -37,22 +53,46 @@ const techIcons = [
     ),
   },
   {
-    name: "Next.js",
-    position: "top-[2%] right-1/3 md:right-[28%] md:top-[10%] lg:right-1/3",
+    name: 'Next.js',
+    position: 'top-[2%] right-1/3 md:right-[28%] md:top-[10%] lg:right-1/3',
     svg: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-full h-full">
-        <circle cx="16" cy="16" r="14" fill="black" stroke="#ffffff22" strokeWidth="1" />
-        <path d="M10 22V10l14 16h-4L10 14v8h-0z" fill="white" />
-        <path d="M19 10h3v8.5L19 14V10z" fill="white" />
+      <svg
+        viewBox="0 0 32 32"
+        fill="none"
+        className="w-full h-full">
+        <circle
+          cx="16"
+          cy="16"
+          r="14"
+          fill="black"
+          stroke="#ffffff22"
+          strokeWidth="1"
+        />
+        <path
+          d="M10 22V10l14 16h-4L10 14v8h-0z"
+          fill="white"
+        />
+        <path
+          d="M19 10h3v8.5L19 14V10z"
+          fill="white"
+        />
       </svg>
     ),
   },
   {
-    name: "TypeScript",
-    position: "top-1/3 right-[15%] md:right-[12%] lg:right-[15%]",
+    name: 'TypeScript',
+    position: 'top-1/3 right-[15%] md:right-[12%] lg:right-[15%]',
     svg: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-full h-full">
-        <rect width="32" height="32" rx="4" fill="#3178C6" />
+      <svg
+        viewBox="0 0 32 32"
+        fill="none"
+        className="w-full h-full">
+        <rect
+          width="32"
+          height="32"
+          rx="4"
+          fill="#3178C6"
+        />
         <path
           d="M18.6 22v-2.2c.7.4 1.6.7 2.4.7.9 0 1.4-.3 1.4-.9 0-.2-.1-.4-.2-.6-.2-.1-.4-.3-.7-.4l-1-.4c-1.4-.5-2.1-1.3-2.1-2.5 0-.8.3-1.4.9-1.9.6-.5 1.4-.7 2.4-.7.9 0 1.7.1 2.3.4v2.1c-.6-.3-1.3-.5-2.1-.5-.8 0-1.2.3-1.2.8 0 .2.1.4.3.5.2.1.5.3.9.4l.8.3c.8.3 1.3.6 1.7 1.1.4.4.5 1 .5 1.6 0 .9-.3 1.5-.9 2-.6.5-1.5.7-2.6.7-1 0-1.9-.2-2.8-.5zM9 14.2H6V12h8.2v2.2h-3V22H9v-7.8z"
           fill="white"
@@ -61,10 +101,13 @@ const techIcons = [
     ),
   },
   {
-    name: "Tailwind CSS",
-    position: "bottom-1/4 right-1/4 md:right-[18%] lg:right-1/4",
+    name: 'Tailwind CSS',
+    position: 'bottom-1/4 right-1/4 md:right-[18%] lg:right-1/4',
     svg: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-full h-full">
+      <svg
+        viewBox="0 0 32 32"
+        fill="none"
+        className="w-full h-full">
         <path
           d="M16 7c-3.6 0-5.8 1.8-6.8 5.4 1.4-1.8 2.9-2.5 4.7-2 1 .25 1.7 1 2.5 1.8C17.6 13.4 19 15 22 15c3.6 0 5.8-1.8 6.8-5.4-1.4 1.8-2.9 2.5-4.7 2-1-.25-1.7-1-2.5-1.8C20.4 8.6 19 7 16 7zM9.2 15c-3.6 0-5.8 1.8-6.8 5.4 1.4-1.8 2.9-2.5 4.7-2 1 .25 1.7 1 2.5 1.8 1.2 1.2 2.6 2.8 5.6 2.8 3.6 0 5.8-1.8 6.8-5.4-1.4 1.8-2.9 2.5-4.7 2-1-.25-1.7-1-2.5-1.8C13.6 16.6 12.2 15 9.2 15z"
           fill="#38BDF8"
@@ -73,10 +116,13 @@ const techIcons = [
     ),
   },
   {
-    name: "Git",
-    position: "bottom-1/4 left-1/6 md:left-[12%] lg:left-1/6",
+    name: 'Git',
+    position: 'bottom-1/4 left-1/6 md:left-[12%] lg:left-1/6',
     svg: (
-      <svg viewBox="0 0 32 32" fill="none" className="w-full h-full">
+      <svg
+        viewBox="0 0 32 32"
+        fill="none"
+        className="w-full h-full">
         <path
           d="M29.5 14.6L17.4 2.5a1.7 1.7 0 00-2.4 0l-2.4 2.4 3 3a2 2 0 012.6 2.6l2.9 2.9a2 2 0 112.4 2.4 2 2 0 01-2-2 2 2 0 01.1-.6l-2.7-2.7v7a2 2 0 11-2.4 1.9 2 2 0 012-2v-7.1a2 2 0 01-1.1-2.6L12.6 8 2.5 18.1a1.7 1.7 0 000 2.4l11.1 11.1a1.7 1.7 0 002.4 0L29.5 17a1.7 1.7 0 000-2.4z"
           fill="#F05032"
@@ -102,7 +148,7 @@ const iconVariant = (i: number): Variants => ({
     rotate: 0,
     transition: {
       delay: 1.9 + i * 0.1,
-      type: "spring",
+      type: 'spring',
       stiffness: 120,
       damping: 14,
     },
@@ -111,7 +157,9 @@ const iconVariant = (i: number): Variants => ({
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative min-h-svh flex items-center px-6 pt-10 md:pt-12">
+    <section
+      id="hero"
+      className="relative min-h-svh flex items-center px-6 pt-10 md:pt-12">
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 items-center py-16 md:py-0">
         {/* HERO TAGLINE */}
         <div className="flex flex-col items-start">
@@ -129,7 +177,10 @@ export default function Hero() {
             y={-16}
           />
 
-          <BlurIn delay={0.9} blur={6} y={8}>
+          <BlurIn
+            delay={0.9}
+            blur={6}
+            y={8}>
             <p className="text-sm sm:text-base max-w-md text-foreground-muted">{hero.subtitle}</p>
           </BlurIn>
 
@@ -140,16 +191,14 @@ export default function Hero() {
             duration={0.6}
             blur={12}
             y={12}
-            className="flex flex-col items-start gap-3 mt-[clamp(2.5rem,6vw,5rem)]"
-          >
+            className="flex flex-col items-start gap-3 mt-[clamp(2.5rem,6vw,5rem)]">
             <a
               href="#contact"
-              className="group relative inline-flex items-center pb-1 text-lg font-semibold text-foreground transition-colors duration-300 hover:text-accent-hover sm:text-xl md:text-2xl"
-            >
+              className="group relative inline-flex items-center pb-1 text-lg font-semibold text-foreground transition-colors duration-300 hover:text-accent-hover sm:text-xl md:text-2xl">
               {hero.cta.contactbtn.label}
               <span
                 className="absolute bottom-0 left-0 h-px w-full origin-right scale-x-0 transition-transform duration-500 ease-out group-hover:origin-left group-hover:scale-x-100"
-                style={{ backgroundColor: "var(--color-accent-hover)" }}
+                style={{ backgroundColor: 'var(--color-accent-hover)' }}
               />
             </a>
           </BlurIn>
@@ -165,18 +214,44 @@ export default function Hero() {
               duration={0.9}
               blur={14}
               y={20}
-              className="absolute inset-0 flex items-center justify-center pointer-events-none"
-            >
-              <svg viewBox="0 0 500 500" className="w-[90%] h-[90%]" aria-hidden="true">
+              className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <svg
+                viewBox="0 0 500 500"
+                className="w-[90%] h-[90%]"
+                aria-hidden="true">
                 <path
                   fill="var(--color-background-secondary)"
                   fillOpacity="0.8"
                   d="M220,80 C260,60 310,70 350,100 C390,130 420,180 420,230 C420,280 400,320 380,350 C360,380 330,420 280,440 C230,460 170,450 120,420 C70,390 40,340 50,290 C60,240 90,200 130,170 C170,140 190,100 220,80 Z"
                 />
-                <circle cx="80" cy="120" r="4" fill="var(--color-background-secondary)" fillOpacity="0.4" />
-                <circle cx="440" cy="380" r="3" fill="var(--color-background-secondary)" fillOpacity="0.4" />
-                <circle cx="60" cy="400" r="5" fill="var(--color-background-secondary)" fillOpacity="0.3" />
-                <circle cx="430" cy="130" r="4" fill="var(--color-background-secondary)" fillOpacity="0.3" />
+                <circle
+                  cx="80"
+                  cy="120"
+                  r="4"
+                  fill="var(--color-background-secondary)"
+                  fillOpacity="0.4"
+                />
+                <circle
+                  cx="440"
+                  cy="380"
+                  r="3"
+                  fill="var(--color-background-secondary)"
+                  fillOpacity="0.4"
+                />
+                <circle
+                  cx="60"
+                  cy="400"
+                  r="5"
+                  fill="var(--color-background-secondary)"
+                  fillOpacity="0.3"
+                />
+                <circle
+                  cx="430"
+                  cy="130"
+                  r="4"
+                  fill="var(--color-background-secondary)"
+                  fillOpacity="0.3"
+                />
               </svg>
             </BlurIn>
 
@@ -187,15 +262,14 @@ export default function Hero() {
               duration={1.0}
               blur={16}
               y={12}
-              className="absolute inset-0 overflow-hidden"
-            >
+              className="absolute inset-0 overflow-hidden">
               <Image
                 src="/profile-photo.png"
                 alt="Christian M. Castillo"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain object-center select-none pointer-events-none"
-                style={{ filter: "grayscale(80%) contrast(1.1) brightness(0.85)" }}
+                style={{ filter: 'grayscale(80%) contrast(1.1) brightness(0.85)' }}
                 draggable={false}
                 priority
               />
@@ -217,8 +291,7 @@ export default function Hero() {
                 initial="initial"
                 whileInView="animate"
                 viewport={{ once: true, amount: 0.3 }}
-                title={icon.name}
-              >
+                title={icon.name}>
                 <div className="w-7 h-7">{icon.svg}</div>
               </motion.div>
             ))}

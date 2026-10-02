@@ -1,37 +1,37 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink } from "lucide-react";
-import { FaReact, FaGitAlt, FaHtml5, FaCss3Alt, FaJs, FaFigma, FaGithub } from "react-icons/fa";
-import { SiVuedotjs, SiNextdotjs, SiTypescript, SiTailwindcss, SiVercel, SiFramer, SiSass } from "react-icons/si";
-import { VscVscode } from "react-icons/vsc";
-import { skills, projects, skillsTagline } from "@/data/portfolio";
-import { CascadeText, BlurIn, StaggerList, StaggerItem } from "@/components/ui/motion-primitives";
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink } from 'lucide-react';
+import { FaReact, FaGitAlt, FaHtml5, FaCss3Alt, FaJs, FaFigma, FaGithub } from 'react-icons/fa';
+import { SiVuedotjs, SiNextdotjs, SiTypescript, SiTailwindcss, SiVercel, SiFramer, SiSass } from 'react-icons/si';
+import { VscVscode } from 'react-icons/vsc';
+import { skills, projects, skillsTagline } from '@/data/portfolio';
+import { CascadeText, BlurIn, StaggerList, StaggerItem } from '@/components/ui/motion-primitives';
 
 const iconMap: Record<string, React.ReactNode> = {
   HTML: <FaHtml5 />,
   CSS: <FaCss3Alt />,
   JavaScript: <FaJs />,
   TypeScript: <SiTypescript />,
-  "Next.js": <SiNextdotjs />,
-  "Tailwind CSS": <SiTailwindcss />,
+  'Next.js': <SiNextdotjs />,
+  'Tailwind CSS': <SiTailwindcss />,
   SCSS: <SiSass />,
   React: <FaReact />,
-  "Vue.js": <SiVuedotjs />,
-  "Framer Motion": <SiFramer />,
+  'Vue.js': <SiVuedotjs />,
+  'Framer Motion': <SiFramer />,
   Git: <FaGitAlt />,
   GitHub: <FaGithub />,
   Figma: <FaFigma />,
-  "VS Code": <VscVscode />,
+  'VS Code': <VscVscode />,
   Vercel: <SiVercel />,
 };
 
 const groupLabels: Record<string, string> = {
-  language: "Languages",
-  frameworks: "Frameworks",
-  libraries: "Libraries",
-  tools: "Tools",
+  language: 'Languages',
+  frameworks: 'Frameworks',
+  libraries: 'Libraries',
+  tools: 'Tools',
 };
 
 const skillBaseAngles: Record<keyof typeof skills, number> = {
@@ -42,23 +42,23 @@ const skillBaseAngles: Record<keyof typeof skills, number> = {
 };
 
 const groupPillTransforms: Record<keyof typeof skills, string> = {
-  frameworks: "translate(0, -50%)",
-  libraries: "translate(-50%, 0)",
-  tools: "translate(-100%, -50%)",
-  language: "translate(-50%, -100%)",
+  frameworks: 'translate(0, -50%)',
+  libraries: 'translate(-50%, 0)',
+  tools: 'translate(-100%, -50%)',
+  language: 'translate(-50%, -100%)',
 };
 
 const marqueeItems = [
-  { name: "React", icon: <FaReact /> },
-  { name: "Next.js", icon: <SiNextdotjs /> },
-  { name: "TypeScript", icon: <SiTypescript /> },
-  { name: "JavaScript", icon: <FaJs /> },
-  { name: "Tailwind CSS", icon: <SiTailwindcss /> },
-  { name: "Git", icon: <FaGitAlt /> },
-  { name: "VS Code", icon: <VscVscode /> },
-  { name: "Vercel", icon: <SiVercel /> },
-  { name: "HTML", icon: <FaHtml5 /> },
-  { name: "CSS", icon: <FaCss3Alt /> },
+  { name: 'React', icon: <FaReact /> },
+  { name: 'Next.js', icon: <SiNextdotjs /> },
+  { name: 'TypeScript', icon: <SiTypescript /> },
+  { name: 'JavaScript', icon: <FaJs /> },
+  { name: 'Tailwind CSS', icon: <SiTailwindcss /> },
+  { name: 'Git', icon: <FaGitAlt /> },
+  { name: 'VS Code', icon: <VscVscode /> },
+  { name: 'Vercel', icon: <SiVercel /> },
+  { name: 'HTML', icon: <FaHtml5 /> },
+  { name: 'CSS', icon: <FaCss3Alt /> },
 ];
 
 const toRad = (deg: number) => (deg * Math.PI) / 180;
@@ -71,7 +71,7 @@ const getCoords = (cx: number, cy: number, angle: number, radius: number) => ({
 const getSkillAngles = (group: keyof typeof skills, baseAngle: number, count: number): number[] => {
   if (count === 1) return [baseAngle];
 
-  const isFramework = group === "frameworks";
+  const isFramework = group === 'frameworks';
   const minSpread = isFramework ? 50 : 35;
   const maxSpread = isFramework ? 80 : 60;
   const perItem = isFramework ? 22 : 18;
@@ -105,11 +105,11 @@ export default function Skills() {
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(containerEl);
-    window.addEventListener("resize", measure);
+    window.addEventListener('resize', measure);
 
     return () => {
       observer.disconnect();
-      window.removeEventListener("resize", measure);
+      window.removeEventListener('resize', measure);
     };
   }, [containerEl, isMobile]);
 
@@ -117,8 +117,8 @@ export default function Skills() {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
     setMounted(true);
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
   }, []);
 
   useEffect(() => {
@@ -133,11 +133,11 @@ export default function Skills() {
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(element);
-    window.addEventListener("resize", measure);
+    window.addEventListener('resize', measure);
 
     return () => {
       observer.disconnect();
-      window.removeEventListener("resize", measure);
+      window.removeEventListener('resize', measure);
     };
   }, [isMobile]);
 
@@ -151,11 +151,11 @@ export default function Skills() {
   const ICON_SIZE = isMobile ? 36 : 48;
   const ICON_RADIUS = ICON_SIZE / 2;
   const connectedProjects = activeSkill
-    ? projects.filter((p) => p.status === "live" && p.tech.includes(activeSkill))
+    ? projects.filter((p) => p.status === 'live' && p.tech.includes(activeSkill))
     : [];
 
   const handleSkillClick = (skill: string) => {
-    const hasProjects = projects.some((p) => p.status === "live" && p.tech.includes(skill));
+    const hasProjects = projects.some((p) => p.status === 'live' && p.tech.includes(skill));
     if (!hasProjects) return;
 
     const next = activeSkill === skill ? null : skill;
@@ -201,7 +201,9 @@ export default function Skills() {
   });
 
   return (
-    <section id="skills" className="section-container">
+    <section
+      id="skills"
+      className="section-container">
       <div className="mb-12">
         <CascadeText
           as="h2"
@@ -212,11 +214,14 @@ export default function Skills() {
           blur={8}
           y={-10}
         />
-        <BlurIn delay={0.75} blur={8} y={10} className="mt-6 max-w-xl">
+        <BlurIn
+          delay={0.75}
+          blur={8}
+          y={10}
+          className="mt-6 max-w-xl">
           <p
             className="text-sm italic leading-relaxed sm:text-base"
-            style={{ color: "var(--color-foreground-subtle)" }}
-          >
+            style={{ color: 'var(--color-foreground-subtle)' }}>
             {skillsTagline}
           </p>
         </BlurIn>
@@ -226,20 +231,28 @@ export default function Skills() {
           <div className="w-full h-110" />
         ) : isMobile ? (
           // GRID ON MOBILE
-          <BlurIn delay={1.2} blur={8} y={12} className="w-full">
-            <StaggerList className="w-full space-y-4" stagger={0.12} delay={0.1}>
+          <BlurIn
+            delay={1.2}
+            blur={8}
+            y={12}
+            className="w-full">
+            <StaggerList
+              className="w-full space-y-4"
+              stagger={0.12}
+              delay={0.1}>
               {(Object.keys(skills) as Array<keyof typeof skills>).map((group) => (
-                <StaggerItem key={group} className="rounded-lg p-4">
+                <StaggerItem
+                  key={group}
+                  className="rounded-lg p-4">
                   <h3
                     className="mb-3 text-[10px] font-semibold uppercase tracking-widest"
-                    style={{ color: "var(--color-foreground-subtle)" }}
-                  >
+                    style={{ color: 'var(--color-foreground-subtle)' }}>
                     {groupLabels[group]}
                   </h3>
 
                   <div className="flex flex-wrap gap-2">
                     {skills[group].map((skill) => {
-                      const hasProjects = projects.some((p) => p.status === "live" && p.tech.includes(skill));
+                      const hasProjects = projects.some((p) => p.status === 'live' && p.tech.includes(skill));
                       const isActive = activeSkill === skill;
 
                       return (
@@ -250,20 +263,19 @@ export default function Skills() {
                           disabled={!hasProjects}
                           className="flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition-colors duration-200"
                           style={{
-                            backgroundColor: isActive ? "var(--color-accent-subtle)" : "var(--color-background)",
+                            backgroundColor: isActive ? 'var(--color-accent-subtle)' : 'var(--color-background)',
                             borderColor: isActive
-                              ? "var(--color-accent)"
+                              ? 'var(--color-accent)'
                               : hasProjects
-                                ? "var(--color-border-hover)"
-                                : "var(--color-border)",
+                                ? 'var(--color-border-hover)'
+                                : 'var(--color-border)',
                             color: isActive
-                              ? "var(--color-accent)"
+                              ? 'var(--color-accent)'
                               : hasProjects
-                                ? "var(--color-foreground)"
-                                : "var(--color-foreground-subtle)",
-                            cursor: hasProjects ? "pointer" : "default",
-                          }}
-                        >
+                                ? 'var(--color-foreground)'
+                                : 'var(--color-foreground-subtle)',
+                            cursor: hasProjects ? 'pointer' : 'default',
+                          }}>
                           <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center text-sm">
                             {iconMap[skill]}
                           </span>
@@ -272,7 +284,7 @@ export default function Skills() {
                             <span
                               className="ml-0.5 h-1 w-1 shrink-0 rounded-full"
                               style={{
-                                backgroundColor: isActive ? "var(--color-accent)" : "var(--color-foreground-subtle)",
+                                backgroundColor: isActive ? 'var(--color-accent)' : 'var(--color-foreground-subtle)',
                               }}
                             />
                           )}
@@ -286,8 +298,14 @@ export default function Skills() {
           </BlurIn>
         ) : (
           // RADIAL ON DESKTOP
-          <BlurIn delay={1.2} blur={10} y={16} className="w-full flex justify-center">
-            <div ref={setContainerEl} className="relative w-full max-w-275 h-110 sm:h-135 md:h-155 lg:h-170">
+          <BlurIn
+            delay={1.2}
+            blur={10}
+            y={16}
+            className="w-full flex justify-center">
+            <div
+              ref={setContainerEl}
+              className="relative w-full max-w-275 h-110 sm:h-135 md:h-155 lg:h-170">
               {size.w > 0 && size.h > 0 && (
                 <>
                   {/* RINGS WRAPPER */}
@@ -300,13 +318,12 @@ export default function Skills() {
                     }}
                     transition={{
                       duration: isExpanded ? 1.1 : 0.5,
-                      ease: isExpanded ? [0.16, 1, 0.3, 1] : "easeInOut",
+                      ease: isExpanded ? [0.16, 1, 0.3, 1] : 'easeInOut',
                     }}
                     style={{
                       transformOrigin: `${cx}px ${cy}px`,
-                      pointerEvents: isExpanded ? "auto" : "none",
-                    }}
-                  >
+                      pointerEvents: isExpanded ? 'auto' : 'none',
+                    }}>
                     {/* ICONS CONNECTION */}
                     <svg className="absolute inset-0 w-full h-full pointer-events-none">
                       {groupNodes.map(({ group, coords }) => (
@@ -356,7 +373,7 @@ export default function Skills() {
                                   pathLength: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
                                   opacity: { duration: 0.1 },
                                 }}
-                                style={{ filter: "drop-shadow(0 0 4px var(--color-accent))" }}
+                                style={{ filter: 'drop-shadow(0 0 4px var(--color-accent))' }}
                               />
 
                               {/* GROUPT TO SKILLS */}
@@ -379,7 +396,7 @@ export default function Skills() {
                                   },
                                   opacity: { duration: 0.1, delay: 0.35 },
                                 }}
-                                style={{ filter: "drop-shadow(0 0 4px var(--color-accent))" }}
+                                style={{ filter: 'drop-shadow(0 0 4px var(--color-accent))' }}
                               />
                             </>
                           );
@@ -395,24 +412,20 @@ export default function Skills() {
                           left: coords.x,
                           top: coords.y,
                           transform: groupPillTransforms[group],
-                        }}
-                      >
+                        }}>
                         <motion.div
                           initial={{ opacity: 0, scale: 0 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.4, ease: "easeOut" }}
-                        >
+                          transition={{ duration: 0.4, ease: 'easeOut' }}>
                           <div
                             className="px-2.5 py-1 sm:px-4 sm:py-2 border"
                             style={{
-                              backgroundColor: "var(--color-background-card)",
-                              borderColor: "var(--color-border)",
-                            }}
-                          >
+                              backgroundColor: 'var(--color-background-card)',
+                              borderColor: 'var(--color-border)',
+                            }}>
                             <span
                               className="text-[9px] sm:text-xs font-medium tracking-widest uppercase whitespace-nowrap"
-                              style={{ color: "var(--color-foreground-subtle)" }}
-                            >
+                              style={{ color: 'var(--color-foreground-subtle)' }}>
                               {groupLabels[group]}
                             </span>
                           </div>
@@ -423,7 +436,7 @@ export default function Skills() {
                     {/* OUTER RING */}
                     {allSkillNodes.map(({ skill, coords }, idx) => {
                       const isActive = activeSkill === skill;
-                      const hasProjects = projects.some((p) => p.status === "live" && p.tech.includes(skill));
+                      const hasProjects = projects.some((p) => p.status === 'live' && p.tech.includes(skill));
 
                       return (
                         <motion.div
@@ -435,58 +448,54 @@ export default function Skills() {
                           transition={{
                             duration: 0.4,
                             delay: idx * 0.04,
-                            ease: "easeOut",
-                          }}
-                        >
+                            ease: 'easeOut',
+                          }}>
                           <button
                             onClick={() => handleSkillClick(skill)}
                             className="relative"
                             style={{
                               width: ICON_SIZE,
                               height: ICON_SIZE,
-                              cursor: hasProjects ? "pointer" : "default",
+                              cursor: hasProjects ? 'pointer' : 'default',
                             }}
-                            title={hasProjects ? `See projects using ${skill}` : skill}
-                          >
+                            title={hasProjects ? `See projects using ${skill}` : skill}>
                             <motion.div
                               className="w-full h-full rounded-full flex items-center justify-center border text-base sm:text-lg"
                               style={{
                                 backgroundColor: isActive
-                                  ? "var(--color-accent-subtle)"
-                                  : "var(--color-background-card)",
+                                  ? 'var(--color-accent-subtle)'
+                                  : 'var(--color-background-card)',
                                 borderColor: isActive
-                                  ? "var(--color-accent)"
+                                  ? 'var(--color-accent)'
                                   : hasProjects
-                                    ? "var(--color-border-hover)"
-                                    : "var(--color-border)",
+                                    ? 'var(--color-border-hover)'
+                                    : 'var(--color-border)',
                                 color: isActive
-                                  ? "var(--color-accent)"
+                                  ? 'var(--color-accent)'
                                   : hasProjects
-                                    ? "var(--color-foreground)"
-                                    : "var(--color-foreground-subtle)",
+                                    ? 'var(--color-foreground)'
+                                    : 'var(--color-foreground-subtle)',
                               }}
                               whileHover={
                                 hasProjects
                                   ? {
                                       scale: 1.15,
-                                      borderColor: "var(--color-accent)",
+                                      borderColor: 'var(--color-accent)',
                                     }
                                   : { scale: 1.05 }
                               }
                               whileTap={{ scale: 0.92 }}
                               animate={{
-                                boxShadow: isActive ? "0 0 16px var(--color-accent-subtle)" : "none",
-                              }}
-                            >
+                                boxShadow: isActive ? '0 0 16px var(--color-accent-subtle)' : 'none',
+                              }}>
                               {iconMap[skill]}
                             </motion.div>
 
                             <span
                               className="absolute left-1/2 top-full mt-1 -translate-x-1/2 text-center leading-tight text-[8px] sm:text-[9px] whitespace-nowrap"
                               style={{
-                                color: isActive ? "var(--color-accent)" : "var(--color-foreground-subtle)",
-                              }}
-                            >
+                                color: isActive ? 'var(--color-accent)' : 'var(--color-foreground-subtle)',
+                              }}>
                               {skill}
                             </span>
 
@@ -494,7 +503,7 @@ export default function Skills() {
                               <span
                                 className="absolute left-1/2 top-full mt-4 -translate-x-1/2 w-1 h-1 rounded-full"
                                 style={{
-                                  backgroundColor: isActive ? "var(--color-accent)" : "var(--color-foreground-subtle)",
+                                  backgroundColor: isActive ? 'var(--color-accent)' : 'var(--color-foreground-subtle)',
                                 }}
                               />
                             )}
@@ -505,20 +514,22 @@ export default function Skills() {
                   </motion.div>
 
                   {/* CENTER RING */}
-                  <div className="absolute z-30 -translate-x-1/2 -translate-y-1/2" style={{ left: cx, top: cy }}>
+                  <div
+                    className="absolute z-30 -translate-x-1/2 -translate-y-1/2"
+                    style={{ left: cx, top: cy }}>
                     <div className="relative">
                       {!isExpanded && (
                         <motion.span
                           key={`pulse-idle-${pulseKey}`}
                           className="absolute inset-0 rounded-full pointer-events-none"
-                          style={{ border: "2px solid var(--color-accent)" }}
+                          style={{ border: '2px solid var(--color-accent)' }}
                           initial={{ opacity: 0.75, scale: 1 }}
                           animate={{ opacity: 0, scale: 1.6 }}
                           transition={{
                             duration: 1.8,
                             repeat: Infinity,
                             repeatDelay: 0.1,
-                            ease: "easeOut",
+                            ease: 'easeOut',
                           }}
                         />
                       )}
@@ -527,7 +538,7 @@ export default function Skills() {
                         <motion.span
                           key={`pulse-burst-${pulseKey}`}
                           className="absolute inset-0 rounded-full pointer-events-none"
-                          style={{ border: "2px solid var(--color-accent)" }}
+                          style={{ border: '2px solid var(--color-accent)' }}
                           initial={{ opacity: 0.8, scale: 1 }}
                           animate={{ opacity: 0, scale: 2.2 }}
                           transition={{
@@ -541,22 +552,20 @@ export default function Skills() {
                         onClick={toggleExpanded}
                         className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full flex items-center justify-center border-2"
                         style={{
-                          backgroundColor: "var(--color-background-card)",
-                          borderColor: "var(--color-accent)",
-                          cursor: "pointer",
+                          backgroundColor: 'var(--color-background-card)',
+                          borderColor: 'var(--color-accent)',
+                          cursor: 'pointer',
                         }}
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        transition={{ duration: 0.5, ease: 'easeOut' }}
                         whileHover={{ scale: 1.06 }}
                         whileTap={{ scale: 0.94 }}
-                        aria-label={isExpanded ? "Hide skills" : "Show skills"}
-                        aria-expanded={isExpanded}
-                      >
+                        aria-label={isExpanded ? 'Hide skills' : 'Show skills'}
+                        aria-expanded={isExpanded}>
                         <span
                           className="text-sm sm:text-base font-bold font-heading tracking-widest"
-                          style={{ color: "var(--color-accent)" }}
-                        >
+                          style={{ color: 'var(--color-accent)' }}>
                           SKILLS
                         </span>
                       </motion.button>
@@ -578,12 +587,10 @@ export default function Skills() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.3 }}
-            className="mb-12 sm:mb-16"
-          >
+            className="mb-12 sm:mb-16">
             <p
               className="text-xs font-medium tracking-widest uppercase mb-4"
-              style={{ color: "var(--color-foreground-subtle)" }}
-            >
+              style={{ color: 'var(--color-foreground-subtle)' }}>
               Projects using {activeSkill}
             </p>
 
@@ -592,13 +599,16 @@ export default function Skills() {
                 <div
                   key={project.title}
                   className="p-4 border transition-colors duration-200"
-                  style={{ backgroundColor: "var(--color-background-card)", borderColor: "var(--color-border)" }}
-                >
-                  <h4 className="font-heading font-bold text-sm mb-1" style={{ color: "var(--color-foreground)" }}>
+                  style={{ backgroundColor: 'var(--color-background-card)', borderColor: 'var(--color-border)' }}>
+                  <h4
+                    className="font-heading font-bold text-sm mb-1"
+                    style={{ color: 'var(--color-foreground)' }}>
                     {project.title}
                   </h4>
 
-                  <p className="text-xs leading-relaxed mb-3" style={{ color: "var(--color-foreground-muted)" }}>
+                  <p
+                    className="text-xs leading-relaxed mb-3"
+                    style={{ color: 'var(--color-foreground-muted)' }}>
                     {project.shortDescription}
                   </p>
 
@@ -609,8 +619,7 @@ export default function Skills() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs"
-                        style={{ color: "var(--color-accent)" }}
-                      >
+                        style={{ color: 'var(--color-accent)' }}>
                         <ExternalLink size={10} />
                         Live
                       </a>
@@ -622,8 +631,7 @@ export default function Skills() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs"
-                        style={{ color: "var(--color-foreground-muted)" }}
-                      >
+                        style={{ color: 'var(--color-foreground-muted)' }}>
                         <FaGithub size={10} />
                         GitHub
                       </a>
@@ -637,7 +645,9 @@ export default function Skills() {
       </AnimatePresence>
 
       {/* MARQUEE */}
-      <div className="pt-8 border-t overflow-hidden" style={{ borderColor: "var(--color-border)" }}>
+      <div
+        className="pt-8 border-t overflow-hidden"
+        style={{ borderColor: 'var(--color-border)' }}>
         <CascadeText
           as="p"
           text="Technologies I work with"
@@ -648,15 +658,18 @@ export default function Skills() {
           y={-6}
         />
 
-        <BlurIn delay={0.4} blur={8} y={10}>
+        <BlurIn
+          delay={0.4}
+          blur={8}
+          y={10}>
           <div className="relative flex overflow-hidden">
             <div
               className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to right, var(--color-background), transparent)" }}
+              style={{ background: 'linear-gradient(to right, var(--color-background), transparent)' }}
             />
             <div
               className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 z-10 pointer-events-none"
-              style={{ background: "linear-gradient(to left, var(--color-background), transparent)" }}
+              style={{ background: 'linear-gradient(to left, var(--color-background), transparent)' }}
             />
 
             <div className="flex animate-marquee gap-10 sm:gap-16 items-center">
@@ -664,9 +677,8 @@ export default function Skills() {
                 <span
                   key={i}
                   className="text-2xl sm:text-3xl md:text-4xl shrink-0"
-                  style={{ color: "var(--color-foreground-subtle)" }}
-                  title={item.name}
-                >
+                  style={{ color: 'var(--color-foreground-subtle)' }}
+                  title={item.name}>
                   {item.icon}
                 </span>
               ))}

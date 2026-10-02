@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-background: #f1eada;
@@ -23,7 +23,7 @@
   --navbar-tint: rgba(241, 234, 218, 0.65);
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --color-background: #25272c;
   --color-background-secondary: #2c2e34;
   --color-background-card: #282a30;
@@ -54,11 +54,15 @@
   html {
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
-
+    scroll-padding-top: 80px;
     color-scheme: light;
   }
+  section[id],
+  div[id] {
+    scroll-margin-top: 80px;
+  }
 
-  [data-theme="dark"] {
+  [data-theme='dark'] {
     color-scheme: dark;
   }
 

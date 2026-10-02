@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { BlurIn } from "@/components/ui/motion-primitives";
-import { contact, footer } from "@/data/portfolio";
+import { useEffect, useState } from 'react';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { BlurIn } from '@/components/ui/motion-primitives';
+import { contact, footer } from '@/data/portfolio';
 
 /* SOCIALS — built from `contact`, empty URLs are dropped */
 const socials = [
   contact.github && {
-    label: "GitHub",
+    label: 'GitHub',
     href: contact.github,
     icon: <FaGithub size={14} />,
   },
   contact.linkedin && {
-    label: "LinkedIn",
+    label: 'LinkedIn',
     href: contact.linkedin,
     icon: <FaLinkedin size={14} />,
   },
@@ -24,15 +24,15 @@ const socials = [
 }>;
 
 export default function Footer() {
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState('');
 
   useEffect(() => {
     const update = () => {
       const now = new Date();
       const formatted = now.toLocaleTimeString(footer.location.locale, {
         timeZone: footer.location.timeZone,
-        hour: "numeric",
-        minute: "2-digit",
+        hour: 'numeric',
+        minute: '2-digit',
         hour12: true,
       });
       setTime(formatted);
@@ -43,14 +43,24 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="" style={{ backgroundColor: "var(--color-background-secondary)" }}>
-      <BlurIn delay={0.5} blur={6} y={12} className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+    <footer
+      className=""
+      style={{ backgroundColor: 'var(--color-background-secondary)' }}>
+      <BlurIn
+        delay={0.5}
+        blur={6}
+        y={12}
+        className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
         <div className="flex flex-col items-center text-center">
           {/* IDENTITY + SOCIALS */}
-          <p className="font-heading text-base font-bold" style={{ color: "var(--color-foreground)" }}>
+          <p
+            className="font-heading text-base font-bold"
+            style={{ color: 'var(--color-foreground)' }}>
             {footer.identity.name}
           </p>
-          <p className="mt-1 text-xs tracking-wide" style={{ color: "var(--color-foreground-muted)" }}>
+          <p
+            className="mt-1 text-xs tracking-wide"
+            style={{ color: 'var(--color-foreground-muted)' }}>
             {footer.identity.role}
           </p>
 
@@ -63,8 +73,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-xs transition-colors duration-200 hover:text-accent"
-                    style={{ color: "var(--color-foreground-muted)" }}
-                  >
+                    style={{ color: 'var(--color-foreground-muted)' }}>
                     <span aria-hidden="true">{s.icon}</span>
                     {s.label}
                   </a>
@@ -75,11 +84,13 @@ export default function Footer() {
 
           {/* META */}
           <div className="mt-8 flex flex-col gap-1.5 text-xs">
-            <p style={{ color: "var(--color-foreground-muted)" }}>
+            <p style={{ color: 'var(--color-foreground-muted)' }}>
               {footer.location.city}
-              {time ? ` · ${time}` : ""}
+              {time ? ` · ${time}` : ''}
             </p>
-            <p suppressHydrationWarning style={{ color: "var(--color-foreground-subtle)" }}>
+            <p
+              suppressHydrationWarning
+              style={{ color: 'var(--color-foreground-subtle)' }}>
               {footer.copyright}
             </p>
           </div>
