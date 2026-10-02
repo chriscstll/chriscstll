@@ -14,7 +14,7 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Drag state
+  // DRAG STATE
   const [isDragging, setIsDragging] = useState(false);
   const dragStartX = useRef(0);
   const dragStartScrollLeft = useRef(0);
@@ -149,8 +149,6 @@ export default function Projects() {
     if (pointerId.current !== e.pointerId) return;
 
     const delta = e.clientX - dragStartX.current;
-
-    // Only start dragging after 4px of movement
     if (!hasDragged.current && Math.abs(delta) > 4) {
       hasDragged.current = true;
       setIsDragging(true);

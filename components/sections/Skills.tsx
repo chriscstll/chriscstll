@@ -84,7 +84,6 @@ const getSkillAngles = (group: keyof typeof skills, baseAngle: number, count: nu
 
 export default function Skills() {
   const [activeSkill, setActiveSkill] = useState<string | null>(null);
-  // Start collapsed — only the center is visible on load.
   const [isExpanded, setIsExpanded] = useState(false);
   const [pulseKey, setPulseKey] = useState(0);
   const [size, setSize] = useState({ w: 0, h: 0 });
@@ -169,7 +168,7 @@ export default function Skills() {
         setFlowKey((k) => k + 1);
       }
     } else {
-      setFlowTarget(null); // ← clears when deselecting
+      setFlowTarget(null);
     }
   };
 
@@ -341,7 +340,7 @@ export default function Skills() {
 
                           return (
                             <>
-                              {/* Center → Group */}
+                              {/* CENTER TO GROUP */}
                               <motion.line
                                 key={`flow-center-${flowKey}`}
                                 x1={cx}
@@ -360,7 +359,7 @@ export default function Skills() {
                                 style={{ filter: "drop-shadow(0 0 4px var(--color-accent))" }}
                               />
 
-                              {/* Group → Skill */}
+                              {/* GROUPT TO SKILLS */}
                               <motion.line
                                 key={`flow-skill-${flowKey}`}
                                 x1={startX}

@@ -3,14 +3,7 @@
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
-/* EASING */
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
-
-/* 
-   CASCADE TEXT
-   Splits text into characters (or words), each blurs in
-   from below with a spring offset. Classic + blur combo.
-    */
 
 const motionTags = {
   span: motion.span,
@@ -65,7 +58,6 @@ export function CascadeText({
     <Tag
       className={className}
       aria-label={text}
-      // Parent variants — controls stagger timing for children
       variants={{
         hidden: {},
         visible: {
@@ -116,8 +108,6 @@ export function CascadeText({
   );
 }
 
-/* BLUR IN | Wraps a whole block. Blurs + slides + fades in on scroll. */
-
 type BlurInProps = {
   children: ReactNode;
   className?: string;
@@ -162,10 +152,6 @@ export function BlurIn({
     </motion.div>
   );
 }
-
-/* STAGGER LIST + ITEM
-   For lists. Parent staggers children
-   that are wrapped in <StaggerItem>. */
 
 type StaggerListProps = {
   children: ReactNode;

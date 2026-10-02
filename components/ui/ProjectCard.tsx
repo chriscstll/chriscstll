@@ -17,7 +17,6 @@ export default function ProjectCard({ project, onClick, isDragging = false }: Pr
       className="shrink-0 w-90 flex flex-col rounded-lg overflow-hidden border transition-all duration-300 group "
       style={{ borderColor: "var(--color-border)" }}
     >
-      {/* Image — only this area is clickable */}
       <div
         className={`relative w-full h-45 overflow-hidden ${isPlaceholder ? "cursor-default" : "cursor-pointer"}`}
         style={{ backgroundColor: "var(--color-background-secondary)" }}
@@ -31,7 +30,6 @@ export default function ProjectCard({ project, onClick, isDragging = false }: Pr
         }
       >
         {isPlaceholder ? (
-          /* Placeholder state */
           <div className="w-full h-full flex flex-col items-center justify-center gap-2">
             <div
               className="text-xs font-medium tracking-widest uppercase px-3 py-1 border"
@@ -41,7 +39,7 @@ export default function ProjectCard({ project, onClick, isDragging = false }: Pr
             </div>
           </div>
         ) : (
-          /* Real project image */
+          /* PORJECT IMG */
           <>
             <Image
               src={project.image}
@@ -53,7 +51,6 @@ export default function ProjectCard({ project, onClick, isDragging = false }: Pr
               className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
             />
 
-            {/* Hover overlay */}
             <div
               className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               style={{ backgroundColor: "rgba(0,0,0,0.55)" }}
@@ -83,7 +80,7 @@ export default function ProjectCard({ project, onClick, isDragging = false }: Pr
           {project.shortDescription}
         </p>
 
-        {/* Tech tags */}
+        {/* TECH TAGS */}
         <div className="flex flex-wrap gap-1 mt-1">
           {project.tech.slice(0, 3).map((t) => (
             <span

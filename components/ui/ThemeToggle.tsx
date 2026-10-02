@@ -12,7 +12,6 @@ const THEME_COLORS: Record<Theme, { bg: string; accent: string }> = {
   dark: { bg: "#25272c", accent: "#6ec9c0" },
 };
 
-// When the theme actually flips (screen is fully covered by pixels)
 const COMPLETE_AT = 880;
 
 export default function ThemeToggle() {
@@ -62,7 +61,6 @@ export default function ThemeToggle() {
       return;
     }
 
-    // Measure the toggle button's center as a % of the viewport
     const rect = buttonRef.current?.getBoundingClientRect();
     const originX = rect ? ((rect.left + rect.width / 2) / window.innerWidth) * 100 : 92;
     const originY = rect ? ((rect.top + rect.height / 2) / window.innerHeight) * 100 : 6;
@@ -128,10 +126,6 @@ export default function ThemeToggle() {
   );
 }
 
-/* =========================================================
-   PIXELATE OVERLAY
-   ========================================================= */
-
 function PixelateOverlay({ color, origin }: { color: string; origin: { x: number; y: number } }) {
   const isSmall = typeof window !== "undefined" && window.innerWidth < 768;
 
@@ -142,8 +136,6 @@ function PixelateOverlay({ color, origin }: { color: string; origin: { x: number
 
   const cells = useState(() => {
     const arr: { x: number; y: number; delay: number }[] = [];
-
-    // Convert the toggle's % position into grid coordinates
     const originCol = (origin.x / 100) * COLS;
     const originRow = (origin.y / 100) * ROWS;
 
