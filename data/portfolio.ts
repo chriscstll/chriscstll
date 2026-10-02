@@ -1,10 +1,9 @@
 import { title } from "process";
 
 export const siteConfig = {
-  name: "Christian M. Castillo",
-  title: "Christian M. Castillo",
-  description:
-    "Christian Castillo is a frontend developer focused on creating scalable, intuitive and seamless digital experiences",
+  name: "Christian Castillo",
+  title: "Christian Castillo",
+  description: "Frontend developer drawn to the logic of how things work and the craft of making them work well.",
   url: "https://stillindevelopment.com",
   ogImage: "/og-image.jpg",
 };
@@ -17,7 +16,6 @@ export const navLinks = [
 ];
 
 export const hero = {
-  name: "Christian M. Castillo",
   tagline: "\u201CThe decisions nobody notices are the ones that matter most\u201D",
   subtitle: "I craft seamless web applications through thoughtful engineering.",
   cta: {
@@ -137,7 +135,7 @@ export const contact = {
   email: "castilloxtiann@gmail.com",
   linkedin: "https://linkedin.com/in/placeholder",
   github: "https://github.com/chriscstll",
-  formspreeEndpoint: "https://formspree.io/f/your-form-id",
+  formspreeEndpoint: "https://formspree.io/f/myezaryz",
 };
 
 export const footer = {
@@ -177,5 +175,5 @@ export const structuredData = {
   url: siteConfig.url,
   jobTitle: "Frontend Developer",
   description: siteConfig.description,
-  sameAs: [contact.linkedin, contact.github],
+  image: `${siteConfig.url}/profile-photo.png`,
 };

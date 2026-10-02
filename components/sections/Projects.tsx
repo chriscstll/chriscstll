@@ -327,9 +327,9 @@ export default function Projects() {
                   onClick={closeModal}
                   aria-label="Close project"
                   className="absolute top-3 right-3 z-10 p-2 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-125 active:scale-90"
-                  style={{ color: "var(--color-accent-hover)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-accent-hover)")}
+                  style={{ color: "rgba(241, 234, 218, 1)" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(251, 249, 245, 1)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(241, 234, 218, 1)")}
                 >
                   <X size={20} />
                 </button>
@@ -343,14 +343,14 @@ export default function Projects() {
                   {selectedProject.description}
                 </p>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1">
                   {selectedProject.tech.map((t) => (
                     <span
                       key={t}
-                      className="inline-flex items-center rounded-sm px-3 py-1.5 text-xs"
+                      className="inline-flex items-center rounded-md px-3 py-1.5 text-xs"
                       style={{
                         color: "var(--color-foreground-muted)",
-                        boxShadow: "inset 0 1px 0 var(--color-border-hover), inset 0 -1px 0 var(--color-border-hover)",
+                        backgroundColor: "var(--color-background-secondary)",
                       }}
                     >
                       {t}
@@ -358,13 +358,13 @@ export default function Projects() {
                   ))}
                 </div>
 
-                <div className="flex gap-3 pt-2">
+                <div className="flex gap-2.5 pt-3.5">
                   {selectedProject.liveUrl && (
                     <a
                       href={selectedProject.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-2 rounded-md border border-transparent px-4 py-2 text-sm font-medium transition-all duration-300 hover:border-accent"
+                      className="group inline-flex items-center gap-1 rounded-md border px-2.5 py-1 text-base font-medium "
                       style={{ color: "var(--color-accent-text)" }}
                     >
                       <ExternalLink size={14} />
@@ -377,7 +377,7 @@ export default function Projects() {
                       href={selectedProject.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-2 rounded-md border border-transparent px-4 py-2 text-sm font-medium transition-all duration-300 hover:border-accent"
+                      className="group inline-flex items-center gap-1 rounded-md border px-2.5 py-1 text-base font-medium"
                       style={{ color: "var(--color-accent-text)" }}
                     >
                       <FaGithub size={14} />

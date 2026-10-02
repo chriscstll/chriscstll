@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
 
-  keywords: [siteConfig.name, "Frontend Developer", "React Developer", "Tailwind CSS", "TypeScript"],
+  keywords: [siteConfig.name, "Frontend Developer", "TypeScript", "React Developer", "Tailwind CSS"],
 
   robots: {
     index: true,

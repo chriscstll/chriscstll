@@ -73,7 +73,7 @@ export default function About() {
         </StaggerList>
 
         {/* RIGHT SIDE */}
-        <div className="order-1 md:order-2 flex flex-col gap-6">
+        <div className="order-1 md:order-2 flex flex-col gap-6 min-h-100 md:min-h-112.5">
           <h2>
             <CascadeText
               as="span"
@@ -119,7 +119,7 @@ export default function About() {
                     delay: 0.1,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  className="text-sm leading-[1.65] tracking-wide min-h-70 md:min-h-85 md:max-w-90 lg:max-w-md rounded-md px-4 py-3"
+                  className="text-sm leading-[1.65] tracking-wide md:max-w-90 lg:max-w-md rounded-md px-4 py-3"
                   style={{
                     color: "var(--color-foreground-muted)",
                     backgroundColor: "var(--color-background-card)",

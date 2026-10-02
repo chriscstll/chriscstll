@@ -12,7 +12,7 @@ type FieldErrors = Partial<Record<FieldName, string>>;
 type FieldValues = Record<FieldName, string>;
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const INITIAL_VALUES: FieldValues = {
   name: "",
@@ -46,10 +46,13 @@ function validateField(name: FieldName, value: string): string | null {
       return null;
   }
 }
-
-/* =========================================================
-   MAIN COMPONENT
-   ========================================================= */
+const SPAM_PATTERNS = [
+  /(https?:\/\/.*){2,}/i,
+  /\b(viagra|casino|crypto|bitcoin|forex|loan)\b/i,
+  /[A-Z]{15,}/,
+  /(.)\1{9,}/,
+];
+const looksLikeSpam = (message: string): boolean => SPAM_PATTERNS.some((p) => p.test(message));
 
 export default function Contact() {
   const [values, setValues] = useState<FieldValues>(INITIAL_VALUES);
@@ -57,6 +60,7 @@ export default function Contact() {
   const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
   const [status, setStatus] = useState<FormStatus>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleChange = (name: FieldName, value: string) => {
@@ -78,9 +82,52 @@ export default function Contact() {
     setServerError(null);
     setTouched({ name: true, email: true, message: true });
 
+    // 0. HONEYPOT
+    if (honeypot) {
+      setStatus("success");
+      setValues(INITIAL_VALUES);
+      return;
+    }
+
+    const MAX_LENGTHS = { name: 80, email: 120, message: 1000 };
+
+    // 1. REJECT OVERSIZED PAYLOAD
+    if (
+      values.name.length > MAX_LENGTHS.name * 2 ||
+      values.email.length > MAX_LENGTHS.email * 2 ||
+      values.message.length > MAX_LENGTHS.message * 2
+    ) {
+      setServerError("Message is too long. Please shorten it.");
+      return;
+    }
+
+    // 2. RATE LIMIT
+    const RATE_LIMIT_MS = 60_000;
+    const lastSubmit = Number(localStorage.getItem("contact_submitted_at") || 0);
+    const now = Date.now();
+    if (now - lastSubmit < RATE_LIMIT_MS) {
+      const secondsLeft = Math.ceil((RATE_LIMIT_MS - (now - lastSubmit)) / 1000);
+      setServerError(`Please wait ${secondsLeft}s before sending another message.`);
+      return;
+    }
+
+    // 3. TRIMMED VALUES
+    const trimmed = {
+      name: values.name.trim().slice(0, MAX_LENGTHS.name),
+      email: values.email.trim().slice(0, MAX_LENGTHS.email),
+      message: values.message.trim().slice(0, MAX_LENGTHS.message),
+    };
+
+    // 4. SPAM CHECK
+    if (looksLikeSpam(trimmed.message) || looksLikeSpam(trimmed.name)) {
+      setServerError("Your message was flagged as spam. If this is a mistake, email me directly.");
+      return;
+    }
+
+    // 5. FFIELD VALIDATION
     const newErrors: FieldErrors = {};
-    (Object.keys(values) as FieldName[]).forEach((key) => {
-      const err = validateField(key, values[key]);
+    (Object.keys(trimmed) as FieldName[]).forEach((key) => {
+      const err = validateField(key, trimmed[key]);
       if (err) newErrors[key] = err;
     });
     setErrors(newErrors);
@@ -94,13 +141,13 @@ export default function Contact() {
       return;
     }
 
-    // FORMSPREE SUBMIT
+    // 6. SEND
     setStatus("submitting");
 
     const formData = new FormData();
-    formData.append("name", values.name.trim());
-    formData.append("email", values.email.trim());
-    formData.append("message", values.message.trim());
+    formData.append("name", trimmed.name);
+    formData.append("email", trimmed.email);
+    formData.append("message", trimmed.message);
 
     try {
       const res = await fetch(contact.formspreeEndpoint, {
@@ -114,9 +161,10 @@ export default function Contact() {
         setValues(INITIAL_VALUES);
         setErrors({});
         setTouched({});
+        localStorage.setItem("contact_submitted_at", String(Date.now()));
       } else {
         setStatus("error");
-        setServerError("We couldn't send your message right now. Please try again later, or email me directly.");
+        setServerError("We couldn't send your message right now. Please try again, or email me directly.");
       }
     } catch {
       setStatus("error");
@@ -203,11 +251,19 @@ export default function Contact() {
               >
                 <input
                   type="text"
-                  name="_gotcha"
+                  name="website"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
                   tabIndex={-1}
                   autoComplete="off"
-                  style={{ display: "none" }}
                   aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    left: "-9999px",
+                    width: "1px",
+                    height: "1px",
+                    overflow: "hidden",
+                  }}
                 />
 
                 {/* NAME + EMAIL */}
