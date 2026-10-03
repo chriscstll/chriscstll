@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { contact, navLinks } from '@/data/portfolio';
 import { BlurIn } from '@/components/ui/motion-primitives';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import Link from 'next/link';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -133,8 +134,8 @@ export default function Navbar() {
             y={-6}
             duration={0.5}
             className="relative z-50">
-            <a
-              href="/"
+            <Link
+              href="/#hero"
               className="transition-opacity duration-200 hover:opacity-75 relative z-50"
               onClick={closeMenu}
               aria-label="Christian M. Castillo">
@@ -146,7 +147,7 @@ export default function Navbar() {
                 className="h-10 w-auto sm:h-11 md:h-12"
                 priority
               />
-            </a>
+            </Link>
           </BlurIn>
 
           <ul className="hidden md:flex items-center gap-8">

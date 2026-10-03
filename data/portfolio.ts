@@ -1,5 +1,3 @@
-import { title } from 'process';
-
 export const siteConfig = {
   name: 'Christian Castillo',
   title: 'Christian Castillo',

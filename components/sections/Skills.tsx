@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useSyncExternalStore } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { FaReact, FaGitAlt, FaHtml5, FaCss3Alt, FaJs, FaFigma, FaGithub } from 'react-icons/fa';
@@ -82,15 +82,34 @@ const getSkillAngles = (group: keyof typeof skills, baseAngle: number, count: nu
   return Array.from({ length: count }, (_, i) => baseAngle - spread / 2 + i * step);
 };
 
+function subscribeToResize(callback: () => void) {
+  window.addEventListener('resize', callback);
+  return () => window.removeEventListener('resize', callback);
+}
+
+function useIsMobile() {
+  return useSyncExternalStore(
+    subscribeToResize,
+    () => window.innerWidth < 768,
+    () => false,
+  );
+}
+const subscribeNoop = () => () => {};
+function useMounted() {
+  return useSyncExternalStore(
+    subscribeNoop,
+    () => true,
+    () => false,
+  );
+}
 export default function Skills() {
   const [activeSkill, setActiveSkill] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [pulseKey, setPulseKey] = useState(0);
   const [size, setSize] = useState({ w: 0, h: 0 });
-  const [isMobile, setIsMobile] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   const [containerEl, setContainerEl] = useState<HTMLDivElement | null>(null);
+  const mounted = useMounted();
 
   const [flowTarget, setFlowTarget] = useState<{ group: string; skill: string } | null>(null);
   const [flowKey, setFlowKey] = useState(0);
@@ -112,34 +131,6 @@ export default function Skills() {
       window.removeEventListener('resize', measure);
     };
   }, [containerEl, isMobile]);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    setMounted(true);
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  useEffect(() => {
-    if (isMobile || !containerEl) return;
-    const element = containerRef.current;
-    if (!element) return;
-
-    const measure = () => {
-      setSize({ w: element.offsetWidth, h: element.offsetHeight });
-    };
-
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(element);
-    window.addEventListener('resize', measure);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', measure);
-    };
-  }, [isMobile]);
 
   const cx = size.w / 2;
   const cy = size.h / 2;

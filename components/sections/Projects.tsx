@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import ProjectCard from '@/components/ui/ProjectCard';
 import { CascadeText, BlurIn, StaggerList, StaggerItem } from '@/components/ui/motion-primitives';
 import { projects, projectsTagline } from '@/data/portfolio';
+import Image from 'next/image';
 
 type Project = (typeof projects)[number];
 
@@ -23,6 +24,7 @@ export default function Projects() {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const pendingIndexRef = useRef<number | null>(null);
+  const closeModal = useCallback(() => setSelectedProject(null), []);
 
   /* SCROLL - DETECT ACTIVE INDEX */
   const handleScroll = () => {
@@ -86,6 +88,7 @@ export default function Projects() {
   }, [selectedProject]);
 
   /* KEYBOARD */
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
@@ -110,7 +113,7 @@ export default function Projects() {
 
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [activeIndex, selectedProject]);
+  }, [activeIndex, selectedProject, closeModal]);
 
   // DEADSPACE AT THE END OF CARDS
   const [spacerWidth, setSpacerWidth] = useState(0);
@@ -128,7 +131,7 @@ export default function Projects() {
     measure();
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
-  }, [projects.length]);
+  }, []);
 
   /* DRAG */
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -173,16 +176,10 @@ export default function Projects() {
     setIsDragging(false);
   };
 
-  const handlePointerCancel = (e: React.PointerEvent<HTMLDivElement>) => {
-    handlePointerUp(e);
-  };
-
   const handleProjectClick = (project: Project) => {
     if (hasDragged.current) return;
     setSelectedProject(project);
   };
-
-  const closeModal = () => setSelectedProject(null);
 
   return (
     <section
@@ -322,9 +319,10 @@ export default function Projects() {
               <div
                 className="relative w-full h-55 md:h-70 overflow-hidden"
                 style={{ backgroundColor: 'var(--color-background-secondary)' }}>
-                <img
+                <Image
                   src={selectedProject.image}
                   alt={selectedProject.title}
+                  fill
                   sizes="(max-width: 768px) 100vw, 672px"
                   className="object-contain object-center"
                 />
@@ -333,9 +331,9 @@ export default function Projects() {
                   onClick={closeModal}
                   aria-label="Close project"
                   className="absolute top-3 right-3 z-10 p-2 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:scale-125 active:scale-90"
-                  style={{ color: 'rgba(241, 234, 218, 1)' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = 'rgba(251, 249, 245, 1)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(241, 234, 218, 1)')}>
+                  style={{ color: 'var(--color-accent)' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent-hover)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}>
                   <X size={20} />
                 </button>
               </div>

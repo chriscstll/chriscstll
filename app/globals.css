@@ -178,13 +178,6 @@
   .scrollbar-none::-webkit-scrollbar {
     display: none;
   }
-
-  .theme-transition {
-    transition:
-      background-color 300ms ease,
-      color 300ms ease,
-      border-color 300ms ease;
-  }
 }
 
 /* FOR THE TECH STACK */
@@ -198,26 +191,15 @@
 }
 
 /* FOR THE THEME SWITHC */
-@keyframes pixel-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
-
-.pixel-cell {
-  opacity: 0;
-  animation: pixel-in 0.28s ease-out forwards;
-  will-change: opacity;
+::view-transition-old(root) {
+  z-index: 1;
 }
-html.theme-switching *,
-html.theme-switching *::before,
-html.theme-switching *::after {
-  transition: none !important;
-  animation: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  will-change: auto !important;
+::view-transition-new(root) {
+  z-index: 2;
+  clip-path: path('M0 0Z');
 }

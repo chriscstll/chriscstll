@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Bricolage_Grotesque, Lora } from 'next/font/google';
 import './globals.css';
 import SmoothScroll from '@/components/SmoothScroll';
-import Script from 'next/script';
+import { ThemeProvider } from '@/components/theme-provider';
 import { siteConfig, structuredData } from '@/data/portfolio';
 
 const bricolage = Bricolage_Grotesque({
@@ -88,27 +88,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
-
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function () {
-                try {
-                  var stored = localStorage.getItem("theme");
-                  if (stored === "dark") {
-                    document.documentElement.setAttribute("data-theme", "dark");
-                  }
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
       </head>
       <body>
-        <SmoothScroll />
-        {children}
+        <ThemeProvider>
+          {children}
+          <SmoothScroll />
+        </ThemeProvider>
       </body>
     </html>
   );

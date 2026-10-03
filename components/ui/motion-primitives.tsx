@@ -40,7 +40,6 @@ export function CascadeText({
   delay = 0,
   stagger = 0.03,
   duration = 0.55,
-  splitBy = 'char',
   trigger = 'view',
   blur = 8,
   y = -10,
