@@ -1,13 +1,13 @@
 'use client';
 
+import { FaReact, FaGitAlt, FaHtml5, FaCss3Alt, FaJs, FaFigma, FaGithub } from 'react-icons/fa';
+import { SiVuedotjs, SiNextdotjs, SiTypescript, SiTailwindcss, SiVercel, SiFramer, SiSass } from 'react-icons/si';
+import { CascadeText, BlurIn, StaggerList, StaggerItem } from '@/components/ui/motion-primitives';
+import { skills, projects, skillsTagline } from '@/data/portfolio';
 import { useState, useEffect, useSyncExternalStore } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import { FaReact, FaGitAlt, FaHtml5, FaCss3Alt, FaJs, FaFigma, FaGithub } from 'react-icons/fa';
-import { SiVuedotjs, SiNextdotjs, SiTypescript, SiTailwindcss, SiVercel, SiFramer, SiSass } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
-import { skills, projects, skillsTagline } from '@/data/portfolio';
-import { CascadeText, BlurIn, StaggerList, StaggerItem } from '@/components/ui/motion-primitives';
 
 const iconMap: Record<string, React.ReactNode> = {
   HTML: <FaHtml5 />,

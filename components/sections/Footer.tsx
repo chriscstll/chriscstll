@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { BlurIn } from '@/components/ui/motion-primitives';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { contact, footer } from '@/data/portfolio';
+import { useEffect, useState } from 'react';
 
 /* SOCIALS — built from `contact`, empty URLs are dropped */
 const socials = [

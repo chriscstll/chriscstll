@@ -1,12 +1,12 @@
 'use client';
 
+import { CascadeText, BlurIn, StaggerList, StaggerItem } from '@/components/ui/motion-primitives';
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { projects, projectsTagline } from '@/data/portfolio';
 import { motion, AnimatePresence } from 'framer-motion';
+import ProjectCard from '@/components/ui/ProjectCard';
 import { X, ExternalLink } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
-import ProjectCard from '@/components/ui/ProjectCard';
-import { CascadeText, BlurIn, StaggerList, StaggerItem } from '@/components/ui/motion-primitives';
-import { projects, projectsTagline } from '@/data/portfolio';
 import Image from 'next/image';
 
 type Project = (typeof projects)[number];

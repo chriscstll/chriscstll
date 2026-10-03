@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlignRight, SquareX, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import Image from 'next/image';
 import { contact, navLinks } from '@/data/portfolio';
 import { BlurIn } from '@/components/ui/motion-primitives';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Navbar() {

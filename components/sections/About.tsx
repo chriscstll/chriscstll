@@ -1,10 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import { about } from '@/data/portfolio';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Fragment } from 'react';
 import { CascadeText, BlurIn, StaggerList, StaggerItem } from '@/components/ui/motion-primitives';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Fragment, useState } from 'react';
+import { about } from '@/data/portfolio';
 
 export default function About() {
   const [activeCard, setActiveCard] = useState(0);

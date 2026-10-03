@@ -1,9 +1,9 @@
 'use client';
 
-import Image from 'next/image';
-import { motion, type Variants } from 'framer-motion';
 import { CascadeText, BlurIn } from '@/components/ui/motion-primitives';
+import { motion, type Variants } from 'framer-motion';
 import { hero } from '@/data/portfolio';
+import Image from 'next/image';
 
 const techIcons = [
   {

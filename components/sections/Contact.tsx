@@ -1,10 +1,10 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { AlertCircle, Check, Loader2 } from 'lucide-react';
 import { CascadeText, BlurIn } from '@/components/ui/motion-primitives';
+import { AlertCircle, Check, Loader2 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { contact } from '@/data/portfolio';
+import { useRef, useState } from 'react';
 
 // TYPES+VALIDATION
 type FieldName = 'name' | 'email' | 'message';

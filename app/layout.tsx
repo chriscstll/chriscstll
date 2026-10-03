@@ -1,9 +1,9 @@
-import type { Metadata } from 'next';
-import { Bricolage_Grotesque, Lora } from 'next/font/google';
-import './globals.css';
-import SmoothScroll from '@/components/SmoothScroll';
-import { ThemeProvider } from '@/components/theme-provider';
 import { siteConfig, structuredData } from '@/data/portfolio';
+import { Bricolage_Grotesque, Lora } from 'next/font/google';
+import { ThemeProvider } from '@/components/theme-provider';
+import SmoothScroll from '@/components/SmoothScroll';
+import type { Metadata } from 'next';
+import './globals.css';
 
 const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
