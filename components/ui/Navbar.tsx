@@ -7,6 +7,7 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { contact, navLinks } from '@/data/portfolio';
 import { BlurIn } from '@/components/ui/motion-primitives';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,6 +16,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const pathname = usePathname();
 
   // AUTO HIDE ON SCROLL DOWN, SHOW ON SCROLL UP
   useEffect(() => {
@@ -135,10 +137,17 @@ export default function Navbar() {
             duration={0.5}
             className="relative z-50">
             <Link
-              href="/#hero"
+              href="/"
               className="transition-opacity duration-200 hover:opacity-75 relative z-50"
-              onClick={closeMenu}
-              aria-label="Christian M. Castillo">
+              aria-label="Christian M. Castillo"
+              onClick={(e) => {
+                closeMenu();
+                if (pathname === '/') {
+                  e.preventDefault();
+                  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                  window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+                }
+              }}>
               <Image
                 src="/logo.png"
                 alt="logo"
