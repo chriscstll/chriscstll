@@ -1,21 +1,20 @@
-# chriscstll.com
+# Hi, I'm Christian M. Castillo
 
-A quite personal portfolio.
+**Frontend developer** drawn to the logic of how things work and the craft of making them work well.
 
-## The premise
+💼 **Hiring a team?** Open to full-time frontend roles.
+🤝 **Have a project?** Taking on freelance work
+📫 Reach me: [castilloxtiann@gmail.com](mailto:castilloxtiann@gmail.com)
 
-The site exists to answer one question: _is this person careful with the work?_
+### 🌐 Portfolio
 
-## The through-line
+**[chriscstll.com]()**
 
-Every section says the same thing from a different angle:
+### 🛠️ Tech
 
-| Section  | Line                                                                 | Idea                |
-| -------- | -------------------------------------------------------------------- | ------------------- |
-| Hero     | _The decisions nobody notices are the ones that matter most._        | Invisible decisions |
-| Projects | _None of these changed anything. All of them changed me._            | Invisible change    |
-| Skills   | _The stack is visible. The judgment isn't._                          | Invisible judgment  |
-| About    | _Some hours are spent. Some are invested. They look identical._      | Invisible time      |
-| Contact  | _Everything begins with a message. Before the work, there's a word._ | Invisible origin    |
-
-One argument emerges: **the thing you can't see is the thing that matters.**
+<a href="https://skillicons.dev">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=html,css,js,ts,react,nextjs,tailwind,sass,git,github,vscode,vercel&theme=dark">
+    <img src="https://skillicons.dev/icons?i=html,css,js,ts,react,nextjs,tailwind,sass,git,github,vscode,vercel&theme=light" alt="Tech skills" />
+  </picture>
+</a>
