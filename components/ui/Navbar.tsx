@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { AlignRight, SquareX, Mail } from 'lucide-react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import { contact, navLinks } from '@/data/portfolio';
 import { BlurIn } from '@/components/ui/motion-primitives';
+import { AlignRight, SquareX, Mail } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import { contact, navLinks } from '@/data/portfolio';
 import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 

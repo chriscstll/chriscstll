@@ -203,3 +203,136 @@
   z-index: 2;
   clip-path: path('M0 0Z');
 }
+
+/* FOR THE PROJECT RING */
+.ring-stage {
+  --card-w: min(74vw, 320px);
+  --card-h: calc(var(--card-w) * 0.625);
+  --step: calc(360deg / var(--n));
+  --tilt: 16deg;
+  --r: max(calc(var(--card-w) / 2 / tan(calc(180deg / var(--n))) * 1.15), calc(var(--card-w) * 0.95));
+  position: relative;
+  height: calc(var(--card-h) + var(--r) * sin(var(--tilt)) * 2 + 2.5rem);
+  perspective: calc(var(--card-w) * 4);
+  touch-action: pan-y;
+  user-select: none;
+}
+
+@media (min-width: 640px) {
+  .ring-stage {
+    --card-w: 380px;
+  }
+}
+@media (min-width: 1024px) {
+  .ring-stage {
+    --card-w: 440px;
+    --tilt: 20deg;
+  }
+}
+
+.ring-tilt {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--card-w);
+  height: var(--card-h);
+  margin: calc(var(--card-h) / -2) 0 0 calc(var(--card-w) / -2);
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--r) * -1)) rotateX(calc(var(--tilt) * -1));
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(calc(var(--pos) * var(--step) * -1));
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ring-card {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(calc(var(--i) * var(--step))) translateZ(var(--r));
+}
+.card-spin {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(calc(var(--pos) * var(--step) * -1));
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ring-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  opacity: var(--o, 1);
+  transition: opacity 0.5s;
+  cursor: pointer;
+}
+.ring-face-back {
+  transform: rotateY(180deg);
+}
+.ring-face:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.ring-info {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: calc(var(--card-w) * 0.9);
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
+  text-shadow:
+    0 0 10px var(--color-background, #f1eada),
+    0 0 22px var(--color-background, #f1eada);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring,
+  .ring-face {
+    transition: none;
+  }
+}
+
+/* VIEW PROJECT CTA */
+.ring-cta {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0.75rem;
+  pointer-events: none;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.55), transparent 50%);
+}
+.ring-cta-label {
+  border: 1px solid rgb(241 234 218 / 0.7);
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(241 234 218);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ring-cta {
+    align-items: center;
+    background: rgb(0 0 0 / 0.55);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .ring-face:hover .ring-cta,
+  .ring-face:focus-visible .ring-cta {
+    opacity: 1;
+  }
+}

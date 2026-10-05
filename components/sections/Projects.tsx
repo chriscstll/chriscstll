@@ -1,10 +1,9 @@
 'use client';
 
-import { CascadeText, BlurIn, StaggerList, StaggerItem } from '@/components/ui/motion-primitives';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { CascadeText, BlurIn } from '@/components/ui/motion-primitives';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { projects, projectsTagline } from '@/data/portfolio';
-import { motion, AnimatePresence } from 'framer-motion';
-import ProjectCard from '@/components/ui/ProjectCard';
 import { X, ExternalLink } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import Image from 'next/image';
@@ -13,178 +12,85 @@ type Project = (typeof projects)[number];
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  // DRAG STATE
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStartX = useRef(0);
-  const dragStartScrollLeft = useRef(0);
-  const hasDragged = useRef(false);
-  const pointerId = useRef<number | null>(null);
-
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const pendingIndexRef = useRef<number | null>(null);
   const closeModal = useCallback(() => setSelectedProject(null), []);
+  const dotRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const reduce = useReducedMotion();
 
-  /* SCROLL - DETECT ACTIVE INDEX */
-  const handleScroll = () => {
-    if (pendingIndexRef.current !== null) return;
+  // RING POSITION
+  const n = projects.length;
+  const [pos, setPos] = useState(0);
+  const active = ((pos % n) + n) % n;
+  const activeProject = projects[active];
 
-    const el = scrollRef.current;
-    if (!el) return;
-
-    const cards = el.querySelectorAll<HTMLElement>('[data-project-card]');
-    if (cards.length === 0) return;
-
-    const startOffset = cards[0].offsetLeft;
-    const scrollLeft = el.scrollLeft;
-
-    let closest = 0;
-    let minDiff = Infinity;
-
-    cards.forEach((card, i) => {
-      const diff = Math.abs(card.offsetLeft - startOffset - scrollLeft);
-      if (diff < minDiff) {
-        minDiff = diff;
-        closest = i;
-      }
+  const go = useCallback((dir: 1 | -1) => setPos((p) => p + dir), []);
+  const goTo = (index: number) =>
+    setPos((p) => {
+      const cur = ((p % n) + n) % n;
+      let d = index - cur;
+      if (d > n / 2) d -= n;
+      if (d < -n / 2) d += n;
+      return p + d;
     });
 
-    setActiveIndex(closest);
+  // SWIPE
+  const start = useRef<{ x: number; y: number } | null>(null);
+  const swiped = useRef(false);
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    start.current = { x: e.clientX, y: e.clientY };
+    swiped.current = false;
   };
-
-  /* ARROWS */
-  const goTo = (index: number) => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    const cards = el.querySelectorAll<HTMLElement>('[data-project-card]');
-    if (!cards[index]) return;
-
-    setActiveIndex(index);
-    pendingIndexRef.current = index;
-
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    const startOffset = cards[0].offsetLeft;
-    const target = Math.min(cards[index].offsetLeft - startOffset, maxScroll);
-
-    el.scrollTo({ left: target, behavior: 'smooth' });
-
-    window.setTimeout(() => {
-      pendingIndexRef.current = null;
-    }, 600);
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (!start.current) return;
+    const dx = e.clientX - start.current.x;
+    const dy = e.clientY - start.current.y;
+    start.current = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      swiped.current = true;
+      go(dx < 0 ? 1 : -1);
+    }
   };
 
   // SCROLL LOCK WHEN MODAL IS OPEN
   useEffect(() => {
-    if (selectedProject) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = selectedProject ? 'hidden' : '';
     return () => {
       document.body.style.overflow = '';
     };
   }, [selectedProject]);
 
-  /* KEYBOARD */
-
+  // KEYBOARD
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
-      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
-        return;
-      }
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
       if (e.key === 'Escape' && selectedProject) {
         closeModal();
         return;
       }
       if (selectedProject) return;
-
       if (e.key === 'ArrowLeft') {
         e.preventDefault();
-        goTo(Math.max(0, activeIndex - 1));
+        go(-1);
       }
       if (e.key === 'ArrowRight') {
         e.preventDefault();
-        goTo(Math.min(projects.length - 1, activeIndex + 1));
+        go(1);
       }
     };
-
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [activeIndex, selectedProject, closeModal]);
-
-  // DEADSPACE AT THE END OF CARDS
-  const [spacerWidth, setSpacerWidth] = useState(0);
+  }, [selectedProject, closeModal, go]);
 
   useEffect(() => {
-    const measure = () => {
-      const el = scrollRef.current;
-      if (!el) return;
-      const cards = el.querySelectorAll<HTMLElement>('[data-project-card]');
-      if (cards.length === 0) return;
-      const cardWidth = cards[0].offsetWidth;
-      setSpacerWidth(Math.max(0, el.clientWidth - cardWidth));
-    };
-
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, []);
-
-  /* DRAG */
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    dragStartX.current = e.clientX;
-    dragStartScrollLeft.current = el.scrollLeft;
-    hasDragged.current = false;
-    pointerId.current = e.pointerId;
-
-    setIsDragging(false);
-  };
-
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    if (pointerId.current !== e.pointerId) return;
-
-    const delta = e.clientX - dragStartX.current;
-    if (!hasDragged.current && Math.abs(delta) > 4) {
-      hasDragged.current = true;
-      setIsDragging(true);
-      try {
-        el.setPointerCapture(e.pointerId);
-      } catch {}
-    }
-
-    if (hasDragged.current) {
-      el.scrollLeft = dragStartScrollLeft.current - delta;
-    }
-  };
-
-  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = scrollRef.current;
-    if (el && pointerId.current === e.pointerId) {
-      try {
-        el.releasePointerCapture(e.pointerId);
-      } catch {}
-    }
-    pointerId.current = null;
-    setIsDragging(false);
-  };
-
-  const handleProjectClick = (project: Project) => {
-    if (hasDragged.current) return;
-    setSelectedProject(project);
-  };
+    const el = document.activeElement as HTMLButtonElement | null;
+    if (el && dotRefs.current.includes(el)) dotRefs.current[active]?.focus();
+  }, [active]);
 
   return (
     <section
       id="projects"
-      className="py-24 md:py-32">
+      className="py-24 md:py-32 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <CascadeText
           as="h2"
@@ -195,7 +101,6 @@ export default function Projects() {
           blur={8}
           y={-10}
         />
-
         <BlurIn
           delay={0.75}
           blur={8}
@@ -209,70 +114,145 @@ export default function Projects() {
         </BlurIn>
       </div>
 
-      {/* HORIZONTAL SCROLL */}
-      <div className="relative">
-        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none" />
-
+      {/* PROJECT RING */}
+      <BlurIn
+        delay={1.2}
+        blur={8}
+        y={10}>
         <div
-          ref={scrollRef}
-          onScroll={handleScroll}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={handlePointerUp}
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            overflowX: 'scroll',
-            overflowY: 'hidden',
-            paddingBottom: '1rem',
-            scrollSnapType: 'none',
-            WebkitOverflowScrolling: 'touch',
-            msOverflowStyle: 'none',
-            scrollbarWidth: 'none',
-            cursor: isDragging ? 'grabbing' : 'grab',
-            userSelect: 'none',
-            touchAction: 'pan-y',
-            overscrollBehaviorX: 'contain',
-          }}>
-          <StaggerList
-            className="flex flex-nowrap gap-4 px-4 sm:px-6 lg:px-8"
-            style={{ width: 'max-content' }}
-            stagger={0.12}
-            delay={1.0}>
-            {projects.map((project) => (
-              <StaggerItem
-                key={project.title}
-                data-project-card>
-                <ProjectCard
-                  project={project}
-                  isDragging={isDragging}
-                  onClick={() => handleProjectClick(project)}
-                />
-              </StaggerItem>
-            ))}
-            <div
-              aria-hidden="true"
-              style={{ width: spacerWidth, flexShrink: 0 }}
-            />
-          </StaggerList>
+          className="ring-stage mx-auto"
+          role="group"
+          aria-roledescription="carousel"
+          aria-label="Projects"
+          style={{ '--n': n, '--pos': pos } as React.CSSProperties}
+          onPointerDown={onPointerDown}
+          onPointerUp={onPointerUp}
+          onPointerCancel={() => (start.current = null)}>
+          <div className="ring-tilt">
+            <div className="card-spin">
+              {projects.map((project, i) => {
+                let d = i - active;
+                if (d > n / 2) d -= n;
+                if (d < -n / 2) d += n;
+                const dist = Math.abs(d);
+                const isLive = project.status === 'live';
+                const showCta = dist === 0 && isLive;
+                const o = Math.max(0.25, 1 - 0.75 * (dist / (n / 2)));
+
+                const face = isLive ? (
+                  <Image
+                    src={project.image}
+                    alt=""
+                    fill
+                    draggable={false}
+                    sizes="(max-width: 640px) 74vw, (max-width: 1024px) 380px, 440px"
+                    className="object-cover object-top"
+                  />
+                ) : (
+                  <span
+                    className="absolute inset-0 flex items-center justify-center text-xs font-medium uppercase tracking-widest"
+                    style={{ color: 'var(--color-foreground-subtle)' }}>
+                    {project.status === 'in-progress' ? 'In Progress' : 'Coming Soon'}
+                  </span>
+                );
+
+                const faceStyle = {
+                  borderColor: 'var(--color-border)',
+                  backgroundColor: 'var(--color-background-secondary)',
+                  cursor: dist === 0 && !isLive ? 'default' : 'pointer',
+                };
+
+                const onCardClick = () => {
+                  if (swiped.current) {
+                    swiped.current = false;
+                    return;
+                  }
+                  if (dist !== 0) goTo(i);
+                  else if (isLive) setSelectedProject(project);
+                };
+
+                return (
+                  <div
+                    key={project.title}
+                    className="ring-card"
+                    style={{ '--i': i, '--o': o } as React.CSSProperties}
+                    aria-hidden={dist > 2}>
+                    <button
+                      type="button"
+                      className="ring-face border"
+                      style={faceStyle}
+                      tabIndex={dist === 0 ? 0 : -1}
+                      aria-label={
+                        dist === 0
+                          ? `${project.title}${isLive ? ', open details' : ''}`
+                          : `${project.title}, bring to front`
+                      }
+                      onClick={onCardClick}>
+                      {face}
+                      {showCta && (
+                        <span
+                          className="ring-cta"
+                          aria-hidden="true">
+                          <span className="ring-cta-label">View project</span>
+                        </span>
+                      )}
+                    </button>
+                    <div
+                      aria-hidden="true"
+                      className="ring-face ring-face-back border"
+                      style={faceStyle}
+                      onClick={onCardClick}>
+                      {face}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="ring-info">
+            <AnimatePresence
+              mode="wait"
+              initial={false}>
+              <motion.div
+                key={active}
+                className="flex flex-col items-center text-center"
+                initial={{ opacity: 0, y: reduce ? 0 : 10, filter: reduce ? 'blur(0px)' : 'blur(8px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, y: reduce ? 0 : -10, filter: reduce ? 'blur(0px)' : 'blur(8px)' }}
+                transition={{ duration: reduce ? 0 : 0.35, ease: [0.16, 1, 0.3, 1] }}>
+                <h3
+                  className="font-heading mt-2 text-xl font-bold sm:text-2xl lg:text-3xl"
+                  style={{ color: 'var(--color-foreground)' }}>
+                  {activeProject.title}
+                </h3>
+                <p
+                  className="mt-2 text-sm italic lg:text-base"
+                  style={{ color: 'var(--color-foreground-subtle)' }}>
+                  {activeProject.shortDescription}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
-      </div>
+      </BlurIn>
 
       {/* DOTS */}
       <BlurIn
-        delay={1.6}
+        delay={1.3}
         blur={8}
         y={8}
-        className="mt-6 flex items-center justify-center gap-0.5 px-4 sm:gap-1 md:gap-1.5">
+        className="mt-6 flex items-center justify-center px-4 gap-0.5 sm:gap-1 md:gap-1.5">
         {projects.map((project, i) => {
-          const isActive = i === activeIndex;
-
+          const isActive = i === active;
           return (
             <button
               key={project.title}
               type="button"
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() => goTo(i)}
+              ref={(el) => {
+                dotRefs.current[i] = el;
+              }}
               aria-label={`Go to ${project.title}`}
               aria-current={isActive}
               className="flex h-8 items-center justify-center px-0.5 sm:px-1">

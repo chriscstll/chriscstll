@@ -118,6 +118,14 @@ export const projects: Project[] = [
     image: '/projects/placeholder.png',
     status: 'coming-soon',
   },
+  {
+    title: 'Project Seven',
+    shortDescription: 'Something exciting is coming.',
+    description: 'This project is currently in progress. Check back soon.',
+    tech: ['React', 'Next.js'],
+    image: '/projects/placeholder.png',
+    status: 'coming-soon',
+  },
 ];
 
 export const skillsTagline = "The stack is visible. The judgment isn't.";
