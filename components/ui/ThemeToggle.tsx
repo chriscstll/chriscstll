@@ -1,5 +1,6 @@
 'use client';
 
+import { BlurIn } from '@/components/ui/motion-primitives';
 import { useRef, useSyncExternalStore } from 'react';
 import { flushSync } from 'react-dom';
 import { useTheme } from 'next-themes';
@@ -210,28 +211,31 @@ export default function ThemeToggle() {
         type="button"
         onClick={toggle}
         aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
-        className="relative flex h-5 w-5 items-center justify-center transition-colors duration-200 disabled:opacity-60"
+        className="relative flex h-5 w-5 items-center justify-center transition-colors duration-200"
         style={{ color: 'var(--color-foreground-muted)' }}
         onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent-text)')}
         onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-foreground-muted)')}>
-        <Sun
-          size={16}
-          strokeWidth={1.75}
-          className="absolute transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-          style={{
-            transform: theme === 'dark' ? 'rotate(90deg) scale(0.5)' : 'rotate(0deg) scale(1)',
-            opacity: theme === 'dark' ? 0 : 1,
-          }}
-        />
-        <Moon
-          size={16}
-          strokeWidth={1.75}
-          className="absolute transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-          style={{
-            transform: theme === 'dark' ? 'rotate(0deg) scale(1)' : 'rotate(-90deg) scale(0.5)',
-            opacity: theme === 'dark' ? 1 : 0,
-          }}
-        />
+        <span className="absolute inset-0 flex items-center justify-center">
+          <BlurIn
+            trigger="mount"
+            delay={1.2}
+            blur={8}
+            y={0}
+            duration={DURATION / 1000}
+            className="flex items-center justify-center">
+            {theme === 'dark' ? (
+              <Moon
+                size={16}
+                strokeWidth={1.75}
+              />
+            ) : (
+              <Sun
+                size={16}
+                strokeWidth={1.75}
+              />
+            )}
+          </BlurIn>
+        </span>
       </button>
     </>
   );

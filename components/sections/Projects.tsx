@@ -221,12 +221,12 @@ export default function Projects() {
                 exit={{ opacity: 0, y: reduce ? 0 : -10, filter: reduce ? 'blur(0px)' : 'blur(8px)' }}
                 transition={{ duration: reduce ? 0 : 0.35, ease: [0.16, 1, 0.3, 1] }}>
                 <h3
-                  className="font-heading mt-2 text-xl font-bold sm:text-2xl lg:text-3xl"
+                  className="font-heading mt-1 text-lg font-bold text-balance sm:mt-2 sm:text-2xl lg:text-3xl"
                   style={{ color: 'var(--color-foreground)' }}>
                   {activeProject.title}
                 </h3>
                 <p
-                  className="mt-2 text-sm italic lg:text-base"
+                  className="mt-1 text-xs italic sm:mt-2 sm:text-sm lg:text-base"
                   style={{ color: 'var(--color-foreground-subtle)' }}>
                   {activeProject.shortDescription}
                 </p>
