@@ -2,7 +2,7 @@
 
 **Frontend developer** focused on deliberate architecture, maintainable systems and interfaces with intent.
 
-![Open to work](https://img.shields.io/badge/Open_to-full--time_%26_freelance-3d5c59?style=flat-square)
+![Open to work](https://img.shields.io/badge/Open_to-Full--time_%7C_Freelance-3d5c59?style=flat-square)
 <br>
 Reach me: [castilloxtiann@gmail.com](mailto:castilloxtiann@gmail.com)
 
