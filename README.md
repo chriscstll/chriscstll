@@ -1,13 +1,14 @@
 <h1>I'm Christian M. Castillo</h1>
 
-**Frontend developer** drawn to the logic of how things work and the craft of making them work well.
+**Frontend developer** focused on deliberate architecture, maintainable systems and interfaces with intent.
 
-![Open to work](https://img.shields.io/badge/Open_to_work_%C2%B7_Full--time_%2F_Freelance-3d5c59?style=flat) <br>
+![Open to work](https://img.shields.io/badge/Open_to-full--time_%26_freelance-3d5c59?style=flat-square)
+<br>
 Reach me: [castilloxtiann@gmail.com](mailto:castilloxtiann@gmail.com)
 
 ### Portfolio
 
-**[chriscstll.com]()**
+**[chriscstll.com](portfolio-url)**
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
