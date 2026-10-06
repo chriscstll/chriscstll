@@ -1,4 +1,4 @@
-# Hi, I'm Christian M. Castillo
+<h1>I'm Christian M. Castillo</h1>
 
 **Frontend developer** drawn to the logic of how things work and the craft of making them work well.
 
