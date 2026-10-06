@@ -5,10 +5,8 @@
 ![Open to work](https://img.shields.io/badge/Open_to-Full--time_%7C_Freelance-3d5c59?style=flat-square)
 <br>
 Reach me: [castilloxtiann@gmail.com](mailto:castilloxtiann@gmail.com)
-
-### Portfolio
-
-**[chriscstll.com](portfolio-url)**
+<br>
+**[chriscstll](https://chriscstll.vercel.app/)**
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)

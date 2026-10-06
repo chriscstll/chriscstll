@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-background: #f1eada;
+  --color-background: #f7f4ec;
   --color-background-secondary: #e6ded0;
   --color-background-card: #ebe4d6;
 
@@ -20,7 +20,7 @@
   --font-sans: var(--font-lora);
   --font-heading: var(--font-bricolage);
 
-  --navbar-tint: rgba(241, 234, 218, 0.65);
+  --navbar-tint: rgba(247, 244, 236, 0.65);
 }
 
 [data-theme='dark'] {
@@ -28,7 +28,7 @@
   --color-background-secondary: #2c2e34;
   --color-background-card: #282a30;
 
-  --color-foreground: #f1eada;
+  --color-foreground: #f7f4ec;
   --color-foreground-muted: #a8a29a;
   --color-foreground-subtle: #625d55;
 

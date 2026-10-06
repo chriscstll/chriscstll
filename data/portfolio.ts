@@ -2,7 +2,7 @@ export const siteConfig = {
   name: 'Christian Castillo',
   title: 'Christian Castillo',
   description: 'Frontend developer drawn to the logic of how things work and the craft of making them work well.',
-  url: 'https://stillindevelopment.com',
+  url: 'https://chriscstll.vercel.app/',
   ogImage: '/og-image.jpg',
 };
 
