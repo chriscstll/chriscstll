@@ -180,16 +180,18 @@
   }
 }
 
-/* FOR THE HERO IMG */
+/* FOR HERO IMG */
 :root {
   --photo-filter: grayscale(20%) contrast(1.05) brightness(1);
+  --photo-shadow: drop-shadow(0 clamp(6px, 1.4vw, 16px) clamp(12px, 2.6vw, 30px) rgb(37 39 44 / 0.28));
 }
 
 [data-theme='dark'] {
   --photo-filter: grayscale(30%) contrast(1.1) brightness(0.88);
+  --photo-shadow: drop-shadow(0 clamp(6px, 1.4vw, 16px) clamp(12px, 2.6vw, 30px) rgb(0 0 0 / 0.55));
 }
 
-/* FOR THE TECH STACK */
+/* FOR TECH STACK */
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -199,7 +201,7 @@
   }
 }
 
-/* FOR THE THEME SWITHC */
+/* FOR THEME SWITHC */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -213,7 +215,7 @@
   clip-path: path('M0 0Z');
 }
 
-/* FOR THE PROJECT RING */
+/* FOR PROJECT RING */
 .ring-stage {
   --card-w: min(74vw, 320px);
   --card-h: calc(var(--card-w) * 0.625);

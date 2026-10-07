@@ -112,14 +112,14 @@ export default function Hero() {
               duration={1.0}
               blur={16}
               y={12}
-              className="absolute inset-0 overflow-hidden">
+              className="absolute inset-0">
               <Image
                 src="/profile-photo.png"
                 alt="Christian M. Castillo"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain object-center select-none pointer-events-none"
-                style={{ filter: 'var(--photo-filter)' }}
+                style={{ filter: 'var(--photo-filter) var(--photo-shadow)' }}
                 draggable={false}
                 priority
               />
