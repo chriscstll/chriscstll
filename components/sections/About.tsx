@@ -75,7 +75,7 @@ export default function About() {
         </StaggerList>
 
         {/* RIGHT SIDE */}
-        <div className="order-1 md:order-2 flex flex-col gap-6 min-h-100 md:min-h-112.5">
+        <div className="order-1 md:order-2 flex flex-col gap-6 self-start md:self-auto md:min-h-112.5">
           <h2>
             <CascadeText
               as="span"
@@ -101,7 +101,8 @@ export default function About() {
           <BlurIn
             delay={1.1}
             blur={12}
-            y={16}>
+            y={16}
+            className="min-h-95 min-[375px]:min-h-68 sm:min-h-60 md:min-h-0">
             <AnimatePresence
               mode="wait"
               initial={false}>

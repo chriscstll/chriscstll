@@ -283,21 +283,21 @@ export default function Projects() {
             />
 
             <motion.div
-              className="fixed z-50 overflow-hidden rounded-lg"
+              className="fixed z-50 flex flex-col overflow-hidden rounded-lg"
               style={{
                 backgroundColor: 'var(--color-background-card)',
                 top: '50%',
                 left: '50%',
                 width: 'calc(100% - 2rem)',
                 maxWidth: '672px',
-                maxHeight: '90vh',
+                maxHeight: '90dvh',
               }}
               initial={{ opacity: 0, scale: 0.95, x: '-50%', y: '-50%' }}
               animate={{ opacity: 1, scale: 1, x: '-50%', y: '-50%' }}
               exit={{ opacity: 0, scale: 0.95, x: '-50%', y: '-50%' }}
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}>
               <div
-                className="relative w-full h-55 md:h-70 overflow-hidden"
+                className="relative w-full shrink-0 h-[min(13.75rem,34dvh)] md:h-[min(17.5rem,40dvh)] overflow-hidden"
                 style={{ backgroundColor: 'var(--color-background-secondary)' }}>
                 <Image
                   src={selectedProject.image}
@@ -318,7 +318,7 @@ export default function Projects() {
                 </button>
               </div>
 
-              <div className="p-6 flex flex-col gap-4">
+              <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto overscroll-contain p-4 sm:p-6">
                 <h3
                   className="font-heading font-bold text-xl"
                   style={{ color: 'var(--color-foreground)' }}>
