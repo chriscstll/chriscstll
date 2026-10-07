@@ -90,7 +90,7 @@ export const projects: Project[] = [
     title: 'Project Three',
     shortDescription: 'Something exciting is coming.',
     description: 'This project is currently in progress. Check back soon.',
-    tech: ['React', 'Next.js'],
+    tech: ['React'],
     image: '/projects/placeholder.png',
     status: 'in-progress',
   },
@@ -106,7 +106,7 @@ export const projects: Project[] = [
     title: 'Project Five',
     shortDescription: 'Something exciting is coming.',
     description: 'This project is currently in progress. Check back soon.',
-    tech: ['React', 'Next.js'],
+    tech: ['React'],
     image: '/projects/placeholder.png',
     status: 'coming-soon',
   },
@@ -114,7 +114,7 @@ export const projects: Project[] = [
     title: 'Project Six',
     shortDescription: 'Something exciting is coming.',
     description: 'This project is currently in progress. Check back soon.',
-    tech: ['React', 'Next.js'],
+    tech: ['React'],
     image: '/projects/placeholder.png',
     status: 'coming-soon',
   },
@@ -122,7 +122,7 @@ export const projects: Project[] = [
     title: 'Project Seven',
     shortDescription: 'Something exciting is coming.',
     description: 'This project is currently in progress. Check back soon.',
-    tech: ['React', 'Next.js'],
+    tech: ['React'],
     image: '/projects/placeholder.png',
     status: 'coming-soon',
   },
@@ -130,9 +130,9 @@ export const projects: Project[] = [
 
 export const skillsTagline = "The stack is visible. The judgment isn't.";
 export const skills = {
-  language: ['JavaScript', 'TypeScript', 'HTML', 'CSS'],
+  language: ['HTML', 'CSS', 'JavaScript', 'TypeScript'],
   libraries: ['React', 'Framer Motion'],
-  frameworks: ['Vue.js', 'Next.js', 'Tailwind CSS', 'SCSS'],
+  frameworks: ['Tailwind CSS', 'SCSS'],
   tools: ['Git', 'GitHub', 'VS Code', 'Vercel'],
 };
 
@@ -182,4 +182,5 @@ export const structuredData = {
   jobTitle: 'Frontend Developer',
   description: siteConfig.description,
   image: `${siteConfig.url}/profile-photo.png`,
+  sameAs: ['https://github.com/chriscstll'],
 };

@@ -52,8 +52,6 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
 
-  keywords: [siteConfig.name, 'Frontend Developer', 'TypeScript', 'React Developer', 'Tailwind CSS'],
-
   robots: {
     index: true,
     follow: true,
@@ -70,11 +68,6 @@ export const metadata: Metadata = {
     shortcut: '/logo.png',
     apple: '/logo.png',
   },
-
-  /*  Get this value from: search.google.com/search-console
-  verification: {
-    google: "your-verification-token",
-  }, */
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

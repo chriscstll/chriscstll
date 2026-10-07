@@ -1,6 +1,6 @@
 'use client';
 
-import { SiVuedotjs, SiNextdotjs, SiTypescript, SiTailwindcss, SiVercel, SiFramer, SiSass } from 'react-icons/si';
+import { SiTypescript, SiTailwindcss, SiVercel, SiFramer, SiSass } from 'react-icons/si';
 import { CascadeText, BlurIn, StaggerList, StaggerItem } from '@/components/ui/motion-primitives';
 import { FaReact, FaGitAlt, FaHtml5, FaCss3Alt, FaJs, FaFigma, FaGithub } from 'react-icons/fa';
 import { skills, projects, skillsTagline } from '@/data/portfolio';
@@ -14,11 +14,10 @@ const iconMap: Record<string, React.ReactNode> = {
   CSS: <FaCss3Alt />,
   JavaScript: <FaJs />,
   TypeScript: <SiTypescript />,
-  'Next.js': <SiNextdotjs />,
   'Tailwind CSS': <SiTailwindcss />,
   SCSS: <SiSass />,
   React: <FaReact />,
-  'Vue.js': <SiVuedotjs />,
+
   'Framer Motion': <SiFramer />,
   Git: <FaGitAlt />,
   GitHub: <FaGithub />,
@@ -50,7 +49,6 @@ const groupPillTransforms: Record<keyof typeof skills, string> = {
 
 const marqueeItems = [
   { name: 'React', icon: <FaReact /> },
-  { name: 'Next.js', icon: <SiNextdotjs /> },
   { name: 'TypeScript', icon: <SiTypescript /> },
   { name: 'JavaScript', icon: <FaJs /> },
   { name: 'Tailwind CSS', icon: <SiTailwindcss /> },

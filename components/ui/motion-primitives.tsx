@@ -4,6 +4,10 @@ import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import type { ReactNode } from 'react';
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
+export const DELAY_SCALE = 0.35;
+export const MAX_DELAY = 0.8;
+export const STAGGER_SCALE = 0.6;
+export const scaleDelay = (d = 0) => Math.min(d * DELAY_SCALE, MAX_DELAY);
 
 const motionTags = {
   span: motion.span,
@@ -39,7 +43,7 @@ export function CascadeText({
   charClassName = '',
   delay = 0,
   stagger = 0.03,
-  duration = 0.55,
+  duration = 0.45,
   trigger = 'view',
   blur = 8,
   y = -10,
@@ -61,8 +65,8 @@ export function CascadeText({
         hidden: {},
         visible: {
           transition: {
-            staggerChildren: stagger,
-            delayChildren: delay,
+            staggerChildren: stagger * STAGGER_SCALE,
+            delayChildren: scaleDelay(delay),
           },
         },
       }}
@@ -84,6 +88,7 @@ export function CascadeText({
           {Array.from(word).map((char, ci) => (
             <motion.span
               key={ci}
+              data-blurin=""
               className={charClassName}
               style={{ willChange: 'filter, transform, opacity' }}
               variants={{
@@ -133,6 +138,7 @@ export function BlurIn({
 
   return (
     <motion.div
+      data-blurin=""
       className={className}
       initial={{ opacity: 0, y, filter: `blur(${blur}px)` }}
       {...(trigger === 'mount'
@@ -141,8 +147,7 @@ export function BlurIn({
             whileInView: target,
             viewport: { once, amount: 0.3 },
           })}
-      transition={{ duration, delay, ease: EASE_OUT_EXPO }}
-      style={{ willChange: 'filter, transform, opacity' }}>
+      transition={{ duration, delay: scaleDelay(delay), ease: EASE_OUT_EXPO }}>
       {children}
     </motion.div>
   );
@@ -171,7 +176,7 @@ export function StaggerList({ children, className = '', delay = 0, stagger = 0.1
       variants={{
         hidden: {},
         visible: {
-          transition: { staggerChildren: stagger, delayChildren: delay },
+          transition: { staggerChildren: stagger * STAGGER_SCALE, delayChildren: scaleDelay(delay) },
         },
       }}>
       {children}
@@ -189,7 +194,7 @@ export const staggerItem: Variants = {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
-    transition: { duration: 0.7, ease: EASE_OUT_EXPO },
+    transition: { duration: 0.55, ease: EASE_OUT_EXPO },
   },
 };
 
@@ -218,8 +223,9 @@ export function StaggerItem({
 
   return (
     <motion.div
+      data-blurin=""
       className={className}
-      style={{ willChange: 'filter, transform, opacity', ...style }}
+      style={{ ...style }}
       variants={staggerItem}
       {...rest}>
       {children}
