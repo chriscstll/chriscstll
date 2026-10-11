@@ -15,7 +15,7 @@ export const navLinks = [
 
 export const hero = {
   tagline: '\u201CThe decisions nobody notices are the ones that matter most\u201D',
-  subtitle: 'I craft seamless web applications through thoughtful engineering.',
+  subtitle: 'I build web applications. Deliberately.',
   cta: {
     contactbtn: { label: 'Say something', href: '#contact' },
   },
@@ -36,16 +36,16 @@ export const about = {
       description: 'Less than it looks. More than it shows.',
       content: {
         title: 'Frontend Developer',
-        body: "I've been building frontends for two years.In that time I've worked with clients, built for businesses and consumers, and shipped personal projects on the side.Every one of them taught me something different. Some taught me how to work with a team, others taught me how to work alone. Client work taught me how to listen. Personal work taught me how to build things nobody asked for.",
+        body: "I've been working on frontends for over a year.In that time I've worked with clients, built for businesses and consumers, and shipped personal projects on the side.Every one of them taught me something different. Some taught me how to work with a team, others taught me how to work alone. Client work taught me how to listen. Personal work taught me how to build things nobody asked for.",
       },
     },
     {
-      id: 'the-unlogged-hours',
-      label: 'Unlogged hours',
+      id: 'the-unplugged-hours',
+      label: 'Unplugged hours',
       description: 'Some hours are spent. Some are invested. They look identical.',
       content: {
-        title: 'Unlogged hours',
-        body: 'When I’m not coding, I’m usually looking for somewhere to go or something to do outside. I enjoy cars, going on long drives by myself, doing off-road trails, camping, and overlanding. I also spend a fair amount of time in the kitchen. Sometimes I’m trying out a new recipe, sometimes I’m just cooking whatever I feel like. These are the things that help me slow down, clear my head, and enjoy some time away from the screen.',
+        title: 'Unplugged hours',
+        body: 'When I’m not coding, I’m usually looking for somewhere to go or something to do outside. I enjoy cars and long drives. I also spend a fair amount of time in the kitchen. Sometimes I’m trying out a new recipe or just cooking whatever I feel like. These are the things that help me slow down, clear my head, and enjoy some time away from the screen.',
       },
     },
   ],
