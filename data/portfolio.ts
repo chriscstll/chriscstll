@@ -36,7 +36,7 @@ export const about = {
       description: 'Less than it looks. More than it shows.',
       content: {
         title: 'Frontend Developer',
-        body: "I've been working on frontends for over a year.In that time I've worked with clients, built for businesses and consumers, and shipped personal projects on the side.Every one of them taught me something different. Some taught me how to work with a team, others taught me how to work alone. Client work taught me how to listen. Personal work taught me how to build things nobody asked for.",
+        body: "I've been working on frontends for over a year. In that time I've worked with clients, built for businesses and shipped personal projects on the side. Every one of them taught me something different. Some taught me how to work with a team, others taught me how to work alone. Client work taught me how to listen. Personal work taught me how to build things nobody asked for.",
       },
     },
     {
