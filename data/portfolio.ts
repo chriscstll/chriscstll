@@ -36,7 +36,7 @@ export const about = {
       description: 'Less than it looks. More than it shows.',
       content: {
         title: 'Frontend Developer',
-        body: "I've been working on frontends for over a year. In that time I've worked with clients, built for businesses and shipped personal projects on the side. Every one of them taught me something different. Some taught me how to work with a team, others taught me how to work alone. Client work taught me how to listen. Personal work taught me how to build things nobody asked for.",
+        body: 'I’m a front-end developer with over a year of experience building websites for clients and businesses, as well as developing personal projects. My expertise includes API integration, responsive design, performance optimization, technical SEO and web accessibility. I focus on writing clean, maintainable code and creating fast, accessible and user-friendly web experiences that balance functionality with performance.',
       },
     },
     {
