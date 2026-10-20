@@ -36,7 +36,7 @@ export const about = {
       description: 'Less than it looks. More than it shows.',
       content: {
         title: 'Frontend Developer',
-        body: 'I’m a front-end developer with over a year of experience building websites for clients and businesses, as well as developing personal projects. My expertise includes API integration, responsive design, performance optimization, technical SEO and web accessibility. I focus on writing clean, maintainable code and creating fast, accessible and user-friendly web experiences that balance functionality with performance.',
+        body: 'I’ve worked on websites for businesses and clients, as well as personal projects, for over a year. My expertise includes API integration, responsive design, performance optimization, technical SEO and web accessibility. I prioritize maintainable code and fast, accessible, user-friendly interfaces without compromising functionality.',
       },
     },
     {
